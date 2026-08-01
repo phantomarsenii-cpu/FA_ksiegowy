@@ -24,7 +24,7 @@ import java.util.Locale
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
-class ReportActivity : AppCompatActivity() {
+class ReportActivity : BaseActivity() {
     lateinit var db: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {

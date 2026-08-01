@@ -59,4 +59,6 @@ Key features:
 
 Contact: p.arsenii@interia.pl</string>
     <string name="about_email">p.arsenii@interia.pl</string>
+    <string name="dialog_close">Close</string>
+    <string name="dialog_write">Write</string>
 </resources>

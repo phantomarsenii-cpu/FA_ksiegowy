@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 
-class AddEntryActivity : AppCompatActivity() {
+class AddEntryActivity : BaseActivity() {
     private var selectedImagePath: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

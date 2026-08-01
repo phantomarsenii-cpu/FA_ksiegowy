@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
 
-class MineActivity : AppCompatActivity() {
+class MineActivity : BaseActivity() {
     private lateinit var db: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
