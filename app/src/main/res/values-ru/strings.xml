@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FinArs</string>
-    <string name="app_subtitle">Księgowy</string>
+    <string name="app_subtitle">FinArs</string>
     <string name="add_income">Добавить доход</string>
     <string name="add_expense">Добавить расход</string>
     <string name="balance">Баланс</string>
