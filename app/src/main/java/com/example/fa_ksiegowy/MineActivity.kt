@@ -44,13 +44,23 @@ class MineActivity : BaseActivity() {
 
     private fun loadData() {
         CoroutineScope(Dispatchers.IO).launch {
-            val entries = db.entryDao().getAll()
-            val income = entries.filter { it.isIncome }.sumOf { it.amount }
-            val expense = entries.filter { !it.isIncome }.sumOf { it.amount }
+            // Полная история — для списка операций (не ограничена годом).
+            val allEntries = db.entryDao().getAll()
+
+            // Баланс/статистика/налог — только за текущий календарный год,
+            // так как лимит 30 000 zł годовой (см. TaxHelper).
+            val year = TaxHelper.currentYear()
+            val (yearStart, yearEndExclusive) = TaxHelper.yearRange(year)
+            val yearEntries = db.entryDao().getBetween(yearStart, yearEndExclusive - 1)
+
+            val income = yearEntries.filter { it.isIncome }.sumOf { it.amount }
+            val expense = yearEntries.filter { !it.isIncome }.sumOf { it.amount }
             val profit = income - expense
+
             val prefs = getSharedPreferences("settings", MODE_PRIVATE)
             val taxPercent = prefs.getFloat("taxPercent", 12f)
-            val tax = if (profit > 0) profit * taxPercent / 100.0 else 0.0
+            val otherIncome = TaxHelper.getOtherIncome(prefs, year)
+            val taxResult = TaxHelper.calc(profit, otherIncome, taxPercent)
 
             withContext(Dispatchers.Main) {
                 findViewById<TextView>(R.id.tv_balance).text = formatMoney(profit)
@@ -59,8 +69,8 @@ class MineActivity : BaseActivity() {
                 findViewById<TextView>(R.id.tv_stat_profit).text = formatMoney(profit)
                 findViewById<TextView>(R.id.tv_stat_tax_label).text =
                     getString(R.string.stat_tax_format, taxPercent.toInt())
-                findViewById<TextView>(R.id.tv_stat_tax).text = formatMoney(tax)
-                findViewById<RecyclerView>(R.id.rv_entries).adapter = EntryAdapter(entries)
+                findViewById<TextView>(R.id.tv_stat_tax).text = formatMoney(taxResult.tax)
+                findViewById<RecyclerView>(R.id.rv_entries).adapter = EntryAdapter(allEntries)
             }
         }
     }

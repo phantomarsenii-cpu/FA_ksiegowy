@@ -11,6 +11,10 @@
     <string name="save">Сохранить</string>
     <string name="settings">Настройки</string>
     <string name="tax_percent">Процент налога</string>
+    <string name="other_income_label">Прочие доходы (%1$d)</string>
+    <string name="other_income_title">Прочие доходы</string>
+    <string name="other_income_hint">Ваш общий налогооблагаемый доход за этот год из других источников (работа, другая деятельность и т.д.). Учитывается вместе с доходом из этого приложения при проверке годового необлагаемого лимита в 30 000 zł.</string>
+    <string name="saved">Сохранено</string>
     <string name="export_report">Экспорт отчёта</string>
     <string name="generate_report">Сгенерировать отчёт</string>
     <string name="select_period">Выберите период</string>

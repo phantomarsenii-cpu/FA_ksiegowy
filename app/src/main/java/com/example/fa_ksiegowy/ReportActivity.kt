@@ -41,16 +41,26 @@ class ReportActivity : BaseActivity() {
     private fun generateForMonth() {
         val now = System.currentTimeMillis()
         val monthMs = 30L * 24 * 60 * 60 * 1000
-        generateReport(now - monthMs, now, getString(R.string.report_title_month))
+        // Лимит 30 000 zł годовой, к частичному периоду его применять некорректно
+        // (профит за один месяц почти всегда меньше лимита, отчёт вводил бы в
+        // заблуждение) — поэтому здесь налог считается по старой формуле, без лимита.
+        generateReport(now - monthMs, now, getString(R.string.report_title_month), applyAnnualLimit = false)
     }
 
     private fun generateForYear() {
+        val year = TaxHelper.currentYear()
+        val (yearStart, yearEndExclusive) = TaxHelper.yearRange(year)
         val now = System.currentTimeMillis()
-        val yearMs = 365L * 24 * 60 * 60 * 1000
-        generateReport(now - yearMs, now, getString(R.string.report_title_year))
+        generateReport(
+            yearStart, minOf(now, yearEndExclusive - 1),
+            getString(R.string.report_title_year), applyAnnualLimit = true, year = year
+        )
     }
 
-    private fun generateReport(from: Long, to: Long, title: String) {
+    private fun generateReport(
+        from: Long, to: Long, title: String,
+        applyAnnualLimit: Boolean, year: Int = TaxHelper.currentYear()
+    ) {
         setButtonsEnabled(false)
         Toast.makeText(this, getString(R.string.report_generating), Toast.LENGTH_SHORT).show()
         CoroutineScope(Dispatchers.IO).launch {
@@ -218,7 +228,12 @@ class ReportActivity : BaseActivity() {
                 // экране приложения, а не от суммы отдельных доходов — иначе итог
                 // в отчёте не совпадает с балансом в приложении.
                 val totalProfitForTax = totalIncome - totalExpense
-                val correctedTotalTax = if (totalProfitForTax > 0) totalProfitForTax * taxPercent / 100.0 else 0.0
+                val correctedTotalTax = if (applyAnnualLimit) {
+                    val otherIncome = TaxHelper.getOtherIncome(prefs, year)
+                    TaxHelper.calc(totalProfitForTax, otherIncome, taxPercent).tax
+                } else {
+                    if (totalProfitForTax > 0) totalProfitForTax * taxPercent / 100.0 else 0.0
+                }
 
                 val taxRow = sheet.createRow(rowN)
                 taxRow.createCell(0).also { it.setCellValue(getString(R.string.report_total_tax)); it.cellStyle = totalLabelStyle }

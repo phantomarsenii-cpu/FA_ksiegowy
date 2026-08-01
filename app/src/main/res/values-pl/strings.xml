@@ -11,6 +11,10 @@
     <string name="save">Zapisz</string>
     <string name="settings">Ustawienia</string>
     <string name="tax_percent">Procent podatku</string>
+    <string name="other_income_label">Inne przychody (%1$d)</string>
+    <string name="other_income_title">Inne przychody</string>
+    <string name="other_income_hint">Twój łączny dochód podlegający opodatkowaniu w tym roku z innych źródeł (etat, inna działalność itd.). Uwzględniany razem z dochodem z tej aplikacji przy sprawdzaniu rocznego limitu wolnego od podatku 30 000 zł.</string>
+    <string name="saved">Zapisano</string>
     <string name="export_report">Eksportuj raport</string>
     <string name="generate_report">Generuj raport</string>
     <string name="select_period">Wybierz okres</string>

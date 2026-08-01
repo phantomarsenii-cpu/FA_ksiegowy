@@ -7,6 +7,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 
 class SettingsActivity : BaseActivity() {
     private lateinit var prefs: SharedPreferences
@@ -21,6 +23,17 @@ class SettingsActivity : BaseActivity() {
         findViewById<Button>(R.id.btn_save_tax).setOnClickListener {
             val v = etTax.text.toString().toFloatOrNull() ?: 12f
             prefs.edit().putFloat("taxPercent", v).apply()
+        }
+
+        val year = TaxHelper.currentYear()
+        val tvOtherIncomeLabel = findViewById<TextView>(R.id.tv_other_income_label)
+        tvOtherIncomeLabel.text = getString(R.string.other_income_label, year)
+        val etOtherIncome = findViewById<EditText>(R.id.et_other_income)
+        etOtherIncome.setText(TaxHelper.getOtherIncome(prefs, year).toString())
+        findViewById<Button>(R.id.btn_save_other_income).setOnClickListener {
+            val v = etOtherIncome.text.toString().toDoubleOrNull() ?: 0.0
+            TaxHelper.setOtherIncome(prefs, year, v)
+            Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
         }
 
         findViewById<Button>(R.id.btn_lang_ru).setOnClickListener { setLocale("ru") }
