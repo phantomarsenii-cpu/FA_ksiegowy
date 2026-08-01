@@ -44,7 +44,19 @@
     <string name="report_ready">Report ready</string>
     <string name="report_share_title">Share report</string>
     <string name="report_error">Failed to generate report: %1$s</string>
-    <string name="about_app">О приложении</string>
-    <string name="about_description">FinArs — удобное приложение для ведения финансов нерегистрируемой деятельности. Легко учитывайте доходы и расходы, контролируйте текущий баланс, автоматически рассчитывайте налоги и формируйте отчёты. Приложение помогает соблюдать лимиты, отслеживать финансовые показатели и всегда иметь под рукой полную историю операций. Простой интерфейс и быстрый ввод данных делают ежедневный учёт максимально удобным.\n\nОсновные возможности:\n💰 Учёт доходов и расходов.\n📊 Автоматический расчёт прибыли.\n🧾 Расчёт налогов.\n📈 Контроль лимитов нерегистрируемой деятельности.\n📄 Генерация отчётов.\n🔍 История всех операций.\n🌙 Современный тёмный интерфейс.\n🔒 Все данные хранятся локально на устройстве.\n\nСвязь: p.arsenii@interia.pl</string>
+    <string name="about_app">About the app</string>
+    <string name="about_description">FinArs is a convenient app for managing the finances of unregistered business activity. Easily track income and expenses, monitor your current balance, automatically calculate taxes and generate reports. The app helps you stay within limits, track financial indicators and always have the full history of operations at hand. A simple interface and quick data entry make daily bookkeeping as convenient as possible.
+
+Key features:
+💰 Income and expense tracking.
+📊 Automatic profit calculation.
+🧾 Tax calculation.
+📈 Monitoring of unregistered activity limits.
+📄 Report generation.
+🔍 Full operation history.
+🌙 Modern dark interface.
+🔒 All data is stored locally on the device.
+
+Contact: p.arsenii@interia.pl</string>
     <string name="about_email">p.arsenii@interia.pl</string>
 </resources>

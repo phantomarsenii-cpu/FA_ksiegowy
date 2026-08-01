@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">F.A księgowy</string>
+    <string name="app_name">FinArs</string>
     <string name="app_subtitle">Księgowy</string>
     <string name="add_income">Добавить доход</string>
     <string name="add_expense">Добавить расход</string>
@@ -44,4 +44,7 @@
     <string name="report_ready">Отчёт готов</string>
     <string name="report_share_title">Поделиться отчётом</string>
     <string name="report_error">Ошибка формирования отчёта: %1$s</string>
+    <string name="about_app">О приложении</string>
+    <string name="about_description">FinArs — удобное приложение для ведения финансов нерегистрируемой деятельности. Легко учитывайте доходы и расходы, контролируйте текущий баланс, автоматически рассчитывайте налоги и формируйте отчёты. Приложение помогает соблюдать лимиты, отслеживать финансовые показатели и всегда иметь под рукой полную историю операций. Простой интерфейс и быстрый ввод данных делают ежедневный учёт максимально удобным.\n\nОсновные возможности:\n💰 Учёт доходов и расходов.\n📊 Автоматический расчёт прибыли.\n🧾 Расчёт налогов.\n📈 Контроль лимитов нерегистрируемой деятельности.\n📄 Генерация отчётов.\n🔍 История всех операций.\n🌙 Современный тёмный интерфейс.\n🔒 Все данные хранятся локально на устройстве.\n\nСвязь: p.arsenii@interia.pl</string>
+    <string name="about_email">p.arsenii@interia.pl</string>
 </resources>
