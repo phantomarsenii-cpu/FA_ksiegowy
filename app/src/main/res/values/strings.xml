@@ -30,7 +30,7 @@
     <string name="statistics">Statistics</string>
     <string name="stat_income">Income</string>
     <string name="stat_expense">Expense</string>
-    <string name="stat_profit">Profit</string>
+    <string name="stat_profit">Profit (gross)</string>
     <string name="stat_tax_format">Tax (%1$d%%)</string>
 
     <string name="report_col_date">Date</string>
@@ -86,4 +86,5 @@ Contact: p.arsenii@interia.pl</string>
     <string name="enter_code_wrong">Invalid code</string>
     <string name="enter_code_success">Pro unlocked</string>
     <string name="transaction_history">Transaction history</string>
+    <string name="stat_net_profit">Net profit (after tax)</string>
 </resources>

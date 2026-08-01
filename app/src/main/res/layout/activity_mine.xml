@@ -93,11 +93,22 @@
         </LinearLayout>
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal" android:layout_marginBottom="8dp">
             <TextView android:id="@+id/tv_stat_tax_label" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                 android:textColor="@color/text_secondary" android:textSize="15sp"/>
             <TextView android:id="@+id/tv_stat_tax" android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textColor="@color/text_secondary" android:textSize="15sp" android:textStyle="bold"/>
+        </LinearLayout>
+
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="#2A2E60" android:layout_marginTop="6dp" android:layout_marginBottom="10dp"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:text="@string/stat_net_profit" android:textColor="@color/text_primary" android:textSize="16sp" android:textStyle="bold"/>
+            <TextView android:id="@+id/tv_stat_net_profit" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="@color/accent_cyan" android:textSize="16sp" android:textStyle="bold"/>
         </LinearLayout>
 
     </LinearLayout>

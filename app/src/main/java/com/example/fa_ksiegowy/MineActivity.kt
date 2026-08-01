@@ -132,6 +132,9 @@ class MineActivity : BaseActivity() {
                 findViewById<TextView>(R.id.tv_stat_tax_label).text =
                     getString(R.string.stat_tax_format, taxPercent.toInt())
                 findViewById<TextView>(R.id.tv_stat_tax).text = formatMoney(taxResult.tax)
+                // Чистая прибыль = прибыль минус налог, рассчитанный TaxHelper
+                // (с учётом годового лимита и прочих доходов из настроек).
+                findViewById<TextView>(R.id.tv_stat_net_profit).text = formatMoney(profit - taxResult.tax)
             }
         }
     }

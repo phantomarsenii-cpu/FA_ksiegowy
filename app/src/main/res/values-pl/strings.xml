@@ -30,7 +30,7 @@
     <string name="statistics">Statystyka</string>
     <string name="stat_income">Przychód</string>
     <string name="stat_expense">Wydatek</string>
-    <string name="stat_profit">Zysk</string>
+    <string name="stat_profit">Zysk (brutto)</string>
     <string name="stat_tax_format">Podatek (%1$d%%)</string>
 
     <string name="report_col_date">Data</string>
@@ -74,4 +74,5 @@
     <string name="enter_code_wrong">Nieprawidłowy kod</string>
     <string name="enter_code_success">Pro odblokowane</string>
     <string name="transaction_history">Historia transakcji</string>
+    <string name="stat_net_profit">Zysk netto (po podatku)</string>
 </resources>
