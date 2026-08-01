@@ -4,6 +4,7 @@
     <string name="app_subtitle">FinArs</string>
     <string name="add_income">Add income</string>
     <string name="add_expense">Add expense</string>
+    <string name="add_entry">Add +</string>
     <string name="balance">Balance</string>
     <string name="enter_amount">Amount</string>
     <string name="enter_comment">Comment</string>
@@ -42,10 +43,13 @@
     <string name="report_sheet_name">Report</string>
     <string name="report_title_month">Report — Month</string>
     <string name="report_title_year">Report — Year</string>
+    <string name="report_title_custom">Report — Custom period</string>
+    <string name="custom_range_invalid">The end date must be after the start date</string>
     <string name="report_total_income">Total income</string>
     <string name="report_total_expense">Total expense</string>
     <string name="report_total_profit">Total profit</string>
     <string name="report_total_tax">Total tax</string>
+    <string name="report_total_net_profit">Net profit (after tax)</string>
     <string name="report_generating">Generating report…</string>
     <string name="report_ready">Report ready</string>
     <string name="report_share_title">Share report</string>

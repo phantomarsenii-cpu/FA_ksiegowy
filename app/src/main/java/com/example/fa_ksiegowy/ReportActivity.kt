@@ -1,11 +1,13 @@
 package com.example.fa_ksiegowy
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import java.util.Calendar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,7 +38,7 @@ class ReportActivity : BaseActivity() {
             runIfPro { generateForYear() }
         }
         findViewById<Button>(R.id.btn_report_custom).setOnClickListener {
-            runIfPro { Toast.makeText(this, "—", Toast.LENGTH_LONG).show() }
+            runIfPro { showCustomRangePicker() }
         }
     }
 
@@ -54,6 +56,42 @@ class ReportActivity : BaseActivity() {
                 .setNegativeButton(getString(R.string.dialog_close), null)
                 .show()
         }
+    }
+
+    /**
+     * Произвольный период: два DatePickerDialog подряд — сначала выбираем дату "от",
+     * затем "до". Лимит 30 000 zł к произвольному периоду не применяем (как и к
+     * месячному отчёту) — он корректно применим только к целому календарному году.
+     */
+    private fun showCustomRangePicker() {
+        val cal = Calendar.getInstance()
+        DatePickerDialog(
+            this,
+            { _, fromYear, fromMonth, fromDay ->
+                val fromCal = Calendar.getInstance()
+                fromCal.set(fromYear, fromMonth, fromDay, 0, 0, 0)
+                fromCal.set(Calendar.MILLISECOND, 0)
+                val fromMillis = fromCal.timeInMillis
+
+                DatePickerDialog(
+                    this,
+                    { _, toYear, toMonth, toDay ->
+                        val toCal = Calendar.getInstance()
+                        toCal.set(toYear, toMonth, toDay, 23, 59, 59)
+                        toCal.set(Calendar.MILLISECOND, 999)
+                        val toMillis = toCal.timeInMillis
+
+                        if (toMillis < fromMillis) {
+                            Toast.makeText(this, getString(R.string.custom_range_invalid), Toast.LENGTH_LONG).show()
+                            return@DatePickerDialog
+                        }
+                        generateReport(fromMillis, toMillis, getString(R.string.report_title_custom), applyAnnualLimit = false)
+                    },
+                    cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)
+                ).apply { setTitle(getString(R.string.to)) }.show()
+            },
+            cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)
+        ).apply { setTitle(getString(R.string.from)) }.show()
     }
 
     private fun generateForMonth() {
@@ -253,9 +291,16 @@ class ReportActivity : BaseActivity() {
                     if (totalProfitForTax > 0) totalProfitForTax * taxPercent / 100.0 else 0.0
                 }
 
-                val taxRow = sheet.createRow(rowN)
+                val taxRow = sheet.createRow(rowN++)
                 taxRow.createCell(0).also { it.setCellValue(getString(R.string.report_total_tax)); it.cellStyle = totalLabelStyle }
                 taxRow.createCell(1).also { it.setCellValue(correctedTotalTax); it.cellStyle = totalValueStyle }
+
+                // Чистая прибыль = прибыль минус налог — тот же показатель, что и
+                // "tv_stat_net_profit" на главном экране приложения.
+                val netProfit = totalProfitForTax - correctedTotalTax
+                val netProfitRow = sheet.createRow(rowN)
+                netProfitRow.createCell(0).also { it.setCellValue(getString(R.string.report_total_net_profit)); it.cellStyle = totalLabelStyle }
+                netProfitRow.createCell(1).also { it.setCellValue(netProfit); it.cellStyle = totalValueStyle }
 
                 // ---- column widths (manual — avoids java.awt dependency on Android) ----
                 sheet.setColumnWidth(0, 20 * 256)

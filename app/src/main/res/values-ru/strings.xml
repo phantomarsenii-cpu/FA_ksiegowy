@@ -4,6 +4,7 @@
     <string name="app_subtitle">FinArs</string>
     <string name="add_income">Добавить доход</string>
     <string name="add_expense">Добавить расход</string>
+    <string name="add_entry">Добавить +</string>
     <string name="balance">Баланс</string>
     <string name="enter_amount">Сумма</string>
     <string name="enter_comment">Комментарий</string>
@@ -42,10 +43,13 @@
     <string name="report_sheet_name">Отчёт</string>
     <string name="report_title_month">Отчёт — Месяц</string>
     <string name="report_title_year">Отчёт — Год</string>
+    <string name="report_title_custom">Отчёт — Произвольный период</string>
+    <string name="custom_range_invalid">Дата окончания должна быть позже даты начала</string>
     <string name="report_total_income">Итого доход</string>
     <string name="report_total_expense">Итого расход</string>
     <string name="report_total_profit">Итого прибыль</string>
     <string name="report_total_tax">Итого налог</string>
+    <string name="report_total_net_profit">Чистая прибыль (после налога)</string>
     <string name="report_generating">Формирую отчёт…</string>
     <string name="report_ready">Отчёт готов</string>
     <string name="report_share_title">Поделиться отчётом</string>

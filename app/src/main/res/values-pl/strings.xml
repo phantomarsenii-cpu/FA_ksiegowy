@@ -4,6 +4,7 @@
     <string name="app_subtitle">FinArs</string>
     <string name="add_income">Dodaj przychód</string>
     <string name="add_expense">Dodaj wydatek</string>
+    <string name="add_entry">Dodaj +</string>
     <string name="balance">Bilans</string>
     <string name="enter_amount">Kwota</string>
     <string name="enter_comment">Komentarz</string>
@@ -42,10 +43,13 @@
     <string name="report_sheet_name">Raport</string>
     <string name="report_title_month">Raport — Miesiąc</string>
     <string name="report_title_year">Raport — Rok</string>
+    <string name="report_title_custom">Raport — Zakres niestandardowy</string>
+    <string name="custom_range_invalid">Data końcowa musi być późniejsza niż data początkowa</string>
     <string name="report_total_income">Suma przychodów</string>
     <string name="report_total_expense">Suma wydatków</string>
     <string name="report_total_profit">Suma zysku</string>
     <string name="report_total_tax">Suma podatku</string>
+    <string name="report_total_net_profit">Zysk netto (po podatku)</string>
     <string name="report_generating">Generuję raport…</string>
     <string name="report_ready">Raport gotowy</string>
     <string name="report_share_title">Udostępnij raport</string>

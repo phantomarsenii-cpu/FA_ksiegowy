@@ -27,11 +27,11 @@ class MineActivity : BaseActivity() {
         setContentView(R.layout.activity_mine)
         db = AppDatabase.getInstance(this)
 
-        findViewById<Button>(R.id.btn_add_income).setOnClickListener {
+        // Единая кнопка добавления: выбор дохода/расхода происходит уже внутри
+        // AddEntryActivity (переключатель с подсветкой выбранного варианта).
+        // По умолчанию открываем на "доход", это чаще нужное действие.
+        findViewById<Button>(R.id.btn_add_entry).setOnClickListener {
             startActivity(Intent(this, AddEntryActivity::class.java).putExtra("isIncome", true))
-        }
-        findViewById<Button>(R.id.btn_add_expense).setOnClickListener {
-            startActivity(Intent(this, AddEntryActivity::class.java).putExtra("isIncome", false))
         }
         findViewById<Button>(R.id.btn_settings).setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
