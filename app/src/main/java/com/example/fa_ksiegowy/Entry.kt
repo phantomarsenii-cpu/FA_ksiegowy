@@ -1,5 +1,5 @@
-
 package com.example.fa_ksiegowy
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 

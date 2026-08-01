@@ -20,4 +20,28 @@
     <string name="from">Od</string>
     <string name="to">Do</string>
     <string name="no_entries">Brak wpisów</string>
+
+    <string name="statistics">Statystyka</string>
+    <string name="stat_income">Przychód</string>
+    <string name="stat_expense">Wydatek</string>
+    <string name="stat_profit">Zysk</string>
+    <string name="stat_tax_format">Podatek (%1$d%%)</string>
+
+    <string name="report_col_date">Data</string>
+    <string name="report_col_income">Przychód</string>
+    <string name="report_col_expense">Wydatek</string>
+    <string name="report_col_tax_percent">Podatek %%</string>
+    <string name="report_col_tax_amount">Kwota podatku</string>
+    <string name="report_col_comment">Komentarz</string>
+    <string name="report_sheet_name">Raport</string>
+    <string name="report_title_month">Raport — Miesiąc</string>
+    <string name="report_title_year">Raport — Rok</string>
+    <string name="report_total_income">Suma przychodów</string>
+    <string name="report_total_expense">Suma wydatków</string>
+    <string name="report_total_profit">Suma zysku</string>
+    <string name="report_total_tax">Suma podatku</string>
+    <string name="report_generating">Generuję raport…</string>
+    <string name="report_ready">Raport gotowy</string>
+    <string name="report_share_title">Udostępnij raport</string>
+    <string name="report_error">Błąd generowania raportu: %1$s</string>
 </resources>

@@ -1,41 +1,69 @@
-
 package com.example.fa_ksiegowy
+
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Locale
 
 class MineActivity : AppCompatActivity() {
-    private val scope = MainScope()
-    lateinit var db: AppDatabase
+    private lateinit var db: AppDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mine)
         db = AppDatabase.getInstance(this)
-        val rv = findViewById<RecyclerView>(R.id.rv_entries)
-        rv.layoutManager = LinearLayoutManager(this)
-        val tvBalance = findViewById<TextView>(R.id.tv_balance)
+
         findViewById<Button>(R.id.btn_add_income).setOnClickListener {
-            val i = Intent(this, AddEntryActivity::class.java); i.putExtra("isIncome", true); startActivity(i)
+            startActivity(Intent(this, AddEntryActivity::class.java).putExtra("isIncome", true))
         }
         findViewById<Button>(R.id.btn_add_expense).setOnClickListener {
-            val i = Intent(this, AddEntryActivity::class.java); i.putExtra("isIncome", false); startActivity(i)
+            startActivity(Intent(this, AddEntryActivity::class.java).putExtra("isIncome", false))
         }
-        findViewById<Button>(R.id.btn_settings).setOnClickListener { startActivity(Intent(this, SettingsActivity::class.java)) }
-        findViewById<Button>(R.id.btn_reports).setOnClickListener { startActivity(Intent(this, ReportActivity::class.java)) }
+        findViewById<Button>(R.id.btn_settings).setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
+        findViewById<Button>(R.id.btn_reports).setOnClickListener {
+            startActivity(Intent(this, ReportActivity::class.java))
+        }
 
-        scope.launch {
-            db.entryDao().getAll().collect { list ->
-                rv.adapter = EntryAdapter(list)
-                val balance = list.fold(0.0) { acc, e -> acc + if (e.isIncome) e.amount else -e.amount }
-                tvBalance.text = String.format("%.2f", balance)
+        findViewById<RecyclerView>(R.id.rv_entries).layoutManager = LinearLayoutManager(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadData()
+    }
+
+    private fun loadData() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val entries = db.entryDao().getAll()
+            val income = entries.filter { it.isIncome }.sumOf { it.amount }
+            val expense = entries.filter { !it.isIncome }.sumOf { it.amount }
+            val profit = income - expense
+            val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+            val taxPercent = prefs.getFloat("taxPercent", 12f)
+            val tax = if (profit > 0) profit * taxPercent / 100.0 else 0.0
+
+            withContext(Dispatchers.Main) {
+                findViewById<TextView>(R.id.tv_balance).text = formatMoney(profit)
+                findViewById<TextView>(R.id.tv_stat_income).text = formatMoney(income)
+                findViewById<TextView>(R.id.tv_stat_expense).text = formatMoney(expense)
+                findViewById<TextView>(R.id.tv_stat_profit).text = formatMoney(profit)
+                findViewById<TextView>(R.id.tv_stat_tax_label).text =
+                    getString(R.string.stat_tax_format, taxPercent.toInt())
+                findViewById<TextView>(R.id.tv_stat_tax).text = formatMoney(tax)
+                findViewById<RecyclerView>(R.id.rv_entries).adapter = EntryAdapter(entries)
             }
         }
     }
+
+    private fun formatMoney(v: Double): String = String.format(Locale.getDefault(), "%.2f", v)
 }

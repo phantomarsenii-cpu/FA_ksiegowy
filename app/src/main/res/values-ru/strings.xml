@@ -20,4 +20,28 @@
     <string name="from">От</string>
     <string name="to">До</string>
     <string name="no_entries">Нет записей</string>
+
+    <string name="statistics">Статистика</string>
+    <string name="stat_income">Доход</string>
+    <string name="stat_expense">Расход</string>
+    <string name="stat_profit">Прибыль</string>
+    <string name="stat_tax_format">Налог (%1$d%%)</string>
+
+    <string name="report_col_date">Дата</string>
+    <string name="report_col_income">Доход</string>
+    <string name="report_col_expense">Расход</string>
+    <string name="report_col_tax_percent">Налог %%</string>
+    <string name="report_col_tax_amount">Сумма налога</string>
+    <string name="report_col_comment">Комментарий</string>
+    <string name="report_sheet_name">Отчёт</string>
+    <string name="report_title_month">Отчёт — Месяц</string>
+    <string name="report_title_year">Отчёт — Год</string>
+    <string name="report_total_income">Итого доход</string>
+    <string name="report_total_expense">Итого расход</string>
+    <string name="report_total_profit">Итого прибыль</string>
+    <string name="report_total_tax">Итого налог</string>
+    <string name="report_generating">Формирую отчёт…</string>
+    <string name="report_ready">Отчёт готов</string>
+    <string name="report_share_title">Поделиться отчётом</string>
+    <string name="report_error">Ошибка формирования отчёта: %1$s</string>
 </resources>

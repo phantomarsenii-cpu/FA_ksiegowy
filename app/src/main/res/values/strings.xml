@@ -20,4 +20,28 @@
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="no_entries">No entries</string>
+
+    <string name="statistics">Statistics</string>
+    <string name="stat_income">Income</string>
+    <string name="stat_expense">Expense</string>
+    <string name="stat_profit">Profit</string>
+    <string name="stat_tax_format">Tax (%1$d%%)</string>
+
+    <string name="report_col_date">Date</string>
+    <string name="report_col_income">Income</string>
+    <string name="report_col_expense">Expense</string>
+    <string name="report_col_tax_percent">Tax %%</string>
+    <string name="report_col_tax_amount">Tax amount</string>
+    <string name="report_col_comment">Comment</string>
+    <string name="report_sheet_name">Report</string>
+    <string name="report_title_month">Report — Month</string>
+    <string name="report_title_year">Report — Year</string>
+    <string name="report_total_income">Total income</string>
+    <string name="report_total_expense">Total expense</string>
+    <string name="report_total_profit">Total profit</string>
+    <string name="report_total_tax">Total tax</string>
+    <string name="report_generating">Generating report…</string>
+    <string name="report_ready">Report ready</string>
+    <string name="report_share_title">Share report</string>
+    <string name="report_error">Failed to generate report: %1$s</string>
 </resources>

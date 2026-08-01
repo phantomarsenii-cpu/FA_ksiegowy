@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <application android:allowBackup="true" android:label="@string/app_name" android:theme="@style/Theme.FA">
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/Theme.FA">
         <activity android:name=".SettingsActivity" android:exported="false" />
         <activity android:name=".AddEntryActivity" android:exported="false" />
         <activity android:name=".ReportActivity" android:exported="false" />
