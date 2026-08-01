@@ -11,7 +11,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.apache.poi.ss.usermodel.BorderStyle
-import org.apache.poi.ss.usermodel.CellStyle
 import org.apache.poi.ss.usermodel.FillPatternType
 import org.apache.poi.ss.usermodel.HorizontalAlignment
 import org.apache.poi.ss.usermodel.IndexedColors
@@ -75,13 +74,13 @@ class ReportActivity : AppCompatActivity() {
                 val prefs = getSharedPreferences("settings", MODE_PRIVATE)
                 val taxPercent = prefs.getFloat("taxPercent", 12f)
 
-                // ---- styles ----
+                // ---- styles (types inferred as XSSFCellStyle — required by XSSFCell.setCellStyle) ----
                 val titleFont = wb.createFont().apply {
                     bold = true
                     fontHeightInPoints = 14
                     color = IndexedColors.WHITE.index
                 }
-                val titleStyle: CellStyle = wb.createCellStyle().apply {
+                val titleStyle = wb.createCellStyle().apply {
                     setFont(titleFont)
                     fillForegroundColor = IndexedColors.ROYAL_BLUE.index
                     fillPattern = FillPatternType.SOLID_FOREGROUND
@@ -92,7 +91,7 @@ class ReportActivity : AppCompatActivity() {
                     bold = true
                     color = IndexedColors.WHITE.index
                 }
-                val headerStyle: CellStyle = wb.createCellStyle().apply {
+                val headerStyle = wb.createCellStyle().apply {
                     setFont(headerFont)
                     fillForegroundColor = IndexedColors.BLUE_GREY.index
                     fillPattern = FillPatternType.SOLID_FOREGROUND
@@ -103,7 +102,7 @@ class ReportActivity : AppCompatActivity() {
                     borderRight = BorderStyle.THIN
                 }
 
-                val cellStyle: CellStyle = wb.createCellStyle().apply {
+                val dataStyle = wb.createCellStyle().apply {
                     borderBottom = BorderStyle.THIN
                     borderTop = BorderStyle.THIN
                     borderLeft = BorderStyle.THIN
@@ -111,26 +110,26 @@ class ReportActivity : AppCompatActivity() {
                 }
 
                 val moneyFormat = wb.createDataFormat().getFormat("#,##0.00")
-                val moneyStyle: CellStyle = wb.createCellStyle().apply {
-                    cloneStyleFrom(cellStyle)
+                val moneyStyle = wb.createCellStyle().apply {
+                    cloneStyleFrom(dataStyle)
                     dataFormat = moneyFormat
                 }
 
-                val incomeStyle: CellStyle = wb.createCellStyle().apply {
+                val incomeStyle = wb.createCellStyle().apply {
                     cloneStyleFrom(moneyStyle)
                     setFont(wb.createFont().apply { color = IndexedColors.GREEN.index })
                 }
-                val expenseStyle: CellStyle = wb.createCellStyle().apply {
+                val expenseStyle = wb.createCellStyle().apply {
                     cloneStyleFrom(moneyStyle)
                     setFont(wb.createFont().apply { color = IndexedColors.RED.index })
                 }
 
                 val totalLabelFont = wb.createFont().apply { bold = true }
-                val totalLabelStyle: CellStyle = wb.createCellStyle().apply {
+                val totalLabelStyle = wb.createCellStyle().apply {
                     setFont(totalLabelFont)
                     borderTop = BorderStyle.THIN
                 }
-                val totalValueStyle: CellStyle = wb.createCellStyle().apply {
+                val totalValueStyle = wb.createCellStyle().apply {
                     setFont(totalLabelFont)
                     dataFormat = moneyFormat
                     borderTop = BorderStyle.THIN
@@ -170,7 +169,7 @@ class ReportActivity : AppCompatActivity() {
 
                     val dateCell = r.createCell(0)
                     dateCell.setCellValue(dateFmt.format(Date(e.dateMillis)))
-                    dateCell.cellStyle = cellStyle
+                    dateCell.cellStyle = dataStyle
 
                     val incomeVal = if (e.isIncome) e.amount else 0.0
                     val expenseVal = if (!e.isIncome) e.amount else 0.0
@@ -194,7 +193,7 @@ class ReportActivity : AppCompatActivity() {
 
                     val commentCell = r.createCell(5)
                     commentCell.setCellValue(e.comment ?: "")
-                    commentCell.cellStyle = cellStyle
+                    commentCell.cellStyle = dataStyle
 
                     totalIncome += incomeVal
                     totalExpense += expenseVal
@@ -204,20 +203,20 @@ class ReportActivity : AppCompatActivity() {
                 // ---- totals ----
                 rowN++
                 val profitRow = sheet.createRow(rowN++)
-                profitRow.createCell(0).apply { setCellValue(getString(R.string.report_total_profit)); cellStyle = totalLabelStyle }
-                profitRow.createCell(1).apply { setCellValue(totalIncome - totalExpense); cellStyle = totalValueStyle }
+                profitRow.createCell(0).also { it.setCellValue(getString(R.string.report_total_profit)); it.cellStyle = totalLabelStyle }
+                profitRow.createCell(1).also { it.setCellValue(totalIncome - totalExpense); it.cellStyle = totalValueStyle }
 
                 val incomeRow = sheet.createRow(rowN++)
-                incomeRow.createCell(0).apply { setCellValue(getString(R.string.report_total_income)); cellStyle = totalLabelStyle }
-                incomeRow.createCell(1).apply { setCellValue(totalIncome); cellStyle = totalValueStyle }
+                incomeRow.createCell(0).also { it.setCellValue(getString(R.string.report_total_income)); it.cellStyle = totalLabelStyle }
+                incomeRow.createCell(1).also { it.setCellValue(totalIncome); it.cellStyle = totalValueStyle }
 
                 val expenseRow = sheet.createRow(rowN++)
-                expenseRow.createCell(0).apply { setCellValue(getString(R.string.report_total_expense)); cellStyle = totalLabelStyle }
-                expenseRow.createCell(1).apply { setCellValue(totalExpense); cellStyle = totalValueStyle }
+                expenseRow.createCell(0).also { it.setCellValue(getString(R.string.report_total_expense)); it.cellStyle = totalLabelStyle }
+                expenseRow.createCell(1).also { it.setCellValue(totalExpense); it.cellStyle = totalValueStyle }
 
                 val taxRow = sheet.createRow(rowN)
-                taxRow.createCell(0).apply { setCellValue(getString(R.string.report_total_tax)); cellStyle = totalLabelStyle }
-                taxRow.createCell(1).apply { setCellValue(totalTax); cellStyle = totalValueStyle }
+                taxRow.createCell(0).also { it.setCellValue(getString(R.string.report_total_tax)); it.cellStyle = totalLabelStyle }
+                taxRow.createCell(1).also { it.setCellValue(totalTax); it.cellStyle = totalValueStyle }
 
                 // ---- column widths (manual — avoids java.awt dependency on Android) ----
                 sheet.setColumnWidth(0, 20 * 256)
