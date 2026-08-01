@@ -1,0 +1,2 @@
+Open this folder in Android Studio (File -> Open). Let Gradle sync, then Build -> Build APK(s). Reports will be in getExternalFilesDir(null)/reports.
+If build fails, ensure JDK 17 and network access to download dependencies.

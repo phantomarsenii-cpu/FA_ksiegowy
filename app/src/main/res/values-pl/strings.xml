@@ -1,0 +1,22 @@
+
+<resources>
+    <string name="app_name">F.A księgowy</string>
+    <string name="add_income">Dodaj przychód</string>
+    <string name="add_expense">Dodaj wydatek</string>
+    <string name="balance">Bilans</string>
+    <string name="enter_amount">Kwota</string>
+    <string name="enter_comment">Komentarz</string>
+    <string name="attach_receipt">Dołącz paragon</string>
+    <string name="save">Zapisz</string>
+    <string name="settings">Ustawienia</string>
+    <string name="tax_percent">Procent podatku</string>
+    <string name="export_report">Eksportuj raport</string>
+    <string name="generate_report">Generuj raport</string>
+    <string name="select_period">Wybierz okres</string>
+    <string name="month">Miesiąc</string>
+    <string name="year">Rok</string>
+    <string name="custom_range">Zakres niestandardowy</string>
+    <string name="from">Od</string>
+    <string name="to">Do</string>
+    <string name="no_entries">Brak wpisów</string>
+</resources>

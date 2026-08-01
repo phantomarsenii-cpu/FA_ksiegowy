@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:padding="16dp"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="@string/tax_percent" android:textSize="18sp"/>
+
+    <EditText android:id="@+id/et_tax" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:inputType="numberDecimal"/>
+
+    <Button android:id="@+id/btn_save_tax" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="@string/save"/>
+
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#CCCCCC" android:layout_marginTop="16dp" android:layout_marginBottom="16dp"/>
+
+    <Button android:id="@+id/btn_lang_en" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="English"/>
+    <Button android:id="@+id/btn_lang_ru" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Русский"/>
+    <Button android:id="@+id/btn_lang_pl" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Polski"/>
+
+</LinearLayout>

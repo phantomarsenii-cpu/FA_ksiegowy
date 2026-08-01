@@ -1,0 +1,22 @@
+
+<resources>
+    <string name="app_name">F.A księgowy</string>
+    <string name="add_income">Добавить доход</string>
+    <string name="add_expense">Добавить расход</string>
+    <string name="balance">Баланс</string>
+    <string name="enter_amount">Сумма</string>
+    <string name="enter_comment">Комментарий</string>
+    <string name="attach_receipt">Прикрепить чек</string>
+    <string name="save">Сохранить</string>
+    <string name="settings">Настройки</string>
+    <string name="tax_percent">Процент налога</string>
+    <string name="export_report">Экспорт отчёта</string>
+    <string name="generate_report">Сгенерировать отчёт</string>
+    <string name="select_period">Выберите период</string>
+    <string name="month">Месяц</string>
+    <string name="year">Год</string>
+    <string name="custom_range">Произвольный период</string>
+    <string name="from">От</string>
+    <string name="to">До</string>
+    <string name="no_entries">Нет записей</string>
+</resources>
