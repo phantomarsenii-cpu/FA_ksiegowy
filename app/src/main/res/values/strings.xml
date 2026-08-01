@@ -67,4 +67,22 @@ Contact: p.arsenii@interia.pl</string>
     <string name="about_email">p.arsenii@interia.pl</string>
     <string name="dialog_close">Close</string>
     <string name="dialog_write">Write</string>
+    <string name="pro_status_locked">Pro is locked. Unlock to get yearly/custom Excel reports.</string>
+    <string name="pro_status_active">Pro unlocked. Thank you for your support!</string>
+    <string name="pro_unlock_button">Unlock Pro</string>
+    <string name="pro_unlock_button_price">Unlock Pro — %1$s</string>
+    <string name="pro_loading">Loading price…</string>
+    <string name="pro_feature_locked_title">Pro feature</string>
+    <string name="pro_feature_locked_message">Yearly and custom reports are a Pro feature. Unlock Pro in Settings to use them.</string>
+    <string name="pro_feature_locked_go_settings">Go to Settings</string>
+    <string name="pro_purchase_error">Could not start the purchase. Check your connection and try again.</string>
+    <string name="pro_info_title">Pro version</string>
+    <string name="pro_info_message">Pro unlocks:\n\n• Yearly Excel report\n• Custom-period Excel report\n• No ads\n\nThis is a one-time purchase — pay once, keep it forever.</string>
+    <string name="pro_info_continue">Continue to purchase</string>
+    <string name="enter_code_button">Have a code?</string>
+    <string name="enter_code_title">Enter code</string>
+    <string name="enter_code_hint">Code</string>
+    <string name="enter_code_apply">Apply</string>
+    <string name="enter_code_wrong">Invalid code</string>
+    <string name="enter_code_success">Pro unlocked</string>
 </resources>

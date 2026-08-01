@@ -28,6 +28,17 @@
 
     <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#2A2E60" android:layout_marginBottom="20dp"/>
 
+    <TextView android:id="@+id/tv_pro_status" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="@string/pro_status_locked" android:textSize="15sp"
+        android:textColor="@color/text_primary" android:layout_marginBottom="10dp"/>
+
+    <Button android:id="@+id/btn_unlock_pro" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/pro_unlock_button" android:textAllCaps="false" android:textSize="16sp"
+        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_primary"
+        android:layout_marginBottom="24dp"/>
+
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#2A2E60" android:layout_marginBottom="20dp"/>
+
     <TextView android:id="@+id/tv_other_income_label" android:layout_width="match_parent" android:layout_height="wrap_content"
         android:text="@string/other_income_title" android:textSize="18sp"
         android:textColor="@color/text_primary" android:layout_marginBottom="6dp"/>

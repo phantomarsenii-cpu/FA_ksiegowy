@@ -71,6 +71,8 @@ class SettingsActivity : BaseActivity() {
         findViewById<Button>(R.id.btn_lang_pl).setOnClickListener { setLocale("pl") }
         findViewById<Button>(R.id.btn_lang_en).setOnClickListener { setLocale("en") }
 
+        setupProSection()
+
         findViewById<Button>(R.id.btn_about).setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle(getString(R.string.about_app))
@@ -83,6 +85,66 @@ class SettingsActivity : BaseActivity() {
                 }
                 .setNegativeButton(getString(R.string.dialog_close), null)
                 .show()
+        }
+    }
+
+    private fun setupProSection() {
+        val tvStatus = findViewById<TextView>(R.id.tv_pro_status)
+        val btnUnlock = findViewById<Button>(R.id.btn_unlock_pro)
+
+        fun refreshUi() {
+            if (BillingManager.isPro(this)) {
+                tvStatus.text = getString(R.string.pro_status_active)
+                btnUnlock.isEnabled = false
+                btnUnlock.text = getString(R.string.pro_status_active)
+            } else {
+                tvStatus.text = getString(R.string.pro_status_locked)
+                btnUnlock.isEnabled = true
+            }
+        }
+        refreshUi()
+
+        BillingManager.connect(this) { connected ->
+            runOnUiThread {
+                if (!connected) return@runOnUiThread
+                BillingManager.restorePurchases(this) { refreshUi() }
+                if (!BillingManager.isPro(this)) {
+                    BillingManager.queryProProductDetails { price ->
+                        runOnUiThread {
+                            btnUnlock.text = if (price != null) {
+                                getString(R.string.pro_unlock_button_price, price)
+                            } else {
+                                getString(R.string.pro_unlock_button)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        btnUnlock.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.pro_info_title))
+                .setMessage(getString(R.string.pro_info_message))
+                .setPositiveButton(getString(R.string.pro_info_continue)) { _, _ ->
+                    BillingManager.launchPurchase(this)
+                }
+                .setNegativeButton(getString(R.string.dialog_close), null)
+                .show()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // На случай возврата из окна оплаты Google Play — обновить статус и кнопку.
+        BillingManager.restorePurchases(this) {
+            val tvStatus = findViewById<TextView>(R.id.tv_pro_status)
+            val btnUnlock = findViewById<Button>(R.id.btn_unlock_pro)
+            if (BillingManager.isPro(this)) {
+                tvStatus.text = getString(R.string.pro_status_active)
+                btnUnlock.isEnabled = false
+                btnUnlock.text = getString(R.string.pro_status_active)
+            }
         }
     }
 

@@ -1,12 +1,20 @@
 package com.example.fa_ksiegowy
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.MotionEvent
 import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,11 +43,68 @@ class MineActivity : BaseActivity() {
         }
 
         findViewById<RecyclerView>(R.id.rv_entries).layoutManager = LinearLayoutManager(this)
+
+        AdsManager.setupAndLoadBanner(this, findViewById(R.id.ad_banner))
+        setupHiddenDevCodeGesture()
+    }
+
+    /**
+     * Скрытый вход для разработчика: удержание пальца на логотипе 10 секунд открывает
+     * диалог ввода кода. Никакой видимой кнопки/подсказки в UI нет — это сделано умышленно,
+     * чтобы обычный пользователь не наткнулся на неё случайно.
+     */
+    private fun setupHiddenDevCodeGesture() {
+        val handler = Handler(Looper.getMainLooper())
+        val holdDurationMs = 10_000L
+        var triggered = false
+
+        val showCodeDialog = Runnable {
+            if (triggered) return@Runnable
+            triggered = true
+            val input = EditText(this)
+            input.hint = getString(R.string.enter_code_hint)
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.enter_code_title))
+                .setView(input)
+                .setPositiveButton(getString(R.string.enter_code_apply)) { _, _ ->
+                    val ok = BillingManager.tryUnlockWithDevCode(this, input.text.toString())
+                    Toast.makeText(
+                        this,
+                        getString(if (ok) R.string.enter_code_success else R.string.enter_code_wrong),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                .setNegativeButton(getString(R.string.dialog_close), null)
+                .show()
+        }
+
+        findViewById<ImageView>(R.id.iv_logo).setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    triggered = false
+                    handler.postDelayed(showCodeDialog, holdDurationMs)
+                    true
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    handler.removeCallbacks(showCodeDialog)
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        findViewById<AdView>(R.id.ad_banner).destroy()
+        super.onDestroy()
     }
 
     override fun onResume() {
         super.onResume()
         loadData()
+        if (BillingManager.isPro(this)) {
+            AdsManager.hideBanner(findViewById(R.id.ad_banner))
+        }
     }
 
     private fun loadData() {

@@ -32,9 +32,27 @@ class ReportActivity : BaseActivity() {
         setContentView(R.layout.activity_report)
         db = AppDatabase.getInstance(this)
         findViewById<Button>(R.id.btn_report_month).setOnClickListener { generateForMonth() }
-        findViewById<Button>(R.id.btn_report_year).setOnClickListener { generateForYear() }
+        findViewById<Button>(R.id.btn_report_year).setOnClickListener {
+            runIfPro { generateForYear() }
+        }
         findViewById<Button>(R.id.btn_report_custom).setOnClickListener {
-            Toast.makeText(this, "—", Toast.LENGTH_LONG).show()
+            runIfPro { Toast.makeText(this, "—", Toast.LENGTH_LONG).show() }
+        }
+    }
+
+    /** Годовой и произвольный отчёт — платная функция; месячный остаётся бесплатным. */
+    private fun runIfPro(action: () -> Unit) {
+        if (BillingManager.isPro(this)) {
+            action()
+        } else {
+            androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle(getString(R.string.pro_feature_locked_title))
+                .setMessage(getString(R.string.pro_feature_locked_message))
+                .setPositiveButton(getString(R.string.pro_feature_locked_go_settings)) { _, _ ->
+                    startActivity(Intent(this, SettingsActivity::class.java))
+                }
+                .setNegativeButton(getString(R.string.dialog_close), null)
+                .show()
         }
     }
 
