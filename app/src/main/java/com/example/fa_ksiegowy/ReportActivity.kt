@@ -214,9 +214,15 @@ class ReportActivity : AppCompatActivity() {
                 expenseRow.createCell(0).also { it.setCellValue(getString(R.string.report_total_expense)); it.cellStyle = totalLabelStyle }
                 expenseRow.createCell(1).also { it.setCellValue(totalExpense); it.cellStyle = totalValueStyle }
 
+                // Налог считаем от прибыли (доход - расход), так же как на главном
+                // экране приложения, а не от суммы отдельных доходов — иначе итог
+                // в отчёте не совпадает с балансом в приложении.
+                val totalProfitForTax = totalIncome - totalExpense
+                val correctedTotalTax = if (totalProfitForTax > 0) totalProfitForTax * taxPercent / 100.0 else 0.0
+
                 val taxRow = sheet.createRow(rowN)
                 taxRow.createCell(0).also { it.setCellValue(getString(R.string.report_total_tax)); it.cellStyle = totalLabelStyle }
-                taxRow.createCell(1).also { it.setCellValue(totalTax); it.cellStyle = totalValueStyle }
+                taxRow.createCell(1).also { it.setCellValue(correctedTotalTax); it.cellStyle = totalValueStyle }
 
                 // ---- column widths (manual — avoids java.awt dependency on Android) ----
                 sheet.setColumnWidth(0, 20 * 256)

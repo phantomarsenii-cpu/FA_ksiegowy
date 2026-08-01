@@ -5,6 +5,15 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file("debug.keystore")
+            storePassword "fa_ksiegowy_debug"
+            keyAlias "fa_ksiegowy_debug"
+            keyPassword "fa_ksiegowy_debug"
+        }
+    }
+
     namespace "com.example.fa_ksiegowy"
     compileSdk 34
 
