@@ -13,7 +13,7 @@
         <!-- ЗАМЕНИТЬ на реальный AdMob App ID из консоли AdMob (Apps -> Ваше приложение -> App settings) -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+            android:value="ca-app-pub-9218963926031039~6835956339" />
 
         <activity android:name=".SettingsActivity" android:exported="false" />
         <activity android:name=".AddEntryActivity" android:exported="false" />
