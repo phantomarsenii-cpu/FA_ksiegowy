@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:paddingStart="24dp"
     android:paddingEnd="24dp"
     android:paddingTop="36dp"
@@ -207,3 +212,4 @@
         app:adUnitId="ca-app-pub-9218963926031039/4293553475"/>
 
 </LinearLayout>
+</ScrollView>
