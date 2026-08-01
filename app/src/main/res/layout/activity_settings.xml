@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:padding="16dp"
+    android:orientation="vertical" android:padding="24dp"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="@string/tax_percent" android:textSize="18sp"/>
+        android:text="@string/tax_percent" android:textSize="18sp"
+        android:textColor="@color/text_primary" android:layout_marginBottom="10dp"/>
 
-    <EditText android:id="@+id/et_tax" android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:inputType="numberDecimal"/>
+    <EditText android:id="@+id/et_tax" android:layout_width="match_parent" android:layout_height="56dp"
+        android:background="@drawable/input_field_bg" android:paddingStart="18dp" android:paddingEnd="18dp"
+        android:textColor="@color/text_primary" android:inputType="numberDecimal"
+        android:layout_marginBottom="14dp"/>
 
-    <Button android:id="@+id/btn_save_tax" android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="@string/save"/>
+    <Button android:id="@+id/btn_save_tax" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/save" android:textAllCaps="false" android:textSize="16sp"
+        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_primary"
+        android:layout_marginBottom="24dp"/>
 
-    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#CCCCCC" android:layout_marginTop="16dp" android:layout_marginBottom="16dp"/>
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#2A2E60" android:layout_marginBottom="20dp"/>
 
-    <Button android:id="@+id/btn_lang_en" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="English"/>
-    <Button android:id="@+id/btn_lang_ru" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Русский"/>
-    <Button android:id="@+id/btn_lang_pl" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Polski"/>
+    <Button android:id="@+id/btn_lang_en" android:layout_width="match_parent" android:layout_height="52dp"
+        android:text="English" android:textAllCaps="false" android:textColor="@color/text_primary"
+        android:background="@drawable/btn_pill_outline" android:layout_marginBottom="12dp"/>
+    <Button android:id="@+id/btn_lang_ru" android:layout_width="match_parent" android:layout_height="52dp"
+        android:text="Русский" android:textAllCaps="false" android:textColor="@color/text_primary"
+        android:background="@drawable/btn_pill_outline" android:layout_marginBottom="12dp"/>
+    <Button android:id="@+id/btn_lang_pl" android:layout_width="match_parent" android:layout_height="52dp"
+        android:text="Polski" android:textAllCaps="false" android:textColor="@color/text_primary"
+        android:background="@drawable/btn_pill_outline"/>
 
 </LinearLayout>
