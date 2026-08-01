@@ -15,6 +15,8 @@
     <string name="other_income_title">Прочие доходы</string>
     <string name="other_income_hint">Ваш общий налогооблагаемый доход за этот год из других источников (работа, другая деятельность и т.д.). Учитывается вместе с доходом из этого приложения при проверке годового необлагаемого лимита в 30 000 zł.</string>
     <string name="saved">Сохранено</string>
+    <string name="auto_tax_button">Рассчитать автоматически</string>
+    <string name="auto_tax_result">Предложенная ставка: %1$.1f%% (по шкале PIT: 12%% до 120 000 zł/год, 32%% свыше). Перед сохранением можно поправить вручную.</string>
     <string name="export_report">Экспорт отчёта</string>
     <string name="generate_report">Сгенерировать отчёт</string>
     <string name="select_period">Выберите период</string>

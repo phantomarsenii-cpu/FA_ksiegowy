@@ -9,6 +9,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SettingsActivity : BaseActivity() {
     private lateinit var prefs: SharedPreferences
@@ -23,6 +27,7 @@ class SettingsActivity : BaseActivity() {
         findViewById<Button>(R.id.btn_save_tax).setOnClickListener {
             val v = etTax.text.toString().toFloatOrNull() ?: 12f
             prefs.edit().putFloat("taxPercent", v).apply()
+            Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
         }
 
         val year = TaxHelper.currentYear()
@@ -34,6 +39,32 @@ class SettingsActivity : BaseActivity() {
             val v = etOtherIncome.text.toString().toDoubleOrNull() ?: 0.0
             TaxHelper.setOtherIncome(prefs, year, v)
             Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
+        }
+
+        // Автоподбор процента по прогрессивной шкале PIT (12% / 32%, порог 120000 zł),
+        // на основе прибыли из приложения за текущий год + прочих доходов из поля выше.
+        // Пользователь, знающий свою ставку, может после этого поправить значение вручную.
+        findViewById<Button>(R.id.btn_auto_tax).setOnClickListener {
+            val otherIncome = etOtherIncome.text.toString().toDoubleOrNull() ?: 0.0
+            CoroutineScope(Dispatchers.IO).launch {
+                val db = AppDatabase.getInstance(this@SettingsActivity)
+                val (yearStart, yearEndExclusive) = TaxHelper.yearRange(year)
+                val entries = db.entryDao().getBetween(yearStart, yearEndExclusive - 1)
+                val income = entries.filter { it.isIncome }.sumOf { it.amount }
+                val expense = entries.filter { !it.isIncome }.sumOf { it.amount }
+                val appProfit = income - expense
+                val totalTaxable = otherIncome + (if (appProfit > 0) appProfit else 0.0)
+                val suggested = TaxHelper.suggestTaxPercent(totalTaxable)
+
+                withContext(Dispatchers.Main) {
+                    etTax.setText(suggested.toString())
+                    Toast.makeText(
+                        this@SettingsActivity,
+                        getString(R.string.auto_tax_result, suggested),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
         }
 
         findViewById<Button>(R.id.btn_lang_ru).setOnClickListener { setLocale("ru") }

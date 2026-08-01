@@ -62,4 +62,32 @@ object TaxHelper {
         val tax = taxableFromApp * taxPercent / 100.0
         return TaxResult(totalTaxable, taxBase, tax)
     }
+
+    // ---- Автоподбор процента: польская прогрессивная шкала PIT ----
+    // 12% на доход от 30 000 до 120 000 zł (совпадает с ANNUAL_LIMIT/calc выше),
+    // 32% на часть дохода свыше 120 000 zł.
+    const val SECOND_BRACKET_THRESHOLD = 120000.0
+    private const val FIRST_BRACKET_RATE = 12.0
+    private const val SECOND_BRACKET_RATE = 32.0
+
+    /**
+     * Предлагает процент для поля "процент налога" на основе суммарного
+     * налогооблагаемого дохода (прочие доходы + прибыль из приложения за год).
+     *
+     * До 120 000 zł шкала однорядная — 12%, эту ставку и предлагаем.
+     * Свыше 120 000 zł шкала прогрессивная (12% на часть до порога, 32% на
+     * часть свыше), а в приложении используется единый процент — поэтому
+     * возвращается ЭФФЕКТИВНАЯ ставка, при которой calc() выше даст ровно
+     * такую же сумму налога, как официальная формула. Это оценка, которую
+     * можно поправить вручную.
+     */
+    fun suggestTaxPercent(totalTaxableIncome: Double): Float {
+        if (totalTaxableIncome <= SECOND_BRACKET_THRESHOLD) return FIRST_BRACKET_RATE.toFloat()
+
+        val taxBase = totalTaxableIncome - ANNUAL_LIMIT
+        val officialTax = (SECOND_BRACKET_THRESHOLD - ANNUAL_LIMIT) * FIRST_BRACKET_RATE / 100.0 +
+            (totalTaxableIncome - SECOND_BRACKET_THRESHOLD) * SECOND_BRACKET_RATE / 100.0
+        val effectiveRate = if (taxBase > 0) officialTax / taxBase * 100.0 else FIRST_BRACKET_RATE
+        return effectiveRate.toFloat()
+    }
 }

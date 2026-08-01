@@ -16,6 +16,11 @@
         android:textColor="@color/text_primary" android:inputType="numberDecimal"
         android:layout_marginBottom="14dp"/>
 
+    <Button android:id="@+id/btn_auto_tax" android:layout_width="match_parent" android:layout_height="48dp"
+        android:text="@string/auto_tax_button" android:textAllCaps="false" android:textSize="14sp"
+        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"
+        android:layout_marginBottom="14dp"/>
+
     <Button android:id="@+id/btn_save_tax" android:layout_width="match_parent" android:layout_height="56dp"
         android:text="@string/save" android:textAllCaps="false" android:textSize="16sp"
         android:textColor="@color/text_primary" android:background="@drawable/btn_pill_primary"
