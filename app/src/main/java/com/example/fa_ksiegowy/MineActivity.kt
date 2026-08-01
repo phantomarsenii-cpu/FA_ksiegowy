@@ -12,8 +12,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.AdView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -41,8 +39,10 @@ class MineActivity : BaseActivity() {
         findViewById<Button>(R.id.btn_reports).setOnClickListener {
             startActivity(Intent(this, ReportActivity::class.java))
         }
+        findViewById<Button>(R.id.btn_history).setOnClickListener {
+            startActivity(Intent(this, HistoryActivity::class.java))
+        }
 
-        findViewById<RecyclerView>(R.id.rv_entries).layoutManager = LinearLayoutManager(this)
 
         AdsManager.setupAndLoadBanner(this, findViewById(R.id.ad_banner))
         setupHiddenDevCodeGesture()
@@ -109,9 +109,6 @@ class MineActivity : BaseActivity() {
 
     private fun loadData() {
         CoroutineScope(Dispatchers.IO).launch {
-            // Полная история — для списка операций (не ограничена годом).
-            val allEntries = db.entryDao().getAll()
-
             // Баланс/статистика/налог — только за текущий календарный год,
             // так как лимит 30 000 zł годовой (см. TaxHelper).
             val year = TaxHelper.currentYear()
@@ -135,7 +132,6 @@ class MineActivity : BaseActivity() {
                 findViewById<TextView>(R.id.tv_stat_tax_label).text =
                     getString(R.string.stat_tax_format, taxPercent.toInt())
                 findViewById<TextView>(R.id.tv_stat_tax).text = formatMoney(taxResult.tax)
-                findViewById<RecyclerView>(R.id.rv_entries).adapter = EntryAdapter(allEntries)
             }
         }
     }

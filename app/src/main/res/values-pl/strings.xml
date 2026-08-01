@@ -73,4 +73,5 @@
     <string name="enter_code_apply">Zastosuj</string>
     <string name="enter_code_wrong">Nieprawidłowy kod</string>
     <string name="enter_code_success">Pro odblokowane</string>
+    <string name="transaction_history">Historia transakcji</string>
 </resources>

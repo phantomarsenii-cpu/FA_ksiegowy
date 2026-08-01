@@ -18,6 +18,7 @@
         <activity android:name=".SettingsActivity" android:exported="false" />
         <activity android:name=".AddEntryActivity" android:exported="false" />
         <activity android:name=".ReportActivity" android:exported="false" />
+        <activity android:name=".HistoryActivity" android:exported="false" />
         <activity android:name=".MineActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
