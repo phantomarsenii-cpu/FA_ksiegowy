@@ -10,11 +10,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="20dp"
         android:text="@string/add_expense"
         android:textColor="@color/accent_cyan"
         android:textSize="26sp"
         android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp"
+        android:weightSum="2" android:baselineAligned="false">
+
+        <Button
+            android:id="@+id/btn_type_income"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/btn_pill_primary"
+            android:text="@string/type_income"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/btn_type_expense"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/btn_pill_outline"
+            android:text="@string/type_expense"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/et_amount"
@@ -60,6 +93,18 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/btn_pill_danger"
+        android:text="@string/delete_entry"
+        android:textAllCaps="false"
+        android:textColor="@color/text_primary"
+        android:textSize="15sp"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btn_save"

@@ -6,7 +6,10 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
-class EntryAdapter(private val items: List<Entry>) : RecyclerView.Adapter<EntryAdapter.VH>() {
+class EntryAdapter(
+    private val items: List<Entry>,
+    private val onItemClick: (Entry) -> Unit = {}
+) : RecyclerView.Adapter<EntryAdapter.VH>() {
     class VH(view: View) : RecyclerView.ViewHolder(view) {
         val tvAmount = view.findViewById<TextView>(R.id.tv_amount)
         val tvComment = view.findViewById<TextView>(R.id.tv_comment)
@@ -23,6 +26,8 @@ class EntryAdapter(private val items: List<Entry>) : RecyclerView.Adapter<EntryA
             ContextCompat.getColor(holder.itemView.context, if (e.isIncome) R.color.income_green else R.color.expense_red)
         )
         holder.tvComment.text = e.comment ?: ""
+        // Тап по записи — открыть её на редактирование/удаление (см. AddEntryActivity).
+        holder.itemView.setOnClickListener { onItemClick(e) }
     }
     override fun getItemCount(): Int = items.size
 }

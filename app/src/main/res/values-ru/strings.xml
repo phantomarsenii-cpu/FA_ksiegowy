@@ -75,4 +75,19 @@
     <string name="enter_code_success">Pro активирован</string>
     <string name="transaction_history">История операций</string>
     <string name="stat_net_profit">Чистая прибыль (после налога)</string>
+    <string name="type_income">Доход</string>
+    <string name="type_expense">Расход</string>
+    <string name="edit_income_title">Редактировать доход</string>
+    <string name="edit_expense_title">Редактировать расход</string>
+    <string name="delete_entry">Удалить</string>
+    <string name="delete_confirm_title">Удалить запись?</string>
+    <string name="delete_confirm_message">Запись будет удалена без возможности восстановления.</string>
+    <string name="delete_confirm_yes">Удалить</string>
+    <string name="entry_updated">Обновлено</string>
+    <string name="entry_deleted">Удалено</string>
+    <string name="clear_all_button">Очистить все данные</string>
+    <string name="clear_all_confirm_title">Вы уверены?</string>
+    <string name="clear_all_confirm_message">Все доходы и расходы будут безвозвратно удалены. Это действие нельзя отменить.</string>
+    <string name="clear_all_confirm_yes">Удалить всё</string>
+    <string name="clear_all_done">Все данные удалены</string>
 </resources>

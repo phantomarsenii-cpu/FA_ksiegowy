@@ -73,6 +73,10 @@ class SettingsActivity : BaseActivity() {
 
         setupProSection()
 
+        findViewById<Button>(R.id.btn_clear_all).setOnClickListener {
+            confirmClearAll()
+        }
+
         findViewById<Button>(R.id.btn_about).setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle(getString(R.string.about_app))
@@ -154,5 +158,23 @@ class SettingsActivity : BaseActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
         finishAffinity()
+    }
+
+    /** Необратимо удаляет все доходы/расходы (и связанные чеки на диске не трогает,
+     *  только записи в базе — сами файлы чеков останутся в getExternalFilesDir). */
+    private fun confirmClearAll() {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.clear_all_confirm_title))
+            .setMessage(getString(R.string.clear_all_confirm_message))
+            .setPositiveButton(getString(R.string.clear_all_confirm_yes)) { _, _ ->
+                CoroutineScope(Dispatchers.IO).launch {
+                    AppDatabase.getInstance(applicationContext).entryDao().deleteAll()
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@SettingsActivity, getString(R.string.clear_all_done), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            .setNegativeButton(getString(R.string.dialog_close), null)
+            .show()
     }
 }

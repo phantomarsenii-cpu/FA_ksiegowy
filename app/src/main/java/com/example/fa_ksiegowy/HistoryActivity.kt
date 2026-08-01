@@ -1,5 +1,6 @@
 package com.example.fa_ksiegowy
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,8 @@ class HistoryActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        // Обновляем список при каждом возврате на экран — например, после редактирования
+        // или удаления записи в AddEntryActivity.
         loadData()
     }
 
@@ -31,7 +34,13 @@ class HistoryActivity : BaseActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val allEntries = db.entryDao().getAll()
             withContext(Dispatchers.Main) {
-                findViewById<RecyclerView>(R.id.rv_history).adapter = EntryAdapter(allEntries)
+                findViewById<RecyclerView>(R.id.rv_history).adapter = EntryAdapter(allEntries) { entry ->
+                    startActivity(
+                        Intent(this@HistoryActivity, AddEntryActivity::class.java)
+                            .putExtra("entryId", entry.id)
+                            .putExtra("isIncome", entry.isIncome)
+                    )
+                }
                 findViewById<View>(R.id.tv_no_entries).visibility =
                     if (allEntries.isEmpty()) View.VISIBLE else View.GONE
             }

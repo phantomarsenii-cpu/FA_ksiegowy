@@ -73,6 +73,13 @@
     <View android:layout_width="match_parent" android:layout_height="1dp"
         android:background="#2A2E60" android:layout_marginTop="20dp" android:layout_marginBottom="20dp"/>
 
+    <Button android:id="@+id/btn_clear_all" android:layout_width="match_parent" android:layout_height="52dp"
+        android:text="@string/clear_all_button" android:textAllCaps="false" android:textColor="@color/text_primary"
+        android:background="@drawable/btn_pill_danger" android:layout_marginBottom="24dp"/>
+
+    <View android:layout_width="match_parent" android:layout_height="1dp"
+        android:background="#2A2E60" android:layout_marginBottom="20dp"/>
+
     <Button android:id="@+id/btn_about" android:layout_width="match_parent" android:layout_height="52dp"
         android:text="@string/about_app" android:textAllCaps="false" android:textColor="@color/text_primary"
         android:background="@drawable/btn_pill_outline"/>

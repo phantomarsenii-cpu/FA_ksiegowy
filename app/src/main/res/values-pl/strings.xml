@@ -75,4 +75,19 @@
     <string name="enter_code_success">Pro odblokowane</string>
     <string name="transaction_history">Historia transakcji</string>
     <string name="stat_net_profit">Zysk netto (po podatku)</string>
+    <string name="type_income">Przychód</string>
+    <string name="type_expense">Wydatek</string>
+    <string name="edit_income_title">Edytuj przychód</string>
+    <string name="edit_expense_title">Edytuj wydatek</string>
+    <string name="delete_entry">Usuń</string>
+    <string name="delete_confirm_title">Usunąć wpis?</string>
+    <string name="delete_confirm_message">Wpis zostanie trwale usunięty. Tej czynności nie można cofnąć.</string>
+    <string name="delete_confirm_yes">Usuń</string>
+    <string name="entry_updated">Zaktualizowano</string>
+    <string name="entry_deleted">Usunięto</string>
+    <string name="clear_all_button">Wyczyść wszystkie dane</string>
+    <string name="clear_all_confirm_title">Na pewno?</string>
+    <string name="clear_all_confirm_message">Wszystkie przychody i wydatki zostaną trwale usunięte. Tej czynności nie można cofnąć.</string>
+    <string name="clear_all_confirm_yes">Usuń wszystko</string>
+    <string name="clear_all_done">Wszystkie dane zostały usunięte</string>
 </resources>

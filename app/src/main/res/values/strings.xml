@@ -87,4 +87,19 @@ Contact: p.arsenii@interia.pl</string>
     <string name="enter_code_success">Pro unlocked</string>
     <string name="transaction_history">Transaction history</string>
     <string name="stat_net_profit">Net profit (after tax)</string>
+    <string name="type_income">Income</string>
+    <string name="type_expense">Expense</string>
+    <string name="edit_income_title">Edit income</string>
+    <string name="edit_expense_title">Edit expense</string>
+    <string name="delete_entry">Delete</string>
+    <string name="delete_confirm_title">Delete entry?</string>
+    <string name="delete_confirm_message">This entry will be permanently deleted. This cannot be undone.</string>
+    <string name="delete_confirm_yes">Delete</string>
+    <string name="entry_updated">Updated</string>
+    <string name="entry_deleted">Deleted</string>
+    <string name="clear_all_button">Clear all data</string>
+    <string name="clear_all_confirm_title">Are you sure?</string>
+    <string name="clear_all_confirm_message">All income and expense entries will be permanently deleted. This cannot be undone.</string>
+    <string name="clear_all_confirm_yes">Delete all</string>
+    <string name="clear_all_done">All data has been deleted</string>
 </resources>
