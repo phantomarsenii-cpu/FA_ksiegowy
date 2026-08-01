@@ -1,11 +1,10 @@
-
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.fa_ksiegowy">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application android:allowBackup="true" android:label="@string/app_name" android:theme="@style/Theme.FA">
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".AddEntryActivity" />
-        <activity android:name=".ReportActivity" />
-        <activity android:name=".MineActivity">
+        <activity android:name=".SettingsActivity" android:exported="false" />
+        <activity android:name=".AddEntryActivity" android:exported="false" />
+        <activity android:name=".ReportActivity" android:exported="false" />
+        <activity android:name=".MineActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
