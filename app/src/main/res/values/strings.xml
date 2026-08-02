@@ -127,4 +127,64 @@ Contact: p.arsenii@interia.pl</string>
     <string name="backup_restored">Restored %1$d entries</string>
     <string name="backup_never">Last backup: never</string>
     <string name="backup_last_time">Last backup: %1$s</string>
+
+    <string name="settings_menu_security">Security (PIN / fingerprint)</string>
+    <string name="settings_menu_pit36">Generate PIT-36 (Pro)</string>
+    <string name="pit36_pro_locked_message">PIT-36 generation is a Pro feature. Unlock Pro in Settings to use it.</string>
+
+    <string name="lock_title">FinArs is locked</string>
+    <string name="lock_subtitle">Enter your PIN to continue</string>
+    <string name="lock_pin_hint">PIN</string>
+    <string name="lock_wrong_pin">Wrong PIN, try again</string>
+    <string name="lock_unlock_button">Unlock</string>
+    <string name="lock_biometric_button">Use fingerprint / face</string>
+    <string name="lock_biometric_prompt_title">Unlock FinArs</string>
+    <string name="lock_biometric_prompt_subtitle">Confirm your fingerprint or face</string>
+    <string name="lock_use_pin">Use PIN</string>
+    <string name="lock_biometric_unavailable">No fingerprint/face is set up on this device. Add one in your phone\'s settings first.</string>
+
+    <string name="security_hint">Protect the app with a PIN code. When enabled, FinArs will ask for the PIN every time you open it after leaving the app. You can also enable fingerprint/face unlock as a quick shortcut for the same PIN.</string>
+    <string name="security_pin_switch">Require PIN to open the app</string>
+    <string name="security_change_pin">Change PIN</string>
+    <string name="security_biometric_switch">Unlock with fingerprint / face</string>
+    <string name="security_set_pin_title">Set a PIN</string>
+    <string name="security_set_pin_message">Choose a 4–6 digit PIN</string>
+    <string name="security_continue">Continue</string>
+    <string name="security_pin_length_error">PIN must be 4–6 digits</string>
+    <string name="security_confirm_pin_title">Confirm your PIN</string>
+    <string name="security_pin_saved">PIN saved</string>
+    <string name="security_pin_mismatch">PINs don\'t match, try again</string>
+    <string name="security_disable_pin_title">Enter current PIN</string>
+    <string name="security_enter_current_pin">Enter your current PIN to continue</string>
+    <string name="security_pin_disabled">PIN protection disabled</string>
+
+    <string name="pit_data_title">Personal data for PIT-36</string>
+    <string name="pit_data_hint">Used only to fill in the PIT-36 helper report. Everything stays on your device.</string>
+    <string name="pit_first_name">First name</string>
+    <string name="pit_last_name">Last name</string>
+    <string name="pit_pesel">PESEL (optional)</string>
+    <string name="pit_street">Street and house/apartment number</string>
+    <string name="pit_postal_code">Postal code</string>
+    <string name="pit_city">City</string>
+    <string name="pit_tax_office">Tax office (urząd skarbowy)</string>
+    <string name="pit_reliefs_title">Reliefs and deductions (optional)</string>
+    <string name="pit_children_count">Number of children (ulga na dzieci)</string>
+    <string name="pit_internet_relief">Internet relief — amount spent</string>
+    <string name="pit_ikze">IKZE contributions</string>
+    <string name="pit_donations">Donations (darowizny)</string>
+    <string name="pit_joint_spouse">File jointly with spouse</string>
+    <string name="pit_data_required_error">Please fill in first name, last name and tax office first</string>
+
+    <string name="pit36_hint">Pick a full calendar year, check your personal data, then generate a helper PDF with the numbers and guidance for filling in the official PIT-36 form on podatki.gov.pl (Twój e-PIT) or on paper.</string>
+    <string name="pit_row_przychod">Przychód (income)</string>
+    <string name="pit_row_koszty">Koszty (expenses)</string>
+    <string name="pit_row_dochod">Dochód (profit)</string>
+    <string name="pit_row_tax">Estimated tax</string>
+    <string name="pit_data_status_missing">Personal data not filled in yet — required before generating the report.</string>
+    <string name="pit_data_status_ready">Personal data ready: %1$s</string>
+    <string name="pit_edit_data_button">Edit personal data</string>
+    <string name="pit36_generate_button">Generate PIT-36 helper PDF</string>
+    <string name="pit36_disclaimer">This report is informational only and is not an official PIT-36 form, e-Deklaracja or tax advice. Always double-check the numbers before submitting your declaration.</string>
+    <string name="pit36_calculating">Still calculating, please wait…</string>
+    <string name="pit36_generated">PDF report generated</string>
 </resources>

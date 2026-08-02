@@ -21,8 +21,18 @@
         android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"
         android:layout_marginBottom="14dp"/>
 
+    <Button android:id="@+id/btn_menu_security" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/settings_menu_security" android:textAllCaps="false" android:textSize="16sp"
+        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"
+        android:layout_marginBottom="14dp"/>
+
     <Button android:id="@+id/btn_menu_backup" android:layout_width="match_parent" android:layout_height="56dp"
         android:text="@string/settings_menu_backup" android:textAllCaps="false" android:textSize="16sp"
+        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"
+        android:layout_marginBottom="14dp"/>
+
+    <Button android:id="@+id/btn_menu_pit36" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/settings_menu_pit36" android:textAllCaps="false" android:textSize="16sp"
         android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"
         android:layout_marginBottom="14dp"/>
 
