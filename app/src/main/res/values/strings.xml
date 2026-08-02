@@ -73,7 +73,7 @@ Contact: p.arsenii@interia.pl</string>
     <string name="about_email">p.arsenii@interia.pl</string>
     <string name="dialog_close">Close</string>
     <string name="dialog_write">Write</string>
-    <string name="pro_status_locked">Pro is locked. Unlock to get yearly/custom Excel reports.</string>
+    <string name="pro_status_locked">Pro is locked. Unlock to get yearly/custom Excel reports and remove ads.</string>
     <string name="pro_status_active">Pro unlocked. Thank you for your support!</string>
     <string name="pro_unlock_button">Unlock Pro</string>
     <string name="pro_unlock_button_price">Unlock Pro — %1$s</string>

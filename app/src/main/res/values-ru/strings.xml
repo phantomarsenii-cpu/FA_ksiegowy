@@ -61,7 +61,7 @@
     <string name="about_email">p.arsenii@interia.pl</string>
     <string name="dialog_close">Закрыть</string>
     <string name="dialog_write">Написать</string>
-    <string name="pro_status_locked">Pro не активирован. Разблокируйте, чтобы получить годовые и произвольные отчёты в Excel.</string>
+    <string name="pro_status_locked">Pro не активирован. Разблокируйте, чтобы получить годовые и произвольные отчёты в Excel и убрать рекламу.</string>
     <string name="pro_status_active">Pro активирован. Спасибо за поддержку!</string>
     <string name="pro_unlock_button">Разблокировать Pro</string>
     <string name="pro_unlock_button_price">Разблокировать Pro — %1$s</string>

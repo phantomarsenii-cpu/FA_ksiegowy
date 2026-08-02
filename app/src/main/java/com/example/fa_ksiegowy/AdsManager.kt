@@ -15,29 +15,27 @@ import com.google.android.ump.UserMessagingPlatform
 
 /**
  * Показ баннера только для пользователей без Pro.
- * Перед первым запросом рекламы сначала получаем согласие через UMP
- * (обязательно для пользователей EEA/UK по требованиям Google и GDPR).
  *
- * ВАЖНО (краш "The ad size and ad unit ID must be set before loadAd is called"):
- * официальная документация Google Mobile Ads SDK требует задавать adSize и
- * adUnitId ОБА программно, одним и тем же способом — см. пример в доке AdView:
- *   mAdView.setAdSize(AdSize.BANNER); mAdView.setAdUnitId("...");
- * Раньше adSize был в XML (app:adSize), а adUnitId — в коде. Такое смешение
- * приводило именно к этому краху при вызове loadAd(). Теперь XML не задаёт
- * ни adSize, ни adUnitId — оба выставляются здесь, в одном месте, один раз.
+ * ВАЖНО (краш "adSize/adUnitId must be set before loadAd"): adSize и
+ * adUnitId задаются здесь ОБА программно, одним и тем же способом,
+ * как требует документация Google Mobile Ads SDK. XML их не задаёт.
  *
- * ВАЖНО (краш "The ad unit ID can only be set once on AdView"): adUnitId
- * можно установить у AdView ровно один раз за всё время его жизни — либо
- * через XML, либо через код, но не оба раза. XML больше не задаёт adUnitId.
+ * ВАЖНО (баннер не появляется даже без крашей): в debug-сборке мы
+ * используем официальный ТЕСТОВЫЙ рекламный блок Google, который не
+ * требует прохождения формы согласия (UMP/GDPR) — поэтому для debug
+ * цепочка согласия полностью пропускается, и тестовый баннер грузится
+ * сразу. Раньше (в прошлой версии) тестовый блок тоже ждал
+ * canRequestAds() == true, а это условие становится true для
+ * пользователя из ЕЭЗ (в т.ч. Польши) только после того, как в консоли
+ * AdMob -> Privacy & messaging создано и ОПУБЛИКОВАНО сообщение о
+ * согласии. Пока это не настроено — баннер молчал даже в debug. Теперь
+ * debug-сборка эту зависимость не имеет вообще.
  *
- * ВАЖНО (если баннер вообще не появляется): почти всегда причина не в коде,
- * а в том, что в консоли AdMob (admob.google.com -> Privacy & messaging)
- * не создано и не ОПУБЛИКОВАНО сообщение о согласии на сбор данных (EU/UK).
- * Без этого consentInformation.canRequestAds() никогда не станет true для
- * пользователей из Польши/ЕС, и loadAd() просто никогда не вызывается —
- * без единой ошибки, тихо. Это нужно настроить один раз в консоли AdMob.
- * Дополнительно баннер может не показываться первые часы/дни после создания
- * нового рекламного блока — Google ещё не успел заполнить инвентарь ("no fill").
+ * Для PRODUCTION (release) сборки цепочка согласия по-прежнему
+ * обязательна (это требование GDPR для пользователей ЕЭЗ/Великобритании),
+ * и боевой баннер не покажется, пока в консоли AdMob не опубликовано
+ * сообщение о согласии на сбор данных (Privacy & messaging -> Publish).
+ * Это делается один раз в консоли, кодом не чинится.
  */
 object AdsManager {
 
@@ -51,21 +49,18 @@ object AdsManager {
             return
         }
 
-        // adSize и adUnitId задаём здесь ОБА, программно, в одном месте — так,
-        // как рекомендует официальная документация Google Mobile Ads SDK.
-        // XML больше не задаёт ни то, ни другое. adUnitId, вдобавок, можно
-        // установить у AdView только один раз за всё время его жизни.
+        // adSize и adUnitId — оба программно, в одном месте, один раз.
         adView.setAdSize(AdSize.BANNER)
 
-        // В debug-сборке (это то, что собирается в Termux через debug.keystore)
-        // подставляем официальный тестовый рекламный блок Google — он гарантированно
-        // показывает рекламу и не зависит ни от согласия UMP, ни от заполнения
-        // инвентаря, ни от статуса модерации приложения в AdMob. Это позволяет сразу
-        // увидеть, что баннер технически работает, независимо от настроек AdMob.
         val isDebuggable = (activity.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
         adView.adUnitId = if (isDebuggable) TEST_BANNER_UNIT_ID else PROD_BANNER_UNIT_ID
+
         if (isDebuggable) {
-            Log.i("AdsManager", "Debug build — using Google TEST banner ad unit instead of production one")
+            // Тестовый блок Google не требует согласия пользователя —
+            // грузим его сразу, без UMP, чтобы баннер точно появился.
+            Log.i("AdsManager", "Debug build — loading Google TEST banner immediately (no consent gate)")
+            initAndLoad(activity, adView)
+            return
         }
 
         val consentInformation = UserMessagingPlatform.getConsentInformation(activity)
@@ -97,9 +92,6 @@ object AdsManager {
             },
             { requestError ->
                 Log.w("AdsManager", "Consent info update error: ${requestError.message}")
-                // Не удалось получить статус согласия — на всякий случай не грузим рекламу,
-                // КРОМЕ debug-тестового блока, который не требует согласия.
-                if (isDebuggable) initAndLoad(activity, adView)
             }
         )
 
