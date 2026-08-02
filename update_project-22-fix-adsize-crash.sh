@@ -1,3 +1,35 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -e
+
+echo "=== Обновление 22: фикс краша 'The ad size and ad unit ID must be set before loadAd is called' ==="
+echo "Причина: adSize задавался через XML (app:adSize), а adUnitId — программно в коде."
+echo "Официальная документация Google Mobile Ads SDK требует задавать ОБА параметра"
+echo "вместе одним и тем же способом (см. developers.google.com/admob/android -> AdView):"
+echo "  mAdView.setAdSize(AdSize.BANNER); mAdView.setAdUnitId(...);"
+echo "Смешивание XML + код — источник именно этого краша. Переносим adSize тоже в код."
+echo ""
+
+LAYOUT_MINE="app/src/main/res/layout/activity_mine.xml"
+if [ ! -f "$LAYOUT_MINE" ]; then
+    echo "!!! Не найден $LAYOUT_MINE"
+    exit 1
+fi
+
+if grep -q 'app:adSize="BANNER"' "$LAYOUT_MINE"; then
+    sed -i 's#app:adSize="BANNER"/>#/>#' "$LAYOUT_MINE"
+    echo "OK: app:adSize убран из $LAYOUT_MINE (теперь задаётся только в коде)"
+else
+    echo "-- app:adSize уже отсутствует в $LAYOUT_MINE, пропускаю"
+fi
+
+ADS_MANAGER="app/src/main/java/com/example/fa_ksiegowy/AdsManager.kt"
+if [ ! -f "$ADS_MANAGER" ]; then
+    echo "!!! Не найден $ADS_MANAGER"
+    exit 1
+fi
+
+mkdir -p "$(dirname "$ADS_MANAGER")"
+cat > "$ADS_MANAGER" << 'EOF_ADS_MANAGER_KT'
 package com.example.fa_ksiegowy
 
 import android.app.Activity
@@ -135,3 +167,9 @@ object AdsManager {
         adView.pause()
     }
 }
+EOF_ADS_MANAGER_KT
+echo "OK: $ADS_MANAGER переписан (adSize + adUnitId задаются вместе, программно, один раз)"
+
+echo ""
+echo "=== Готово. Пересобери APK: ./gradlew assembleDebug ==="
+echo "=== git add -A && git commit -m 'Fix: set AdView adSize+adUnitId together in code (loadAd crash)' && git push ==="
