@@ -73,7 +73,7 @@ Contact: p.arsenii@interia.pl</string>
     <string name="about_email">p.arsenii@interia.pl</string>
     <string name="dialog_close">Close</string>
     <string name="dialog_write">Write</string>
-    <string name="pro_status_locked">Pro is locked. Unlock to get yearly/custom Excel reports and remove ads.</string>
+    <string name="pro_status_locked">Pro is locked. Unlock to get yearly/custom Excel reports, backup \&amp; restore, and remove ads.</string>
     <string name="pro_status_active">Pro unlocked. Thank you for your support!</string>
     <string name="pro_unlock_button">Unlock Pro</string>
     <string name="pro_unlock_button_price">Unlock Pro — %1$s</string>
@@ -84,7 +84,7 @@ Contact: p.arsenii@interia.pl</string>
     <string name="backup_pro_locked_message">Backup and restore is a Pro feature. Unlock Pro to keep your data safe with a backup file.</string>
     <string name="pro_purchase_error">Could not start the purchase. Check your connection and try again.</string>
     <string name="pro_info_title">Pro version</string>
-    <string name="pro_info_message">Pro unlocks:\n\n• Yearly Excel report\n• Custom-period Excel report\n• No ads\n\nThis is a one-time purchase — pay once, keep it forever.</string>
+    <string name="pro_info_message">Pro unlocks:\n\n• Yearly Excel report\n• Custom-period Excel report\n• Backup \&amp; restore\n• No ads\n\nThis is a one-time purchase — pay once, keep it forever.</string>
     <string name="pro_info_continue">Continue to purchase</string>
     <string name="enter_code_button">Have a code?</string>
     <string name="enter_code_title">Enter code</string>

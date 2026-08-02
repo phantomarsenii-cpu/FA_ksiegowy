@@ -61,7 +61,7 @@
     <string name="about_email">p.arsenii@interia.pl</string>
     <string name="dialog_close">Zamknij</string>
     <string name="dialog_write">Napisz</string>
-    <string name="pro_status_locked">Pro jest zablokowane. Odblokuj, aby uzyskać roczne i niestandardowe raporty Excel oraz usunąć reklamy.</string>
+    <string name="pro_status_locked">Pro jest zablokowane. Odblokuj, aby uzyskać roczne i niestandardowe raporty Excel, kopię zapasową i przywracanie danych oraz usunąć reklamy.</string>
     <string name="pro_status_active">Pro odblokowane. Dziękujemy za wsparcie!</string>
     <string name="pro_unlock_button">Odblokuj Pro</string>
     <string name="pro_unlock_button_price">Odblokuj Pro — %1$s</string>
@@ -72,7 +72,7 @@
     <string name="backup_pro_locked_message">Kopia zapasowa i przywracanie to funkcja Pro. Odblokuj Pro, aby zabezpieczyć swoje dane plikiem kopii zapasowej.</string>
     <string name="pro_purchase_error">Nie udało się otworzyć zakupu. Sprawdź połączenie i spróbuj ponownie.</string>
     <string name="pro_info_title">Wersja Pro</string>
-    <string name="pro_info_message">Pro odblokowuje:\n\n• Raport roczny w Excelu\n• Raport za dowolny okres\n• Brak reklam\n\nTo jednorazowy zakup — płacisz raz, dostęp zostaje na zawsze.</string>
+    <string name="pro_info_message">Pro odblokowuje:\n\n• Raport roczny w Excelu\n• Raport za dowolny okres\n• Kopia zapasowa i przywracanie danych\n• Brak reklam\n\nTo jednorazowy zakup — płacisz raz, dostęp zostaje na zawsze.</string>
     <string name="pro_info_continue">Przejdź do zakupu</string>
     <string name="enter_code_button">Masz kod?</string>
     <string name="enter_code_title">Wprowadź kod</string>

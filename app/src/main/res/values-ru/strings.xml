@@ -61,7 +61,7 @@
     <string name="about_email">p.arsenii@interia.pl</string>
     <string name="dialog_close">Закрыть</string>
     <string name="dialog_write">Написать</string>
-    <string name="pro_status_locked">Pro не активирован. Разблокируйте, чтобы получить годовые и произвольные отчёты в Excel и убрать рекламу.</string>
+    <string name="pro_status_locked">Pro не активирован. Разблокируйте, чтобы получить годовые и произвольные отчёты в Excel, резервное копирование и восстановление, а также убрать рекламу.</string>
     <string name="pro_status_active">Pro активирован. Спасибо за поддержку!</string>
     <string name="pro_unlock_button">Разблокировать Pro</string>
     <string name="pro_unlock_button_price">Разблокировать Pro — %1$s</string>
@@ -72,7 +72,7 @@
     <string name="backup_pro_locked_message">Резервное копирование и восстановление — Pro-функция. Разблокируйте Pro, чтобы сохранить данные в файл на случай потери.</string>
     <string name="pro_purchase_error">Не удалось открыть окно оплаты. Проверьте соединение и попробуйте снова.</string>
     <string name="pro_info_title">Pro-версия</string>
-    <string name="pro_info_message">Pro открывает:\n\n• Годовой отчёт в Excel\n• Отчёт за произвольный период\n• Без рекламы\n\nЭто разовая покупка — платите один раз, доступ остаётся навсегда.</string>
+    <string name="pro_info_message">Pro открывает:\n\n• Годовой отчёт в Excel\n• Отчёт за произвольный период\n• Резервное копирование и восстановление\n• Без рекламы\n\nЭто разовая покупка — платите один раз, доступ остаётся навсегда.</string>
     <string name="pro_info_continue">Перейти к покупке</string>
     <string name="enter_code_button">Есть код?</string>
     <string name="enter_code_title">Введите код</string>

@@ -44,7 +44,7 @@ class MineActivity : BaseActivity() {
         }
 
 
-        AdsManager.setupAndLoadBanner(this, findViewById(R.id.ad_banner))
+        AdsManager.setupAndLoadBanner(this, findViewById(R.id.ad_banner), findViewById(R.id.tv_ad_debug))
         setupHiddenDevCodeGesture()
     }
 
