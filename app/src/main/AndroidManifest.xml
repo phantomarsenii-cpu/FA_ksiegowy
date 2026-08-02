@@ -16,6 +16,10 @@
             android:value="ca-app-pub-9218963926031039~6835956339" />
 
         <activity android:name=".SettingsActivity" android:exported="false" />
+        <activity android:name=".SettingsProActivity" android:exported="false" />
+        <activity android:name=".SettingsBackupActivity" android:exported="false" />
+        <activity android:name=".SettingsLanguageActivity" android:exported="false" />
+        <activity android:name=".SettingsTaxActivity" android:exported="false" />
         <activity android:name=".AddEntryActivity" android:exported="false" />
         <activity android:name=".ReportActivity" android:exported="false" />
         <activity android:name=".HistoryActivity" android:exported="false" />

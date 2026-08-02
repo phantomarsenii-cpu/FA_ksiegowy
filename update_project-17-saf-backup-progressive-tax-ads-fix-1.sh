@@ -157,6 +157,111 @@ cat > app/src/main/res/layout/activity_settings_tax.xml << 'EOF_APP_SRC_MAIN_RES
 EOF_APP_SRC_MAIN_RES_LAYOUT_ACTIVITY_SETTINGS_TAX_XML
 echo "OK: app/src/main/res/layout/activity_settings_tax.xml"
 
+mkdir -p "$(dirname "app/src/main/res/layout/activity_settings.xml")"
+cat > app/src/main/res/layout/activity_settings.xml << 'EOF_APP_SRC_MAIN_RES_LAYOUT_ACTIVITY_SETTINGS_XML'
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fillViewport="true">
+
+<LinearLayout
+    android:orientation="vertical" android:padding="24dp"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="@string/settings" android:textSize="22sp" android:textStyle="bold"
+        android:textColor="@color/accent_cyan" android:layout_marginBottom="24dp"/>
+
+    <Button android:id="@+id/btn_menu_tax" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/settings_menu_tax" android:textAllCaps="false" android:textSize="16sp"
+        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"
+        android:layout_marginBottom="14dp"/>
+
+    <Button android:id="@+id/btn_menu_language" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/settings_menu_language" android:textAllCaps="false" android:textSize="16sp"
+        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"
+        android:layout_marginBottom="14dp"/>
+
+    <Button android:id="@+id/btn_menu_backup" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/settings_menu_backup" android:textAllCaps="false" android:textSize="16sp"
+        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"
+        android:layout_marginBottom="14dp"/>
+
+    <Button android:id="@+id/btn_menu_pro" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/settings_menu_pro" android:textAllCaps="false" android:textSize="16sp"
+        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_primary"
+        android:layout_marginBottom="14dp"/>
+
+    <View android:layout_width="match_parent" android:layout_height="1dp"
+        android:background="#2A2E60" android:layout_marginTop="10dp" android:layout_marginBottom="24dp"/>
+
+    <Button android:id="@+id/btn_menu_about" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/about_app" android:textAllCaps="false" android:textSize="16sp"
+        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"/>
+
+</LinearLayout>
+</ScrollView>
+EOF_APP_SRC_MAIN_RES_LAYOUT_ACTIVITY_SETTINGS_XML
+echo "OK: app/src/main/res/layout/activity_settings.xml"
+
+mkdir -p "$(dirname "app/src/main/res/layout/activity_settings_language.xml")"
+cat > app/src/main/res/layout/activity_settings_language.xml << 'EOF_APP_SRC_MAIN_RES_LAYOUT_ACTIVITY_SETTINGS_LANGUAGE_XML'
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fillViewport="true">
+
+<LinearLayout
+    android:orientation="vertical" android:padding="24dp"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="@string/settings_menu_language" android:textSize="22sp" android:textStyle="bold"
+        android:textColor="@color/accent_cyan" android:layout_marginBottom="24dp"/>
+
+    <Button android:id="@+id/btn_lang_en" android:layout_width="match_parent" android:layout_height="52dp"
+        android:text="English" android:textAllCaps="false" android:textColor="@color/text_primary"
+        android:background="@drawable/btn_pill_outline" android:layout_marginBottom="12dp"/>
+    <Button android:id="@+id/btn_lang_ru" android:layout_width="match_parent" android:layout_height="52dp"
+        android:text="Русский" android:textAllCaps="false" android:textColor="@color/text_primary"
+        android:background="@drawable/btn_pill_outline" android:layout_marginBottom="12dp"/>
+    <Button android:id="@+id/btn_lang_pl" android:layout_width="match_parent" android:layout_height="52dp"
+        android:text="Polski" android:textAllCaps="false" android:textColor="@color/text_primary"
+        android:background="@drawable/btn_pill_outline"/>
+
+</LinearLayout>
+</ScrollView>
+EOF_APP_SRC_MAIN_RES_LAYOUT_ACTIVITY_SETTINGS_LANGUAGE_XML
+echo "OK: app/src/main/res/layout/activity_settings_language.xml"
+
+mkdir -p "$(dirname "app/src/main/res/layout/activity_settings_pro.xml")"
+cat > app/src/main/res/layout/activity_settings_pro.xml << 'EOF_APP_SRC_MAIN_RES_LAYOUT_ACTIVITY_SETTINGS_PRO_XML'
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fillViewport="true">
+
+<LinearLayout
+    android:orientation="vertical" android:padding="24dp"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="@string/settings_menu_pro" android:textSize="22sp" android:textStyle="bold"
+        android:textColor="@color/accent_cyan" android:layout_marginBottom="16dp"/>
+
+    <TextView android:id="@+id/tv_pro_status" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="@string/pro_status_locked" android:textSize="15sp"
+        android:textColor="@color/text_primary" android:layout_marginBottom="20dp"/>
+
+    <Button android:id="@+id/btn_unlock_pro" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/pro_unlock_button" android:textAllCaps="false" android:textSize="16sp"
+        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_primary"/>
+
+</LinearLayout>
+</ScrollView>
+EOF_APP_SRC_MAIN_RES_LAYOUT_ACTIVITY_SETTINGS_PRO_XML
+echo "OK: app/src/main/res/layout/activity_settings_pro.xml"
+
 mkdir -p "$(dirname "app/src/main/java/com/example/fa_ksiegowy/SettingsBackupActivity.kt")"
 cat > app/src/main/java/com/example/fa_ksiegowy/SettingsBackupActivity.kt << 'EOF_APP_SRC_MAIN_JAVA_COM_EXAMPLE_FA_KSIEGOWY_SETTINGSBACKUPACTIVITY_KT'
 package com.example.fa_ksiegowy
@@ -496,6 +601,119 @@ class SettingsActivity : BaseActivity() {
 }
 EOF_APP_SRC_MAIN_JAVA_COM_EXAMPLE_FA_KSIEGOWY_SETTINGSACTIVITY_KT
 echo "OK: app/src/main/java/com/example/fa_ksiegowy/SettingsActivity.kt"
+
+mkdir -p "$(dirname "app/src/main/java/com/example/fa_ksiegowy/SettingsLanguageActivity.kt")"
+cat > app/src/main/java/com/example/fa_ksiegowy/SettingsLanguageActivity.kt << 'EOF_APP_SRC_MAIN_JAVA_COM_EXAMPLE_FA_KSIEGOWY_SETTINGSLANGUAGEACTIVITY_KT'
+package com.example.fa_ksiegowy
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+
+/** Выбор языка приложения. Смена языка перезапускает MineActivity как единственный
+ *  экран в задаче, чтобы весь UI (в т.ч. уже открытые экраны) пересобрался с новой локалью. */
+class SettingsLanguageActivity : BaseActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_settings_language)
+
+        findViewById<Button>(R.id.btn_lang_en).setOnClickListener { setLocale("en") }
+        findViewById<Button>(R.id.btn_lang_ru).setOnClickListener { setLocale("ru") }
+        findViewById<Button>(R.id.btn_lang_pl).setOnClickListener { setLocale("pl") }
+    }
+
+    private fun setLocale(code: String) {
+        LocaleHelper.setLanguage(this, code)
+        val intent = Intent(this, MineActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        finishAffinity()
+    }
+}
+EOF_APP_SRC_MAIN_JAVA_COM_EXAMPLE_FA_KSIEGOWY_SETTINGSLANGUAGEACTIVITY_KT
+echo "OK: app/src/main/java/com/example/fa_ksiegowy/SettingsLanguageActivity.kt"
+
+mkdir -p "$(dirname "app/src/main/java/com/example/fa_ksiegowy/SettingsProActivity.kt")"
+cat > app/src/main/java/com/example/fa_ksiegowy/SettingsProActivity.kt << 'EOF_APP_SRC_MAIN_JAVA_COM_EXAMPLE_FA_KSIEGOWY_SETTINGSPROACTIVITY_KT'
+package com.example.fa_ksiegowy
+
+import android.app.AlertDialog
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+
+/** Разблокировка Pro-версии (разовая покупка через Google Play Billing). */
+class SettingsProActivity : BaseActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_settings_pro)
+        setupProSection()
+    }
+
+    private fun setupProSection() {
+        val tvStatus = findViewById<TextView>(R.id.tv_pro_status)
+        val btnUnlock = findViewById<Button>(R.id.btn_unlock_pro)
+
+        fun refreshUi() {
+            if (BillingManager.isPro(this)) {
+                tvStatus.text = getString(R.string.pro_status_active)
+                btnUnlock.isEnabled = false
+                btnUnlock.text = getString(R.string.pro_status_active)
+            } else {
+                tvStatus.text = getString(R.string.pro_status_locked)
+                btnUnlock.isEnabled = true
+            }
+        }
+        refreshUi()
+
+        BillingManager.connect(this) { connected ->
+            runOnUiThread {
+                if (!connected) return@runOnUiThread
+                BillingManager.restorePurchases(this) { refreshUi() }
+                if (!BillingManager.isPro(this)) {
+                    BillingManager.queryProProductDetails { price ->
+                        runOnUiThread {
+                            btnUnlock.text = if (price != null) {
+                                getString(R.string.pro_unlock_button_price, price)
+                            } else {
+                                getString(R.string.pro_unlock_button)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        btnUnlock.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.pro_info_title))
+                .setMessage(getString(R.string.pro_info_message))
+                .setPositiveButton(getString(R.string.pro_info_continue)) { _, _ ->
+                    BillingManager.launchPurchase(this)
+                }
+                .setNegativeButton(getString(R.string.dialog_close), null)
+                .show()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // На случай возврата из окна оплаты Google Play — обновить статус и кнопку.
+        BillingManager.restorePurchases(this) {
+            val tvStatus = findViewById<TextView>(R.id.tv_pro_status)
+            val btnUnlock = findViewById<Button>(R.id.btn_unlock_pro)
+            if (BillingManager.isPro(this)) {
+                tvStatus.text = getString(R.string.pro_status_active)
+                btnUnlock.isEnabled = false
+                btnUnlock.text = getString(R.string.pro_status_active)
+            }
+        }
+    }
+}
+EOF_APP_SRC_MAIN_JAVA_COM_EXAMPLE_FA_KSIEGOWY_SETTINGSPROACTIVITY_KT
+echo "OK: app/src/main/java/com/example/fa_ksiegowy/SettingsProActivity.kt"
 
 mkdir -p "$(dirname "app/src/main/java/com/example/fa_ksiegowy/TaxHelper.kt")"
 cat > app/src/main/java/com/example/fa_ksiegowy/TaxHelper.kt << 'EOF_APP_SRC_MAIN_JAVA_COM_EXAMPLE_FA_KSIEGOWY_TAXHELPER_KT'
@@ -1260,7 +1478,7 @@ cat > app/src/main/res/values/strings.xml << 'EOF_APP_SRC_MAIN_RES_VALUES_STRING
     <string name="tax_percent">Tax percent</string>
     <string name="other_income_label">Other income (%1$d)</string>
     <string name="tax_scale_title">Tax is calculated automatically</string>
-    <string name="tax_scale_description">0% up to 30,000 zł/year · 12% on the part between 30,000 and 120,000 zł · 32% on the part above 120,000 zł. The rate applies only to the amount above each threshold, not to the whole sum.</string>
+    <string name="tax_scale_description" formatted="false">0% up to 30,000 zł/year · 12% on the part between 30,000 and 120,000 zł · 32% on the part above 120,000 zł. The rate applies only to the amount above each threshold, not to the whole sum.</string>
     <string name="other_income_title">Other income</string>
     <string name="other_income_hint">Your total taxable income this year from other sources (job, other business, etc.). Used together with income from this app to check the 30,000 zł annual tax-free limit.</string>
     <string name="saved">Saved</string>
@@ -1395,7 +1613,7 @@ cat > app/src/main/res/values-ru/strings.xml << 'EOF_APP_SRC_MAIN_RES_VALUES-RU_
     <string name="tax_percent">Процент налога</string>
     <string name="other_income_label">Прочие доходы (%1$d)</string>
     <string name="tax_scale_title">Налог считается автоматически</string>
-    <string name="tax_scale_description">0% до 30 000 zł/год · 12% с суммы от 30 000 до 120 000 zł · 32% с суммы свыше 120 000 zł. Ставка применяется только к части сверх каждого порога, а не ко всей сумме.</string>
+    <string name="tax_scale_description" formatted="false">0% до 30 000 zł/год · 12% с суммы от 30 000 до 120 000 zł · 32% с суммы свыше 120 000 zł. Ставка применяется только к части сверх каждого порога, а не ко всей сумме.</string>
     <string name="other_income_title">Прочие доходы</string>
     <string name="other_income_hint">Ваш общий налогооблагаемый доход за этот год из других источников (работа, другая деятельность и т.д.). Учитывается вместе с доходом из этого приложения при проверке годового необлагаемого лимита в 30 000 zł.</string>
     <string name="saved">Сохранено</string>
@@ -1518,7 +1736,7 @@ cat > app/src/main/res/values-pl/strings.xml << 'EOF_APP_SRC_MAIN_RES_VALUES-PL_
     <string name="tax_percent">Procent podatku</string>
     <string name="other_income_label">Inne przychody (%1$d)</string>
     <string name="tax_scale_title">Podatek liczony jest automatycznie</string>
-    <string name="tax_scale_description">0% do 30 000 zł/rok · 12% od kwoty od 30 000 do 120 000 zł · 32% od kwoty powyżej 120 000 zł. Stawka dotyczy tylko części ponad każdy próg, a nie całej kwoty.</string>
+    <string name="tax_scale_description" formatted="false">0% do 30 000 zł/rok · 12% od kwoty od 30 000 do 120 000 zł · 32% od kwoty powyżej 120 000 zł. Stawka dotyczy tylko części ponad każdy próg, a nie całej kwoty.</string>
     <string name="other_income_title">Inne przychody</string>
     <string name="other_income_hint">Twój łączny dochód podlegający opodatkowaniu w tym roku z innych źródeł (etat, inna działalność itd.). Uwzględniany razem z dochodem z tej aplikacji przy sprawdzaniu rocznego limitu wolnego od podatku 30 000 zł.</string>
     <string name="saved">Zapisano</string>
@@ -1622,5 +1840,20 @@ cat > app/src/main/res/values-pl/strings.xml << 'EOF_APP_SRC_MAIN_RES_VALUES-PL_
 </resources>
 EOF_APP_SRC_MAIN_RES_VALUES-PL_STRINGS_XML
 echo "OK: app/src/main/res/values-pl/strings.xml"
+
+# --- Регистрируем новые Settings*-экраны в AndroidManifest.xml ---
+MANIFEST="app/src/main/AndroidManifest.xml"
+if [ ! -f "$MANIFEST" ]; then
+    echo "!!! Не найден $MANIFEST"
+    exit 1
+fi
+for ACT in SettingsTaxActivity SettingsLanguageActivity SettingsBackupActivity SettingsProActivity; do
+    if ! grep -q "\.${ACT}\"" "$MANIFEST"; then
+        sed -i "s#<activity android:name=\"\\.SettingsActivity\" android:exported=\"false\" />#<activity android:name=\".SettingsActivity\" android:exported=\"false\" />\n        <activity android:name=\".${ACT}\" android:exported=\"false\" />#" "$MANIFEST"
+        echo "OK: ${ACT} зарегистрирована в $MANIFEST"
+    else
+        echo "-- ${ACT} уже в манифесте, пропускаю"
+    fi
+done
 
 echo "=== Готово. Теперь: git add -A && git commit -m 'SAF backup pro-gated, correct progressive tax, ad debug fallback' && git push ==="

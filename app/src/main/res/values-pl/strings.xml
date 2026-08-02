@@ -14,7 +14,7 @@
     <string name="tax_percent">Procent podatku</string>
     <string name="other_income_label">Inne przychody (%1$d)</string>
     <string name="tax_scale_title">Podatek liczony jest automatycznie</string>
-    <string name="tax_scale_description">0% do 30 000 zł/rok · 12% od kwoty od 30 000 do 120 000 zł · 32% od kwoty powyżej 120 000 zł. Stawka dotyczy tylko części ponad każdy próg, a nie całej kwoty.</string>
+    <string name="tax_scale_description" formatted="false">0% do 30 000 zł/rok · 12% od kwoty od 30 000 do 120 000 zł · 32% od kwoty powyżej 120 000 zł. Stawka dotyczy tylko części ponad każdy próg, a nie całej kwoty.</string>
     <string name="other_income_title">Inne przychody</string>
     <string name="other_income_hint">Twój łączny dochód podlegający opodatkowaniu w tym roku z innych źródeł (etat, inna działalność itd.). Uwzględniany razem z dochodem z tej aplikacji przy sprawdzaniu rocznego limitu wolnego od podatku 30 000 zł.</string>
     <string name="saved">Zapisano</string>

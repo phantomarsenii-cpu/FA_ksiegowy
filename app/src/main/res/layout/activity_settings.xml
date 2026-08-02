@@ -8,81 +8,35 @@
     android:layout_width="match_parent" android:layout_height="wrap_content">
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="@string/tax_percent" android:textSize="18sp"
-        android:textColor="@color/text_primary" android:layout_marginBottom="10dp"/>
+        android:text="@string/settings" android:textSize="22sp" android:textStyle="bold"
+        android:textColor="@color/accent_cyan" android:layout_marginBottom="24dp"/>
 
-    <EditText android:id="@+id/et_tax" android:layout_width="match_parent" android:layout_height="56dp"
-        android:background="@drawable/input_field_bg" android:paddingStart="18dp" android:paddingEnd="18dp"
-        android:textColor="@color/text_primary" android:inputType="numberDecimal"
-        android:layout_marginBottom="14dp"/>
-
-    <Button android:id="@+id/btn_auto_tax" android:layout_width="match_parent" android:layout_height="48dp"
-        android:text="@string/auto_tax_button" android:textAllCaps="false" android:textSize="14sp"
+    <Button android:id="@+id/btn_menu_tax" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/settings_menu_tax" android:textAllCaps="false" android:textSize="16sp"
         android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"
         android:layout_marginBottom="14dp"/>
 
-    <Button android:id="@+id/btn_save_tax" android:layout_width="match_parent" android:layout_height="56dp"
-        android:text="@string/save" android:textAllCaps="false" android:textSize="16sp"
-        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_primary"
-        android:layout_marginBottom="24dp"/>
-
-    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#2A2E60" android:layout_marginBottom="20dp"/>
-
-    <TextView android:id="@+id/tv_pro_status" android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="@string/pro_status_locked" android:textSize="15sp"
-        android:textColor="@color/text_primary" android:layout_marginBottom="10dp"/>
-
-    <Button android:id="@+id/btn_unlock_pro" android:layout_width="match_parent" android:layout_height="56dp"
-        android:text="@string/pro_unlock_button" android:textAllCaps="false" android:textSize="16sp"
-        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_primary"
-        android:layout_marginBottom="24dp"/>
-
-    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#2A2E60" android:layout_marginBottom="20dp"/>
-
-    <TextView android:id="@+id/tv_other_income_label" android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="@string/other_income_title" android:textSize="18sp"
-        android:textColor="@color/text_primary" android:layout_marginBottom="6dp"/>
-
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="@string/other_income_hint" android:textSize="13sp"
-        android:textColor="#9AA0C0" android:layout_marginBottom="10dp"/>
-
-    <EditText android:id="@+id/et_other_income" android:layout_width="match_parent" android:layout_height="56dp"
-        android:background="@drawable/input_field_bg" android:paddingStart="18dp" android:paddingEnd="18dp"
-        android:textColor="@color/text_primary" android:inputType="numberDecimal"
+    <Button android:id="@+id/btn_menu_language" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/settings_menu_language" android:textAllCaps="false" android:textSize="16sp"
+        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"
         android:layout_marginBottom="14dp"/>
 
-    <Button android:id="@+id/btn_save_other_income" android:layout_width="match_parent" android:layout_height="56dp"
-        android:text="@string/save" android:textAllCaps="false" android:textSize="16sp"
+    <Button android:id="@+id/btn_menu_backup" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/settings_menu_backup" android:textAllCaps="false" android:textSize="16sp"
+        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"
+        android:layout_marginBottom="14dp"/>
+
+    <Button android:id="@+id/btn_menu_pro" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/settings_menu_pro" android:textAllCaps="false" android:textSize="16sp"
         android:textColor="@color/text_primary" android:background="@drawable/btn_pill_primary"
-        android:layout_marginBottom="24dp"/>
-
-    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#2A2E60" android:layout_marginBottom="20dp"/>
-
-    <Button android:id="@+id/btn_lang_en" android:layout_width="match_parent" android:layout_height="52dp"
-        android:text="English" android:textAllCaps="false" android:textColor="@color/text_primary"
-        android:background="@drawable/btn_pill_outline" android:layout_marginBottom="12dp"/>
-    <Button android:id="@+id/btn_lang_ru" android:layout_width="match_parent" android:layout_height="52dp"
-        android:text="Русский" android:textAllCaps="false" android:textColor="@color/text_primary"
-        android:background="@drawable/btn_pill_outline" android:layout_marginBottom="12dp"/>
-    <Button android:id="@+id/btn_lang_pl" android:layout_width="match_parent" android:layout_height="52dp"
-        android:text="Polski" android:textAllCaps="false" android:textColor="@color/text_primary"
-        android:background="@drawable/btn_pill_outline"/>
-
+        android:layout_marginBottom="14dp"/>
 
     <View android:layout_width="match_parent" android:layout_height="1dp"
-        android:background="#2A2E60" android:layout_marginTop="20dp" android:layout_marginBottom="20dp"/>
+        android:background="#2A2E60" android:layout_marginTop="10dp" android:layout_marginBottom="24dp"/>
 
-    <Button android:id="@+id/btn_clear_all" android:layout_width="match_parent" android:layout_height="52dp"
-        android:text="@string/clear_all_button" android:textAllCaps="false" android:textColor="@color/text_primary"
-        android:background="@drawable/btn_pill_danger" android:layout_marginBottom="24dp"/>
-
-    <View android:layout_width="match_parent" android:layout_height="1dp"
-        android:background="#2A2E60" android:layout_marginBottom="20dp"/>
-
-    <Button android:id="@+id/btn_about" android:layout_width="match_parent" android:layout_height="52dp"
-        android:text="@string/about_app" android:textAllCaps="false" android:textColor="@color/text_primary"
-        android:background="@drawable/btn_pill_outline"/>
+    <Button android:id="@+id/btn_menu_about" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/about_app" android:textAllCaps="false" android:textSize="16sp"
+        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"/>
 
 </LinearLayout>
 </ScrollView>

@@ -14,7 +14,7 @@
     <string name="tax_percent">Tax percent</string>
     <string name="other_income_label">Other income (%1$d)</string>
     <string name="tax_scale_title">Tax is calculated automatically</string>
-    <string name="tax_scale_description">0% up to 30,000 zł/year · 12% on the part between 30,000 and 120,000 zł · 32% on the part above 120,000 zł. The rate applies only to the amount above each threshold, not to the whole sum.</string>
+    <string name="tax_scale_description" formatted="false">0% up to 30,000 zł/year · 12% on the part between 30,000 and 120,000 zł · 32% on the part above 120,000 zł. The rate applies only to the amount above each threshold, not to the whole sum.</string>
     <string name="other_income_title">Other income</string>
     <string name="other_income_hint">Your total taxable income this year from other sources (job, other business, etc.). Used together with income from this app to check the 30,000 zł annual tax-free limit.</string>
     <string name="saved">Saved</string>
