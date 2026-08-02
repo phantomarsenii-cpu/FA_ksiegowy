@@ -120,20 +120,23 @@ class MineActivity : BaseActivity() {
             val profit = income - expense
 
             val prefs = getSharedPreferences("settings", MODE_PRIVATE)
-            val taxPercent = prefs.getFloat("taxPercent", 12f)
             val otherIncome = TaxHelper.getOtherIncome(prefs, year)
-            val taxResult = TaxHelper.calc(profit, otherIncome, taxPercent)
+            val taxResult = TaxHelper.calc(profit, otherIncome)
 
             withContext(Dispatchers.Main) {
                 findViewById<TextView>(R.id.tv_balance).text = formatMoney(profit)
                 findViewById<TextView>(R.id.tv_stat_income).text = formatMoney(income)
                 findViewById<TextView>(R.id.tv_stat_expense).text = formatMoney(expense)
                 findViewById<TextView>(R.id.tv_stat_profit).text = formatMoney(profit)
+                // Реальная (эффективная) ставка по прогрессивной шкале, а не сохранённое
+                // ранее число — раньше здесь всегда показывалось то, что было один раз
+                // введено вручную (обычно 12%), даже если фактический налог был другим.
                 findViewById<TextView>(R.id.tv_stat_tax_label).text =
-                    getString(R.string.stat_tax_format, taxPercent.toInt())
+                    getString(R.string.stat_tax_format, taxResult.effectiveRatePercent)
                 findViewById<TextView>(R.id.tv_stat_tax).text = formatMoney(taxResult.tax)
                 // Чистая прибыль = прибыль минус налог, рассчитанный TaxHelper
-                // (с учётом годового лимита и прочих доходов из настроек).
+                // (с учётом годового лимита 30 000 zł, прогрессивной шкалы 12%/32%
+                // и прочих доходов из настроек).
                 findViewById<TextView>(R.id.tv_stat_net_profit).text = formatMoney(profit - taxResult.tax)
             }
         }

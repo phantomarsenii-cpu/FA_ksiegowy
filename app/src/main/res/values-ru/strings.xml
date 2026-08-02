@@ -13,6 +13,8 @@
     <string name="settings">Настройки</string>
     <string name="tax_percent">Процент налога</string>
     <string name="other_income_label">Прочие доходы (%1$d)</string>
+    <string name="tax_scale_title">Налог считается автоматически</string>
+    <string name="tax_scale_description">0% до 30 000 zł/год · 12% с суммы от 30 000 до 120 000 zł · 32% с суммы свыше 120 000 zł. Ставка применяется только к части сверх каждого порога, а не ко всей сумме.</string>
     <string name="other_income_title">Прочие доходы</string>
     <string name="other_income_hint">Ваш общий налогооблагаемый доход за этот год из других источников (работа, другая деятельность и т.д.). Учитывается вместе с доходом из этого приложения при проверке годового необлагаемого лимита в 30 000 zł.</string>
     <string name="saved">Сохранено</string>
@@ -32,7 +34,7 @@
     <string name="stat_income">Доход</string>
     <string name="stat_expense">Расход</string>
     <string name="stat_profit">Прибыль (до налога)</string>
-    <string name="stat_tax_format">Налог (%1$d%%)</string>
+    <string name="stat_tax_format">Налог (%1$.1f%%)</string>
 
     <string name="report_col_date">Дата</string>
     <string name="report_col_income">Доход</string>
@@ -67,6 +69,7 @@
     <string name="pro_feature_locked_title">Функция Pro</string>
     <string name="pro_feature_locked_message">Годовые и произвольные отчёты доступны только в Pro-версии. Разблокируйте Pro в настройках.</string>
     <string name="pro_feature_locked_go_settings">Перейти в настройки</string>
+    <string name="backup_pro_locked_message">Резервное копирование и восстановление — Pro-функция. Разблокируйте Pro, чтобы сохранить данные в файл на случай потери.</string>
     <string name="pro_purchase_error">Не удалось открыть окно оплаты. Проверьте соединение и попробуйте снова.</string>
     <string name="pro_info_title">Pro-версия</string>
     <string name="pro_info_message">Pro открывает:\n\n• Годовой отчёт в Excel\n• Отчёт за произвольный период\n• Без рекламы\n\nЭто разовая покупка — платите один раз, доступ остаётся навсегда.</string>
@@ -94,4 +97,22 @@
     <string name="clear_all_confirm_message">Все доходы и расходы будут безвозвратно удалены. Это действие нельзя отменить.</string>
     <string name="clear_all_confirm_yes">Удалить всё</string>
     <string name="clear_all_done">Все данные удалены</string>
+
+    <string name="settings_menu_tax">Налог и лимиты</string>
+    <string name="settings_menu_language">Язык</string>
+    <string name="settings_menu_backup">Резервная копия (Pro)</string>
+    <string name="settings_menu_pro">Pro версия</string>
+
+    <string name="backup_hint">Сохраните резервную копию доходов/расходов — суммы, даты, комментарии и прикреплённые фото чеков — в виде файла. В окне сохранения можно выбрать память телефона или Google Диск (если установлено приложение Диска). Храните этот файл в надёжном месте — только по нему можно восстановить данные при потере телефона или переустановке приложения.</string>
+    <string name="backup_in_progress">Выполняется…</string>
+    <string name="backup_create">Создать резервную копию</string>
+    <string name="backup_restore">Восстановить из копии</string>
+    <string name="backup_success">Копия сохранена (%1$d записей)</string>
+    <string name="backup_error">Ошибка: %1$s</string>
+    <string name="backup_restore_confirm_title">Восстановить из копии?</string>
+    <string name="backup_restore_confirm_message">Записи из файла копии будут добавлены к тем, что уже есть на этом устройстве (существующие записи не удаляются и не перезаписываются). Если нужно "чистое" восстановление — сначала используйте "Очистить все данные", затем восстановление.</string>
+    <string name="backup_invalid_file">Это не похоже на файл резервной копии FinArs</string>
+    <string name="backup_restored">Восстановлено записей: %1$d</string>
+    <string name="backup_never">Последняя копия: никогда</string>
+    <string name="backup_last_time">Последняя копия: %1$s</string>
 </resources>

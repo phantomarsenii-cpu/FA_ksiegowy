@@ -59,7 +59,7 @@ class ReportActivity : BaseActivity() {
     }
 
     /**
-     * Произвольный период: два DatePickerDialog подряд — сначала выбираем дату "от",
+     * Произвольный период: два DatePickerDialog подряd — сначала выбираем дату "от",
      * затем "до". Лимит 30 000 zł к произвольному периоду не применяем (как и к
      * месячному отчёту) — он корректно применим только к целому календарному году.
      */
@@ -138,7 +138,6 @@ class ReportActivity : BaseActivity() {
 
                 val dateFmt = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
                 val prefs = getSharedPreferences("settings", MODE_PRIVATE)
-                val taxPercent = prefs.getFloat("taxPercent", 12f)
 
                 // ---- styles (types inferred as XSSFCellStyle — required by XSSFCell.setCellStyle) ----
                 val titleFont = wb.createFont().apply {
@@ -204,17 +203,20 @@ class ReportActivity : BaseActivity() {
                 // ---- title row ----
                 val titleRow = sheet.createRow(0)
                 titleRow.heightInPoints = 24f
-                for (c in 0..5) titleRow.createCell(c).cellStyle = titleStyle
+                for (c in 0..3) titleRow.createCell(c).cellStyle = titleStyle
                 titleRow.getCell(0).setCellValue(title)
-                sheet.addMergedRegion(org.apache.poi.ss.util.CellRangeAddress(0, 0, 0, 5))
+                sheet.addMergedRegion(org.apache.poi.ss.util.CellRangeAddress(0, 0, 0, 3))
 
                 // ---- header row ----
+                // Столбцов налога на каждую отдельную операцию больше нет: с прогрессивной
+                // шкалой (0% до 30 000 zł, 12% с 30 000 до 120 000 zł, 32% свыше) налог
+                // считается по совокупному годовому доходу, а не по отдельной операции —
+                // делить его поровну между записями было бы некорректно и вводило в
+                // заблуждение. Итоговый налог за период показан ниже, в строке "Итого".
                 val headers = listOf(
                     getString(R.string.report_col_date),
                     getString(R.string.report_col_income),
                     getString(R.string.report_col_expense),
-                    getString(R.string.report_col_tax_percent),
-                    getString(R.string.report_col_tax_amount),
                     getString(R.string.report_col_comment)
                 )
                 val headerRow = sheet.createRow(1)
@@ -228,7 +230,6 @@ class ReportActivity : BaseActivity() {
                 var rowN = 2
                 var totalIncome = 0.0
                 var totalExpense = 0.0
-                var totalTax = 0.0
 
                 for (e in entries) {
                     val r = sheet.createRow(rowN++)
@@ -239,7 +240,6 @@ class ReportActivity : BaseActivity() {
 
                     val incomeVal = if (e.isIncome) e.amount else 0.0
                     val expenseVal = if (!e.isIncome) e.amount else 0.0
-                    val taxAmount = if (e.isIncome) e.amount * taxPercent / 100.0 else 0.0
 
                     val incomeCell = r.createCell(1)
                     incomeCell.setCellValue(incomeVal)
@@ -249,21 +249,12 @@ class ReportActivity : BaseActivity() {
                     expenseCell.setCellValue(expenseVal)
                     expenseCell.cellStyle = expenseStyle
 
-                    val taxPercentCell = r.createCell(3)
-                    taxPercentCell.setCellValue(taxPercent.toDouble())
-                    taxPercentCell.cellStyle = moneyStyle
-
-                    val taxAmountCell = r.createCell(4)
-                    taxAmountCell.setCellValue(taxAmount)
-                    taxAmountCell.cellStyle = moneyStyle
-
-                    val commentCell = r.createCell(5)
+                    val commentCell = r.createCell(3)
                     commentCell.setCellValue(e.comment ?: "")
                     commentCell.cellStyle = dataStyle
 
                     totalIncome += incomeVal
                     totalExpense += expenseVal
-                    totalTax += taxAmount
                 }
 
                 // ---- totals ----
@@ -280,16 +271,18 @@ class ReportActivity : BaseActivity() {
                 expenseRow.createCell(0).also { it.setCellValue(getString(R.string.report_total_expense)); it.cellStyle = totalLabelStyle }
                 expenseRow.createCell(1).also { it.setCellValue(totalExpense); it.cellStyle = totalValueStyle }
 
-                // Налог считаем от прибыли (доход - расход), так же как на главном
-                // экране приложения, а не от суммы отдельных доходов — иначе итог
-                // в отчёте не совпадает с балансом в приложении.
+                // Налог считаем от прибыли (доход - расход) по официальной прогрессивной
+                // шкале — так же, как на главном экране приложения (TaxHelper.calc), а
+                // не плоским процентом от суммы доходов — иначе итог в отчёте не совпадает
+                // с балансом в приложении и не соответствует реальной шкале PIT.
+                //
+                // Для годового отчёта учитываются прочие доходы (они "занимают" нижние
+                // ступени шкалы первыми). Для отчёта за месяц/произвольный период прочие
+                // доходы не учитываются — 30 000 zł порог годовой, применять его к части
+                // года было бы некорректно.
                 val totalProfitForTax = totalIncome - totalExpense
-                val correctedTotalTax = if (applyAnnualLimit) {
-                    val otherIncome = TaxHelper.getOtherIncome(prefs, year)
-                    TaxHelper.calc(totalProfitForTax, otherIncome, taxPercent).tax
-                } else {
-                    if (totalProfitForTax > 0) totalProfitForTax * taxPercent / 100.0 else 0.0
-                }
+                val otherIncomeForTax = if (applyAnnualLimit) TaxHelper.getOtherIncome(prefs, year) else 0.0
+                val correctedTotalTax = TaxHelper.calc(totalProfitForTax, otherIncomeForTax).tax
 
                 val taxRow = sheet.createRow(rowN++)
                 taxRow.createCell(0).also { it.setCellValue(getString(R.string.report_total_tax)); it.cellStyle = totalLabelStyle }
@@ -304,11 +297,9 @@ class ReportActivity : BaseActivity() {
 
                 // ---- column widths (manual — avoids java.awt dependency on Android) ----
                 sheet.setColumnWidth(0, 20 * 256)
-                sheet.setColumnWidth(1, 13 * 256)
-                sheet.setColumnWidth(2, 13 * 256)
-                sheet.setColumnWidth(3, 11 * 256)
-                sheet.setColumnWidth(4, 14 * 256)
-                sheet.setColumnWidth(5, 32 * 256)
+                sheet.setColumnWidth(1, 14 * 256)
+                sheet.setColumnWidth(2, 14 * 256)
+                sheet.setColumnWidth(3, 36 * 256)
 
                 FileOutputStream(xlsx).use { fos ->
                     wb.write(fos)

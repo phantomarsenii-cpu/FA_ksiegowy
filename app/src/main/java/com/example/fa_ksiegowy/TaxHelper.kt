@@ -4,29 +4,33 @@ import android.content.SharedPreferences
 import java.util.Calendar
 
 /**
- * Логика годового необлагаемого лимита (по умолчанию 30 000 zł).
+ * Официальная прогрессивная шкала налога (PIT) для działalność nierejestrowana:
  *
- * Лимит применяется к СУММЕ прибыли за текущий календарный год из этого
- * приложения ("appProfit") и прочих доходов пользователя за тот же год
- * ("otherIncome", вводится вручную в настройках). Налог считается не со
- * всей прибыли, а только с суммы превышения лимита:
+ *   • 0 – 30 000 zł/год за год        — 0%  (kwota wolna od podatku)
+ *   • 30 000 – 120 000 zł/год         — 12% с суммы СВЕРХ 30 000 zł
+ *   • свыше 120 000 zł/год            — 32% с суммы СВЕРХ 120 000 zł
  *
- *   totalTaxable = otherIncome + appProfit
- *   taxBase      = max(0, totalTaxable - LIMIT)
- *   tax          = taxBase * taxPercent / 100
+ * Важно: ставка применяется только к части дохода СВЕРХ каждого порога,
+ * а не ко всей сумме целиком (раньше в приложении был плоский процент,
+ * применённый ко всей налогооблагаемой сумме — это было неверно).
  *
- * Если прочие доходы сами по себе уже покрывают/превышают лимит, вся
- * прибыль из приложения облагается налогом полностью — формула это
- * учитывает автоматически.
+ * "Прочие доходы" пользователя (otherIncome, вводятся вручную в настройках)
+ * учитываются как занимающие нижние ступени шкалы ПЕРВЫМИ — налог, который
+ * показывается в приложении, это налог именно с прибыли из приложения
+ * (appProfit), рассчитанный маржинально поверх прочих доходов.
  */
 object TaxHelper {
 
     const val ANNUAL_LIMIT = 30000.0
+    const val SECOND_BRACKET_THRESHOLD = 120000.0
+    private const val FIRST_BRACKET_RATE = 0.12
+    private const val SECOND_BRACKET_RATE = 0.32
 
     data class TaxResult(
-        val totalTaxable: Double, // otherIncome + appProfit
-        val taxBase: Double,      // сумма, попадающая под налог
-        val tax: Double           // итоговый налог
+        val totalTaxable: Double,   // otherIncome + appProfit
+        val taxBase: Double,        // appProfit (для обратной совместимости с UI)
+        val tax: Double,            // налог, относящийся именно к прибыли из приложения
+        val effectiveRatePercent: Double // эффективная ставка на appProfit, для отображения "Налог (X%)"
     )
 
     fun currentYear(): Int = Calendar.getInstance().get(Calendar.YEAR)
@@ -53,41 +57,47 @@ object TaxHelper {
         prefs.edit().putFloat(otherIncomeKey(year), value.toFloat()).apply()
     }
 
-    fun calc(appProfit: Double, otherIncome: Double, taxPercent: Float): TaxResult {
-        val totalTaxable = otherIncome + appProfit
-        val taxBase = if (totalTaxable > ANNUAL_LIMIT) totalTaxable - ANNUAL_LIMIT else 0.0
-        // Прибыль из приложения не может «отдать» под налог больше, чем сама составляет
-        // (превышение может целиком образовываться прочими доходами).
-        val taxableFromApp = if (appProfit <= 0) 0.0 else minOf(taxBase, appProfit)
-        val tax = taxableFromApp * taxPercent / 100.0
-        return TaxResult(totalTaxable, taxBase, tax)
+    /**
+     * Официальная прогрессивная шкала PIT для действия nierejestrowana / ryczałt-подобного
+     * случая, как её описал пользователь:
+     *   • 0 – 30 000 zł/год       — 0% (kwota wolna od podatku)
+     *   • 30 000 – 120 000 zł/год — 12% с суммы СВЕРХ 30 000 (не со всей суммы!)
+     *   • свыше 120 000 zł/год    — 32% с суммы СВЕРХ 120 000, плюс фиксированные
+     *                               (120 000 − 30 000) × 12% с предыдущей ступени
+     * Считает налог на весь годовой налогооблагаемый доход целиком (без разбивки
+     * по источникам) — используется как вспомогательная функция ниже.
+     */
+    private fun bracketTax(annualIncome: Double): Double {
+        val income = if (annualIncome < 0) 0.0 else annualIncome
+        return when {
+            income <= ANNUAL_LIMIT -> 0.0
+            income <= SECOND_BRACKET_THRESHOLD -> (income - ANNUAL_LIMIT) * FIRST_BRACKET_RATE
+            else -> (SECOND_BRACKET_THRESHOLD - ANNUAL_LIMIT) * FIRST_BRACKET_RATE +
+                (income - SECOND_BRACKET_THRESHOLD) * SECOND_BRACKET_RATE
+        }
     }
 
-    // ---- Автоподбор процента: польская прогрессивная шкала PIT ----
-    // 12% на доход от 30 000 до 120 000 zł (совпадает с ANNUAL_LIMIT/calc выше),
-    // 32% на часть дохода свыше 120 000 zł.
-    const val SECOND_BRACKET_THRESHOLD = 120000.0
-    private const val FIRST_BRACKET_RATE = 12.0
-    private const val SECOND_BRACKET_RATE = 32.0
-
     /**
-     * Предлагает процент для поля "процент налога" на основе суммарного
-     * налогооблагаемого дохода (прочие доходы + прибыль из приложения за год).
+     * Считаем налог, относящийся к прибыли ИЗ ПРИЛОЖЕНИЯ (appProfit), с учётом того,
+     * что "прочие доходы" (otherIncome) занимают нижние ступени шкалы первыми —
+     * это стандартный маржинальный подход: appProfit облагается по тем ступеням
+     * шкалы, которые остаются НАД уже "использованными" прочими доходами.
      *
-     * До 120 000 zł шкала однорядная — 12%, эту ставку и предлагаем.
-     * Свыше 120 000 zł шкала прогрессивная (12% на часть до порога, 32% на
-     * часть свыше), а в приложении используется единый процент — поэтому
-     * возвращается ЭФФЕКТИВНАЯ ставка, при которой calc() выше даст ровно
-     * такую же сумму налога, как официальная формула. Это оценка, которую
-     * можно поправить вручную.
+     * Пример (как в вопросе пользователя): appProfit = 234 400, otherIncome = 0.
+     *   taxOnCombined = (120000-30000)*12% + (234400-120000)*32% = 10800 + 36608 = 47408
+     *   taxOnOtherOnly = 0 (прочих доходов нет)
+     *   tax = 47408 — именно эта сумма должна отображаться, а не плоские 12%.
      */
-    fun suggestTaxPercent(totalTaxableIncome: Double): Float {
-        if (totalTaxableIncome <= SECOND_BRACKET_THRESHOLD) return FIRST_BRACKET_RATE.toFloat()
+    fun calc(appProfit: Double, otherIncome: Double): TaxResult {
+        val other = if (otherIncome < 0) 0.0 else otherIncome
+        val app = if (appProfit < 0) 0.0 else appProfit
+        val combined = other + app
 
-        val taxBase = totalTaxableIncome - ANNUAL_LIMIT
-        val officialTax = (SECOND_BRACKET_THRESHOLD - ANNUAL_LIMIT) * FIRST_BRACKET_RATE / 100.0 +
-            (totalTaxableIncome - SECOND_BRACKET_THRESHOLD) * SECOND_BRACKET_RATE / 100.0
-        val effectiveRate = if (taxBase > 0) officialTax / taxBase * 100.0 else FIRST_BRACKET_RATE
-        return effectiveRate.toFloat()
+        val taxOnOtherOnly = bracketTax(other)
+        val taxOnCombined = bracketTax(combined)
+        val tax = taxOnCombined - taxOnOtherOnly
+
+        val effectiveRate = if (app > 0) (tax / app) * 100.0 else 0.0
+        return TaxResult(combined, app, tax, effectiveRate)
     }
 }

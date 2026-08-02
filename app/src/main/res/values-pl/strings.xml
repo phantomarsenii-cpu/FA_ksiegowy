@@ -13,6 +13,8 @@
     <string name="settings">Ustawienia</string>
     <string name="tax_percent">Procent podatku</string>
     <string name="other_income_label">Inne przychody (%1$d)</string>
+    <string name="tax_scale_title">Podatek liczony jest automatycznie</string>
+    <string name="tax_scale_description">0% do 30 000 zł/rok · 12% od kwoty od 30 000 do 120 000 zł · 32% od kwoty powyżej 120 000 zł. Stawka dotyczy tylko części ponad każdy próg, a nie całej kwoty.</string>
     <string name="other_income_title">Inne przychody</string>
     <string name="other_income_hint">Twój łączny dochód podlegający opodatkowaniu w tym roku z innych źródeł (etat, inna działalność itd.). Uwzględniany razem z dochodem z tej aplikacji przy sprawdzaniu rocznego limitu wolnego od podatku 30 000 zł.</string>
     <string name="saved">Zapisano</string>
@@ -32,7 +34,7 @@
     <string name="stat_income">Przychód</string>
     <string name="stat_expense">Wydatek</string>
     <string name="stat_profit">Zysk (brutto)</string>
-    <string name="stat_tax_format">Podatek (%1$d%%)</string>
+    <string name="stat_tax_format">Podatek (%1$.1f%%)</string>
 
     <string name="report_col_date">Data</string>
     <string name="report_col_income">Przychód</string>
@@ -67,6 +69,7 @@
     <string name="pro_feature_locked_title">Funkcja Pro</string>
     <string name="pro_feature_locked_message">Raporty roczne i niestandardowe są dostępne tylko w wersji Pro. Odblokuj Pro w ustawieniach.</string>
     <string name="pro_feature_locked_go_settings">Przejdź do ustawień</string>
+    <string name="backup_pro_locked_message">Kopia zapasowa i przywracanie to funkcja Pro. Odblokuj Pro, aby zabezpieczyć swoje dane plikiem kopii zapasowej.</string>
     <string name="pro_purchase_error">Nie udało się otworzyć zakupu. Sprawdź połączenie i spróbuj ponownie.</string>
     <string name="pro_info_title">Wersja Pro</string>
     <string name="pro_info_message">Pro odblokowuje:\n\n• Raport roczny w Excelu\n• Raport za dowolny okres\n• Brak reklam\n\nTo jednorazowy zakup — płacisz raz, dostęp zostaje na zawsze.</string>
@@ -94,4 +97,22 @@
     <string name="clear_all_confirm_message">Wszystkie przychody i wydatki zostaną trwale usunięte. Tej czynności nie można cofnąć.</string>
     <string name="clear_all_confirm_yes">Usuń wszystko</string>
     <string name="clear_all_done">Wszystkie dane zostały usunięte</string>
+
+    <string name="settings_menu_tax">Podatek i limity</string>
+    <string name="settings_menu_language">Język</string>
+    <string name="settings_menu_backup">Kopia zapasowa (Pro)</string>
+    <string name="settings_menu_pro">Wersja Pro</string>
+
+    <string name="backup_hint">Zapisz kopię zapasową przychodów/wydatków — kwoty, daty, komentarze i załączone zdjęcia paragonów — jako plik. W oknie zapisu możesz wybrać pamięć telefonu lub Dysk Google (jeśli aplikacja Dysku jest zainstalowana). Przechowuj ten plik w bezpiecznym miejscu — to jedyny sposób odzyskania danych w razie utraty telefonu lub reinstalacji aplikacji.</string>
+    <string name="backup_in_progress">Trwa…</string>
+    <string name="backup_create">Utwórz kopię zapasową</string>
+    <string name="backup_restore">Przywróć z kopii</string>
+    <string name="backup_success">Kopia zapisana (%1$d wpisów)</string>
+    <string name="backup_error">Błąd: %1$s</string>
+    <string name="backup_restore_confirm_title">Przywrócić z kopii?</string>
+    <string name="backup_restore_confirm_message">Wpisy z pliku kopii zostaną dodane do tych, które już są na tym urządzeniu (istniejące wpisy nie są usuwane ani nadpisywane). Jeśli potrzebujesz "czystego" przywrócenia — najpierw użyj "Wyczyść wszystkie dane", a potem przywróć kopię.</string>
+    <string name="backup_invalid_file">To nie wygląda na poprawny plik kopii zapasowej FinArs</string>
+    <string name="backup_restored">Przywrócono wpisów: %1$d</string>
+    <string name="backup_never">Ostatnia kopia: nigdy</string>
+    <string name="backup_last_time">Ostatnia kopia: %1$s</string>
 </resources>
