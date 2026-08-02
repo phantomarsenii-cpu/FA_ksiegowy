@@ -1,3 +1,52 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -e
+
+echo "=== Обновление 19: фикс краша 'The ad unit ID can only be set once on AdView' ==="
+
+LAYOUT="app/src/main/res/layout/activity_mine.xml"
+if [ ! -f "$LAYOUT" ]; then
+    echo "!!! Не найден $LAYOUT"
+    exit 1
+fi
+
+# Причина краша: adUnitId задавался ДВАЖДЫ — один раз в XML (app:adUnitId=...),
+# второй раз в коде (AdsManager.kt, для debug-сборки). AdMob разрешает установить
+# adUnitId только один раз за всё время жизни AdView, вторая установка кидает
+# IllegalStateException. Убираем задание из XML, оставляем единственную точку
+# установки — в коде (AdsManager.kt), где и так уже правильно переключается
+# test/prod ID в зависимости от debuggable-флага.
+if grep -q 'app:adUnitId="ca-app-pub-9218963926031039/4293553475"' "$LAYOUT"; then
+    sed -i '/app:adUnitId="ca-app-pub-9218963926031039\/4293553475"/d' "$LAYOUT"
+    # предыдущая строка (app:adSize="BANNER") оставалась с "\" в конце? нет — там
+    # был перенос через отдельный атрибут, но чтобы не оставить висячий "/>"
+    # без открывающего тега проверим, что тег AdView остался валиден.
+    echo "OK: app:adUnitId удалён из $LAYOUT (единственная точка установки — код)"
+else
+    echo "-- app:adUnitId уже отсутствует в $LAYOUT, пропускаю"
+fi
+
+# Убедимся, что после удаления строки тег AdView всё ещё корректно закрыт
+# атрибутом app:adSize="BANNER"/> (последний оставшийся атрибут должен
+# заканчиваться на "/>").
+if ! grep -A1 'com.google.android.gms.ads.AdView' "$LAYOUT" | grep -q 'adSize'; then
+    echo "!!! Внимание: проверь вручную блок AdView в $LAYOUT — структура тега могла измениться"
+fi
+if grep -q 'app:adSize="BANNER"$' "$LAYOUT"; then
+    sed -i 's#app:adSize="BANNER"$#app:adSize="BANNER"/>#' "$LAYOUT"
+    echo "OK: закрывающий /> перенесён на app:adSize в $LAYOUT"
+fi
+
+echo ""
+echo "=== Обновление AdsManager.kt: явный флаг, чтобы adUnitId выставлялся максимум один раз ==="
+
+ADS_MANAGER="app/src/main/java/com/example/fa_ksiegowy/AdsManager.kt"
+if [ ! -f "$ADS_MANAGER" ]; then
+    echo "!!! Не найден $ADS_MANAGER"
+    exit 1
+fi
+
+mkdir -p "$(dirname "$ADS_MANAGER")"
+cat > "$ADS_MANAGER" << 'EOF_ADS_MANAGER_KT'
 package com.example.fa_ksiegowy
 
 import android.app.Activity
@@ -127,3 +176,8 @@ object AdsManager {
         adView.pause()
     }
 }
+EOF_ADS_MANAGER_KT
+echo "OK: $ADS_MANAGER переписан"
+
+echo ""
+echo "=== Готово. Пересобери APK: ./gradlew assembleDebug (или как обычно у тебя настроено) ==="

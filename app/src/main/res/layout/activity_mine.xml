@@ -195,8 +195,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:visibility="gone"
-        app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-9218963926031039/4293553475"/>
+        app:adSize="BANNER"/>
 
 </LinearLayout>
 </ScrollView>
