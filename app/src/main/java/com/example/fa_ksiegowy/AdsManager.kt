@@ -20,10 +20,8 @@ import com.google.android.ump.UserMessagingPlatform
  * ВАЖНО (краш "The ad unit ID can only be set once on AdView"): adUnitId
  * можно установить у AdView ровно один раз за всё время его жизни — либо
  * через XML (app:adUnitId), либо через код (adView.adUnitId = ...), но не
- * оба раза и не дважды в коде. Раньше id был прописан и в XML-layout, и
- * здесь в коде для debug-сборок — вторая установка и приводила к падению.
- * Теперь XML не задаёт adUnitId вообще — единственная точка установки ниже,
- * в коде, ровно один раз за вызов setupAndLoadBanner.
+ * оба раза. XML больше не задаёт adUnitId вообще — единственная точка
+ * установки ниже, в коде, ровно один раз за вызов setupAndLoadBanner.
  *
  * ВАЖНО (если баннер вообще не появляется): почти всегда причина не в коде,
  * а в том, что в консоли AdMob (admob.google.com -> Privacy & messaging)
