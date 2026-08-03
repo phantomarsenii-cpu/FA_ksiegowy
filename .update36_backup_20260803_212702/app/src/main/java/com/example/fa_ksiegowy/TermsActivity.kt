@@ -16,10 +16,6 @@ import java.util.Date
  * показывается текст, чекбокс и кнопка "Принять и продолжить" (активна
  * только при отмеченном чекбоксе). После принятия флаг сохраняется
  * НАВСЕГДА (KEY_TERMS_ACCEPTED) и отозвать его из приложения нельзя.
- * 
- * После принятия Terms проверяется, выбран ли пользователем тип деятельности.
- * Если нет (is_tax_type_selected == false), направляется на SettingsTaxActivity
- * для обязательного выбора, иначе на MineActivity.
  *
  * Режим "просмотр" (readOnly = true) — вызывается из Настроек:
  * чекбокс и кнопка принятия скрыты, внизу показана плашка со статусом
@@ -87,17 +83,7 @@ class TermsActivity : BaseActivity() {
                     .putBoolean(KEY_TERMS_ACCEPTED, true)
                     .putLong(KEY_TERMS_ACCEPTED_TIMESTAMP, System.currentTimeMillis())
                     .apply()
-                
-                // Проверить, выбран ли тип деятельности
-                val isTaxTypeSelected = prefs.getBoolean("is_tax_type_selected", false)
-                val nextIntent = if (!isTaxTypeSelected) {
-                    // Обязательный выбор типа деятельности
-                    Intent(this, SettingsTaxActivity::class.java)
-                } else {
-                    // Переход на главную страницу
-                    Intent(this, MineActivity::class.java)
-                }
-                startActivity(nextIntent)
+                startActivity(Intent(this, MineActivity::class.java))
                 finish()
             }
 

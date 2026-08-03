@@ -197,7 +197,7 @@
     <string name="ryczalt_rate_label" formatted="false">Stawka ryczałtu dla Twojej działalności (%, zależy od PKD)</string>
     <string name="ryczalt_rate_hint">np. 3, 5.5, 8.5, 12, 17</string>
     <string name="min_wage_label">Minimalne wynagrodzenie miesięczne (zł) — do obliczenia limitu działalności nierejestrowanej</string>
-    <string name="monthly_limit_preview" formatted="false">Limit miesięczny (75%): %1$,.2f zł</string>
+    <string name="monthly_limit_preview" formatted="false">Limit miesięczny (75%): %1$.2f zł</string>
 
     <!-- Wskaźniki limitów na ekranie głównym -->
     <string name="limits_title">Limity</string>

@@ -209,7 +209,7 @@ Contact: p.arsenii@interia.pl</string>
     <string name="ryczalt_rate_label" formatted="false">Lump-sum tax rate for your activity (%, depends on PKD)</string>
     <string name="ryczalt_rate_hint">e.g. 3, 5.5, 8.5, 12, 17</string>
     <string name="min_wage_label">Minimum monthly wage (zł) — used to calculate the unregistered-activity limit</string>
-    <string name="monthly_limit_preview" formatted="false">Monthly limit (75%): %1$,.2f zł</string>
+    <string name="monthly_limit_preview" formatted="false">Monthly limit (75%): %1$.2f zł</string>
 
     <!-- Main screen limit gauges -->
     <string name="limits_title">Limits</string>

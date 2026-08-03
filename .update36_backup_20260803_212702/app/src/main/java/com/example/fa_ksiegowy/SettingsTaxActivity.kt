@@ -33,14 +33,8 @@ class SettingsTaxActivity : BaseActivity() {
         prefs = getSharedPreferences("settings", MODE_PRIVATE)
 
         val year = TaxHelper.currentYear()
-        try {
-            findViewById<TextView>(R.id.tv_other_income_label).text =
-                getString(R.string.other_income_label, year)
-        } catch (e: Exception) {
-            // Fallback if string resource has invalid format
-            findViewById<TextView>(R.id.tv_other_income_label).text = 
-                "Other income ($year)"
-        }
+        findViewById<TextView>(R.id.tv_other_income_label).text =
+            getString(R.string.other_income_label, year)
 
         setupActivityType()
         setupMinWage()
@@ -54,20 +48,13 @@ class SettingsTaxActivity : BaseActivity() {
             val ryczaltRateField = findViewById<EditText>(R.id.et_ryczalt_rate)
             if (ryczaltRateField.visibility == View.VISIBLE) {
                 val rate = ryczaltRateField.text.toString().toDoubleOrNull() ?: 0.0
-                if (rate > 0.0) {
-                    ActivityTypeHelper.setRyczaltRate(prefs, rate)
-                }
+                ActivityTypeHelper.setRyczaltRate(prefs, rate)
             }
             val minWage = findViewById<EditText>(R.id.et_min_wage).text.toString().toDoubleOrNull()
             if (minWage != null && minWage > 0.0) {
                 ActivityTypeHelper.setMinWage(prefs, minWage)
                 updateMonthlyLimitPreview()
             }
-
-            // Отметить, что тип деятельности выбран
-            prefs.edit()
-                .putBoolean("is_tax_type_selected", true)
-                .apply()
 
             Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
         }
@@ -107,24 +94,15 @@ class SettingsTaxActivity : BaseActivity() {
     }
 
     private fun setupMinWage() {
-        val etMinWage = findViewById<EditText>(R.id.et_min_wage)
-        try {
-            etMinWage.setText(
-                String.format("%.2f", ActivityTypeHelper.getMinWage(prefs))
-            )
-        } catch (e: Exception) {
-            etMinWage.setText("0.00")
-        }
+        findViewById<EditText>(R.id.et_min_wage).setText(
+            ActivityTypeHelper.getMinWage(prefs).toString()
+        )
         updateMonthlyLimitPreview()
     }
 
     private fun updateMonthlyLimitPreview() {
-        val tvPreview = findViewById<TextView>(R.id.tv_monthly_limit_preview)
-        try {
-            val limit = ActivityTypeHelper.nierejestrowanaMonthlyLimit(prefs)
-            tvPreview.text = String.format("Monthly limit (75%%): %.2f zł", limit)
-        } catch (e: Exception) {
-            tvPreview.text = "Monthly limit: could not calculate"
-        }
+        val limit = ActivityTypeHelper.nierejestrowanaMonthlyLimit(prefs)
+        findViewById<TextView>(R.id.tv_monthly_limit_preview).text =
+            getString(R.string.monthly_limit_preview, limit)
     }
 }
