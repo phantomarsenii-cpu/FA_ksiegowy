@@ -1,6 +1,7 @@
 package com.example.fa_ksiegowy
 
 import android.content.Intent
+import androidx.activity.addCallback
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.widget.Button
@@ -87,7 +88,10 @@ class TermsActivity : BaseActivity() {
             }
 
             // Первичное согласие нельзя обойти системной кнопкой "назад".
-            onBackPressedDispatcher.addCallback(this) { /* no-op: блокируем выход */ }
+            onBackPressedDispatcher.addCallback(this, true) {
+                /* no-op: блокируем выход системной кнопкой "назад",
+                   пока соглашение не принято */
+            }
         }
     }
 }
