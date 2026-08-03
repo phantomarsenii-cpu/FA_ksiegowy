@@ -20,7 +20,7 @@
     <string name="other_income_hint">Ваш общий налогооблагаемый доход за этот год из других источников (работа, другая деятельность и т.д.). Учитывается вместе с доходом из этого приложения при проверке годового необлагаемого лимита в 30 000 zł.</string>
     <string name="saved">Сохранено</string>
     <string name="auto_tax_button">Рассчитать автоматически</string>
-    <string name="auto_tax_result">Предложенная ставка: %1$.1f%% (по шкале PIT: 12%% до 120 000 zł/год, 32%% свыше). Перед сохранением можно поправить вручную.</string>
+    <string name="auto_tax_result">Предложенная ставка: %1$.1f% (по шкале PIT: 12% до 120 000 zł/год, 32% свыше). Перед сохранением можно поправить вручную.</string>
     <string name="export_report">Экспорт отчёта</string>
     <string name="generate_report">Сгенерировать отчёт</string>
     <string name="select_period">Выберите период</string>
@@ -35,12 +35,12 @@
     <string name="stat_income">Доход</string>
     <string name="stat_expense">Расход</string>
     <string name="stat_profit">Прибыль (до налога)</string>
-    <string name="stat_tax_format">Налог (%1$.1f%%)</string>
+    <string name="stat_tax_format">Налог (%1$.1f%)</string>
 
     <string name="report_col_date">Дата</string>
     <string name="report_col_income">Доход</string>
     <string name="report_col_expense">Расход</string>
-    <string name="report_col_tax_percent">Налог %%</string>
+    <string name="report_col_tax_percent" formatted="false">Налог %</string>
     <string name="report_col_tax_amount">Сумма налога</string>
     <string name="report_col_comment">Комментарий</string>
     <string name="report_sheet_name">Отчёт</string>
@@ -190,14 +190,14 @@
     <string name="activity_type_title">Форма деятельности</string>
     <string name="activity_type_hint">Выберите, как вы работаете — от этого зависит применяемый лимит и то, какую декларацию подавать.</string>
     <string name="activity_type_niezarejestrowana">Незарегистрированная деятельность (без JDG)</string>
-    <string name="activity_type_niezarejestrowana_desc">Доход не должен превышать 75%% минимальной зарплаты в месяц. При превышении нужно зарегистрировать JDG в течение 7 дней. Подаётся через PIT-36 по обычной шкале.</string>
-    <string name="activity_type_jdg_skala">Зарегистрированное ИП (JDG) — шкала 12%% / 32%% (PIT-36)</string>
-    <string name="activity_type_jdg_liniowy">Зарегистрированное ИП (JDG) — плоский налог 19%% (PIT-36L)</string>
+    <string name="activity_type_niezarejestrowana_desc" formatted="false">Доход не должен превышать 75% минимальной зарплаты в месяц. При превышении нужно зарегистрировать JDG в течение 7 дней. Подаётся через PIT-36 по обычной шкале.</string>
+    <string name="activity_type_jdg_skala" formatted="false">Зарегистрированное ИП (JDG) — шкала 12% / 32% (PIT-36)</string>
+    <string name="activity_type_jdg_liniowy" formatted="false">Зарегистрированное ИП (JDG) — плоский налог 19% (PIT-36L)</string>
     <string name="activity_type_jdg_ryczalt">Зарегистрированное ИП (JDG) — ryczałt (PIT-28)</string>
-    <string name="ryczalt_rate_label">Ставка ryczałtu для вашей деятельности (%%, зависит от PKD)</string>
+    <string name="ryczalt_rate_label" formatted="false">Ставка ryczałtu для вашей деятельности (%, зависит от PKD)</string>
     <string name="ryczalt_rate_hint">например 3, 5.5, 8.5, 12, 17</string>
     <string name="min_wage_label">Минимальная месячная зарплата (zł) — для расчёта лимита незарегистрированной деятельности</string>
-    <string name="monthly_limit_preview">Месячный лимит (75%%): %1$.2f zł</string>
+    <string name="monthly_limit_preview">Месячный лимит (75%): %1$.2f zł</string>
 
     <!-- Гейджи лимитов на главном экране -->
     <string name="limits_title">Лимиты</string>
@@ -207,10 +207,10 @@
     <string name="limit_exceeded_warning">Превышен лимит незарегистрированной деятельности! Вы обязаны зарегистрировать JDG в течение 7 дней.</string>
 
     <!-- Динамическая подпись налога -->
-    <string name="tax_label_zero">Налог (0% — необлагаемый минимум)</string>
-    <string name="tax_label_12">Налог (12%)</string>
-    <string name="tax_label_progressive">Налог (прогрессивная шкала 12% / 32%)</string>
-    <string name="tax_label_liniowy">Налог (плоский 19%)</string>
+    <string name="tax_label_zero" formatted="false">Налог (0% — необлагаемый минимум)</string>
+    <string name="tax_label_12" formatted="false">Налог (12%)</string>
+    <string name="tax_label_progressive" formatted="false">Налог (прогрессивная шкала 12% / 32%)</string>
+    <string name="tax_label_liniowy" formatted="false">Налог (плоский 19%)</string>
     <string name="tax_label_ryczalt">Налог (ryczałt, от дохода)</string>
     <string name="pit_form_applicable">Применимая декларация: %1$s</string>
 
@@ -226,13 +226,13 @@
     <string name="notif_channel_name">Лимиты и сроки</string>
     <string name="notif_channel_description">Оповещения о лимитах деятельности и налоговых сроках</string>
     <string name="notif_limit_exceeded_title">Превышен лимит незарегистрированной деятельности</string>
-    <string name="notif_limit_exceeded_text">Доход в этом месяце превышает 75% минимальной зарплаты. Зарегистрируйте JDG в течение 7 дней.</string>
-    <string name="notif_limit_95_title">Достигнуто 95% месячного лимита</string>
+    <string name="notif_limit_exceeded_text" formatted="false">Доход в этом месяце превышает 75% минимальной зарплаты. Зарегистрируйте JDG в течение 7 дней.</string>
+    <string name="notif_limit_95_title" formatted="false">Достигнуто 95% месячного лимита</string>
     <string name="notif_limit_95_text">Вы очень близки к лимиту незарегистрированной деятельности за этот месяц.</string>
-    <string name="notif_limit_80_title">Достигнуто 80% месячного лимита</string>
-    <string name="notif_limit_80_text">Использовано 80% лимита незарегистрированной деятельности за этот месяц.</string>
+    <string name="notif_limit_80_title" formatted="false">Достигнуто 80% месячного лимита</string>
+    <string name="notif_limit_80_text" formatted="false">Использовано 80% лимита незарегистрированной деятельности за этот месяц.</string>
     <string name="notif_bracket_title">Приближение к порогу 120 000 zł</string>
-    <string name="notif_bracket_text">Годовая прибыль приближается к 120 000 zł — доход сверх этой суммы облагается по 32%% вместо 12%%.</string>
+    <string name="notif_bracket_text" formatted="false">Годовая прибыль приближается к 120 000 zł — доход сверх этой суммы облагается по 32% вместо 12%.</string>
     <string name="notif_vat_title">Приближение к лимиту освобождения от VAT</string>
     <string name="notif_vat_text">Годовой доход приближается к 200 000 zł — порогу освобождения от VAT.</string>
     <string name="notif_advance_title">Напоминание об авансовом платеже</string>

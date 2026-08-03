@@ -20,7 +20,7 @@
     <string name="other_income_hint">Your total taxable income this year from other sources (job, other business, etc.). Used together with income from this app to check the 30,000 zł annual tax-free limit.</string>
     <string name="saved">Saved</string>
     <string name="auto_tax_button">Calculate automatically</string>
-    <string name="auto_tax_result">Suggested rate: %1$.1f%% (based on Polish PIT scale: 12%% up to 120,000 zł/year, 32%% above). You can edit it before saving.</string>
+    <string name="auto_tax_result">Suggested rate: %1$.1f% (based on Polish PIT scale: 12% up to 120,000 zł/year, 32% above). You can edit it before saving.</string>
     <string name="export_report">Export report</string>
     <string name="generate_report">Generate report</string>
     <string name="select_period">Select period</string>
@@ -35,12 +35,12 @@
     <string name="stat_income">Income</string>
     <string name="stat_expense">Expense</string>
     <string name="stat_profit">Profit (gross)</string>
-    <string name="stat_tax_format">Tax (%1$.1f%%)</string>
+    <string name="stat_tax_format">Tax (%1$.1f%)</string>
 
     <string name="report_col_date">Date</string>
     <string name="report_col_income">Income</string>
     <string name="report_col_expense">Expense</string>
-    <string name="report_col_tax_percent">Tax %%</string>
+    <string name="report_col_tax_percent" formatted="false">Tax %</string>
     <string name="report_col_tax_amount">Tax amount</string>
     <string name="report_col_comment">Comment</string>
     <string name="report_sheet_name">Report</string>
@@ -202,14 +202,14 @@ Contact: p.arsenii@interia.pl</string>
     <string name="activity_type_title">Activity type</string>
     <string name="activity_type_hint">Choose how you operate — this decides which limit applies and which annual form you should file.</string>
     <string name="activity_type_niezarejestrowana">Unregistered activity (bez rejestracji JDG)</string>
-    <string name="activity_type_niezarejestrowana_desc">Income must stay under 75% of the minimum wage per month. If exceeded, you must register a JDG within 7 days. Filed via PIT-36, tax scale.</string>
-    <string name="activity_type_jdg_skala">Registered JDG — tax scale 12%% / 32%% (PIT-36)</string>
-    <string name="activity_type_jdg_liniowy">Registered JDG — flat tax 19%% (PIT-36L)</string>
+    <string name="activity_type_niezarejestrowana_desc" formatted="false">Income must stay under 75% of the minimum wage per month. If exceeded, you must register a JDG within 7 days. Filed via PIT-36, tax scale.</string>
+    <string name="activity_type_jdg_skala" formatted="false">Registered JDG — tax scale 12% / 32% (PIT-36)</string>
+    <string name="activity_type_jdg_liniowy" formatted="false">Registered JDG — flat tax 19% (PIT-36L)</string>
     <string name="activity_type_jdg_ryczalt">Registered JDG — lump-sum tax (PIT-28)</string>
-    <string name="ryczalt_rate_label">Lump-sum tax rate for your activity (%%, depends on PKD)</string>
+    <string name="ryczalt_rate_label" formatted="false">Lump-sum tax rate for your activity (%, depends on PKD)</string>
     <string name="ryczalt_rate_hint">e.g. 3, 5.5, 8.5, 12, 17</string>
     <string name="min_wage_label">Minimum monthly wage (zł) — used to calculate the unregistered-activity limit</string>
-    <string name="monthly_limit_preview">Monthly limit (75%%): %1$.2f zł</string>
+    <string name="monthly_limit_preview">Monthly limit (75%): %1$.2f zł</string>
 
     <!-- Main screen limit gauges -->
     <string name="limits_title">Limits</string>
@@ -219,10 +219,10 @@ Contact: p.arsenii@interia.pl</string>
     <string name="limit_exceeded_warning">You have exceeded the unregistered-activity limit! You must register a JDG within 7 days.</string>
 
     <!-- Dynamic tax label -->
-    <string name="tax_label_zero">Tax (0% — tax-free amount)</string>
-    <string name="tax_label_12">Tax (12%)</string>
-    <string name="tax_label_progressive">Tax (progressive scale 12% / 32%)</string>
-    <string name="tax_label_liniowy">Tax (flat 19%)</string>
+    <string name="tax_label_zero" formatted="false">Tax (0% — tax-free amount)</string>
+    <string name="tax_label_12" formatted="false">Tax (12%)</string>
+    <string name="tax_label_progressive" formatted="false">Tax (progressive scale 12% / 32%)</string>
+    <string name="tax_label_liniowy" formatted="false">Tax (flat 19%)</string>
     <string name="tax_label_ryczalt">Tax (lump-sum, of revenue)</string>
     <string name="pit_form_applicable">Applicable declaration: %1$s</string>
 
@@ -238,13 +238,13 @@ Contact: p.arsenii@interia.pl</string>
     <string name="notif_channel_name">Limits and deadlines</string>
     <string name="notif_channel_description">Alerts about activity limits and tax deadlines</string>
     <string name="notif_limit_exceeded_title">Unregistered activity limit exceeded</string>
-    <string name="notif_limit_exceeded_text">Your income this month exceeds 75% of the minimum wage. You must register a JDG within 7 days.</string>
-    <string name="notif_limit_95_title">95% of the monthly limit reached</string>
+    <string name="notif_limit_exceeded_text" formatted="false">Your income this month exceeds 75% of the minimum wage. You must register a JDG within 7 days.</string>
+    <string name="notif_limit_95_title" formatted="false">95% of the monthly limit reached</string>
     <string name="notif_limit_95_text">You are very close to the unregistered-activity limit for this month.</string>
-    <string name="notif_limit_80_title">80% of the monthly limit reached</string>
-    <string name="notif_limit_80_text">You have used 80% of the unregistered-activity limit for this month.</string>
+    <string name="notif_limit_80_title" formatted="false">80% of the monthly limit reached</string>
+    <string name="notif_limit_80_text" formatted="false">You have used 80% of the unregistered-activity limit for this month.</string>
     <string name="notif_bracket_title">Approaching the 120,000 zł threshold</string>
-    <string name="notif_bracket_text">Your yearly profit is close to 120,000 zł — income above this is taxed at 32% instead of 12%.</string>
+    <string name="notif_bracket_text" formatted="false">Your yearly profit is close to 120,000 zł — income above this is taxed at 32% instead of 12%.</string>
     <string name="notif_vat_title">Approaching the VAT exemption limit</string>
     <string name="notif_vat_text">Your yearly revenue is close to 200,000 zł — the VAT exemption threshold.</string>
     <string name="notif_advance_title">Advance tax payment reminder</string>

@@ -20,7 +20,7 @@
     <string name="other_income_hint">Twój łączny dochód podlegający opodatkowaniu w tym roku z innych źródeł (etat, inna działalność itd.). Uwzględniany razem z dochodem z tej aplikacji przy sprawdzaniu rocznego limitu wolnego od podatku 30 000 zł.</string>
     <string name="saved">Zapisano</string>
     <string name="auto_tax_button">Oblicz automatycznie</string>
-    <string name="auto_tax_result">Sugerowana stawka: %1$.1f%% (wg skali PIT: 12%% do 120 000 zł/rok, 32%% powyżej). Przed zapisaniem można poprawić ręcznie.</string>
+    <string name="auto_tax_result">Sugerowana stawka: %1$.1f% (wg skali PIT: 12% do 120 000 zł/rok, 32% powyżej). Przed zapisaniem można poprawić ręcznie.</string>
     <string name="export_report">Eksportuj raport</string>
     <string name="generate_report">Generuj raport</string>
     <string name="select_period">Wybierz okres</string>
@@ -35,12 +35,12 @@
     <string name="stat_income">Przychód</string>
     <string name="stat_expense">Wydatek</string>
     <string name="stat_profit">Zysk (brutto)</string>
-    <string name="stat_tax_format">Podatek (%1$.1f%%)</string>
+    <string name="stat_tax_format">Podatek (%1$.1f%)</string>
 
     <string name="report_col_date">Data</string>
     <string name="report_col_income">Przychód</string>
     <string name="report_col_expense">Wydatek</string>
-    <string name="report_col_tax_percent">Podatek %%</string>
+    <string name="report_col_tax_percent" formatted="false">Podatek %</string>
     <string name="report_col_tax_amount">Kwota podatku</string>
     <string name="report_col_comment">Komentarz</string>
     <string name="report_sheet_name">Raport</string>
@@ -190,14 +190,14 @@
     <string name="activity_type_title">Rodzaj działalności</string>
     <string name="activity_type_hint">Wybierz, jak działasz — od tego zależy stosowany limit i to, którą deklarację złożysz.</string>
     <string name="activity_type_niezarejestrowana">Działalność nierejestrowana (bez JDG)</string>
-    <string name="activity_type_niezarejestrowana_desc">Przychód nie może przekroczyć 75%% minimalnego wynagrodzenia miesięcznie. W razie przekroczenia musisz zarejestrować JDG w ciągu 7 dni. Rozliczenie przez PIT-36, skala podatkowa.</string>
-    <string name="activity_type_jdg_skala">Zarejestrowana JDG — skala 12%% / 32%% (PIT-36)</string>
-    <string name="activity_type_jdg_liniowy">Zarejestrowana JDG — podatek liniowy 19%% (PIT-36L)</string>
+    <string name="activity_type_niezarejestrowana_desc" formatted="false">Przychód nie może przekroczyć 75% minimalnego wynagrodzenia miesięcznie. W razie przekroczenia musisz zarejestrować JDG w ciągu 7 dni. Rozliczenie przez PIT-36, skala podatkowa.</string>
+    <string name="activity_type_jdg_skala" formatted="false">Zarejestrowana JDG — skala 12% / 32% (PIT-36)</string>
+    <string name="activity_type_jdg_liniowy" formatted="false">Zarejestrowana JDG — podatek liniowy 19% (PIT-36L)</string>
     <string name="activity_type_jdg_ryczalt">Zarejestrowana JDG — ryczałt (PIT-28)</string>
-    <string name="ryczalt_rate_label">Stawka ryczałtu dla Twojej działalności (%%, zależy od PKD)</string>
+    <string name="ryczalt_rate_label" formatted="false">Stawka ryczałtu dla Twojej działalności (%, zależy od PKD)</string>
     <string name="ryczalt_rate_hint">np. 3, 5.5, 8.5, 12, 17</string>
     <string name="min_wage_label">Minimalne wynagrodzenie miesięczne (zł) — do obliczenia limitu działalności nierejestrowanej</string>
-    <string name="monthly_limit_preview">Limit miesięczny (75%%): %1$.2f zł</string>
+    <string name="monthly_limit_preview">Limit miesięczny (75%): %1$.2f zł</string>
 
     <!-- Wskaźniki limitów na ekranie głównym -->
     <string name="limits_title">Limity</string>
@@ -207,10 +207,10 @@
     <string name="limit_exceeded_warning">Przekroczono limit działalności nierejestrowanej! Musisz zarejestrować JDG w ciągu 7 dni.</string>
 
     <!-- Dynamiczna etykieta podatku -->
-    <string name="tax_label_zero">Podatek (0% — kwota wolna)</string>
-    <string name="tax_label_12">Podatek (12%)</string>
-    <string name="tax_label_progressive">Podatek (skala progresywna 12% / 32%)</string>
-    <string name="tax_label_liniowy">Podatek (liniowy 19%)</string>
+    <string name="tax_label_zero" formatted="false">Podatek (0% — kwota wolna)</string>
+    <string name="tax_label_12" formatted="false">Podatek (12%)</string>
+    <string name="tax_label_progressive" formatted="false">Podatek (skala progresywna 12% / 32%)</string>
+    <string name="tax_label_liniowy" formatted="false">Podatek (liniowy 19%)</string>
     <string name="tax_label_ryczalt">Podatek (ryczałt, od przychodu)</string>
     <string name="pit_form_applicable">Właściwa deklaracja: %1$s</string>
 
@@ -226,13 +226,13 @@
     <string name="notif_channel_name">Limity i terminy</string>
     <string name="notif_channel_description">Powiadomienia o limitach działalności i terminach podatkowych</string>
     <string name="notif_limit_exceeded_title">Przekroczono limit działalności nierejestrowanej</string>
-    <string name="notif_limit_exceeded_text">Przychód w tym miesiącu przekracza 75% minimalnego wynagrodzenia. Zarejestruj JDG w ciągu 7 dni.</string>
-    <string name="notif_limit_95_title">Osiągnięto 95% limitu miesięcznego</string>
+    <string name="notif_limit_exceeded_text" formatted="false">Przychód w tym miesiącu przekracza 75% minimalnego wynagrodzenia. Zarejestruj JDG w ciągu 7 dni.</string>
+    <string name="notif_limit_95_title" formatted="false">Osiągnięto 95% limitu miesięcznego</string>
     <string name="notif_limit_95_text">Jesteś bardzo blisko limitu działalności nierejestrowanej na ten miesiąc.</string>
-    <string name="notif_limit_80_title">Osiągnięto 80% limitu miesięcznego</string>
-    <string name="notif_limit_80_text">Wykorzystano 80% limitu działalności nierejestrowanej na ten miesiąc.</string>
+    <string name="notif_limit_80_title" formatted="false">Osiągnięto 80% limitu miesięcznego</string>
+    <string name="notif_limit_80_text" formatted="false">Wykorzystano 80% limitu działalności nierejestrowanej na ten miesiąc.</string>
     <string name="notif_bracket_title">Zbliżasz się do progu 120 000 zł</string>
-    <string name="notif_bracket_text">Roczny dochód zbliża się do 120 000 zł — nadwyżka będzie opodatkowana stawką 32%% zamiast 12%%.</string>
+    <string name="notif_bracket_text" formatted="false">Roczny dochód zbliża się do 120 000 zł — nadwyżka będzie opodatkowana stawką 32% zamiast 12%.</string>
     <string name="notif_vat_title">Zbliżasz się do limitu zwolnienia z VAT</string>
     <string name="notif_vat_text">Roczny przychód zbliża się do 200 000 zł — progu zwolnienia z VAT.</string>
     <string name="notif_advance_title">Przypomnienie o zaliczce na podatek</string>
