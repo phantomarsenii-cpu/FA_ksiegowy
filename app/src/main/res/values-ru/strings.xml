@@ -8,6 +8,7 @@
     <string name="balance">Баланс</string>
     <string name="enter_amount">Сумма</string>
     <string name="enter_comment">Комментарий</string>
+    <string name="entry_date_label">Дата операции</string>
     <string name="attach_receipt">Прикрепить чек</string>
     <string name="save">Сохранить</string>
     <string name="settings">Настройки</string>
@@ -151,7 +152,12 @@
     <string name="pit_first_name">Имя</string>
     <string name="pit_last_name">Фамилия</string>
     <string name="pit_pesel">PESEL (необязательно)</string>
-    <string name="pit_street">Улица и номер дома/квартиры</string>
+    <string name="pit_street">Улица</string>
+    <string name="pit_house_number">Номер дома</string>
+    <string name="pit_apartment_number">Номер квартиры (необязательно)</string>
+    <string name="pit_voivodeship">Воеводство</string>
+    <string name="pit_county">Повят</string>
+    <string name="pit_commune">Гмина</string>
     <string name="pit_postal_code">Почтовый индекс</string>
     <string name="pit_city">Город</string>
     <string name="pit_tax_office">Налоговая инспекция (urząd skarbowy)</string>
@@ -175,4 +181,62 @@
     <string name="pit36_disclaimer">Этот отчёт носит исключительно информационный характер и не является официальным бланком PIT-36, e-Deklaracją или налоговой консультацией. Всегда перепроверяйте цифры перед подачей декларации.</string>
     <string name="pit36_calculating">Идёт расчёт, подождите…</string>
     <string name="pit36_generated">PDF-отчёт сформирован</string>
+    <string name="pit36_generate_official_button">Заполнить официальный бланк PIT-36 (шаблон 2025)</string>
+    <string name="pit36_official_hint">Заполняет настоящий государственный PDF PIT-36(32)/2025: ваши данные, адрес и строку доходов/расходов бизнеса. Остальные источники дохода и вычеты нужно дозаполнить самостоятельно — см. предупреждение ниже.</string>
+    <string name="pit36_official_unsupported">Официальный бланк доступен только для PIT-36 (skala). Ваша текущая форма — %1$s, используйте кнопку «Сформировать PDF-помощник PIT-36».</string>
+    <string name="pit36_official_generated">Официальный бланк PIT-36 заполнен. Проверьте разделы E–K и добавьте другие доходы/вычеты перед подачей.</string>
+
+    <!-- Тип деятельности / правила регистрации -->
+    <string name="activity_type_title">Форма деятельности</string>
+    <string name="activity_type_hint">Выберите, как вы работаете — от этого зависит применяемый лимит и то, какую декларацию подавать.</string>
+    <string name="activity_type_niezarejestrowana">Незарегистрированная деятельность (без JDG)</string>
+    <string name="activity_type_niezarejestrowana_desc">Доход не должен превышать 75%% минимальной зарплаты в месяц. При превышении нужно зарегистрировать JDG в течение 7 дней. Подаётся через PIT-36 по обычной шкале.</string>
+    <string name="activity_type_jdg_skala">Зарегистрированное ИП (JDG) — шкала 12%% / 32%% (PIT-36)</string>
+    <string name="activity_type_jdg_liniowy">Зарегистрированное ИП (JDG) — плоский налог 19%% (PIT-36L)</string>
+    <string name="activity_type_jdg_ryczalt">Зарегистрированное ИП (JDG) — ryczałt (PIT-28)</string>
+    <string name="ryczalt_rate_label">Ставка ryczałtu для вашей деятельности (%%, зависит от PKD)</string>
+    <string name="ryczalt_rate_hint">например 3, 5.5, 8.5, 12, 17</string>
+    <string name="min_wage_label">Минимальная месячная зарплата (zł) — для расчёта лимита незарегистрированной деятельности</string>
+    <string name="monthly_limit_preview">Месячный лимит (75%%): %1$.2f zł</string>
+
+    <!-- Гейджи лимитов на главном экране -->
+    <string name="limits_title">Лимиты</string>
+    <string name="limit_monthly_label">Незарегистрированная деятельность, этот месяц: %1$s / %2$s zł</string>
+    <string name="limit_bracket_label">Первый налоговый порог (120 000 zł/год): %1$s / %2$s zł</string>
+    <string name="limit_vat_label">Освобождение от VAT (200 000 zł/год): %1$s / %2$s zł</string>
+    <string name="limit_exceeded_warning">Превышен лимит незарегистрированной деятельности! Вы обязаны зарегистрировать JDG в течение 7 дней.</string>
+
+    <!-- Динамическая подпись налога -->
+    <string name="tax_label_zero">Налог (0% — необлагаемый минимум)</string>
+    <string name="tax_label_12">Налог (12%)</string>
+    <string name="tax_label_progressive">Налог (прогрессивная шкала 12% / 32%)</string>
+    <string name="tax_label_liniowy">Налог (плоский 19%)</string>
+    <string name="tax_label_ryczalt">Налог (ryczałt, от дохода)</string>
+    <string name="pit_form_applicable">Применимая декларация: %1$s</string>
+
+    <!-- Таблица истории -->
+    <string name="history_col_receipt">Чек</string>
+    <string name="history_col_amount">Сумма</string>
+
+    <!-- Колонки отчёта -->
+    <string name="report_col_receipt">Чек</string>
+    <string name="report_receipt_yes">Есть</string>
+
+    <!-- Уведомления -->
+    <string name="notif_channel_name">Лимиты и сроки</string>
+    <string name="notif_channel_description">Оповещения о лимитах деятельности и налоговых сроках</string>
+    <string name="notif_limit_exceeded_title">Превышен лимит незарегистрированной деятельности</string>
+    <string name="notif_limit_exceeded_text">Доход в этом месяце превышает 75% минимальной зарплаты. Зарегистрируйте JDG в течение 7 дней.</string>
+    <string name="notif_limit_95_title">Достигнуто 95% месячного лимита</string>
+    <string name="notif_limit_95_text">Вы очень близки к лимиту незарегистрированной деятельности за этот месяц.</string>
+    <string name="notif_limit_80_title">Достигнуто 80% месячного лимита</string>
+    <string name="notif_limit_80_text">Использовано 80% лимита незарегистрированной деятельности за этот месяц.</string>
+    <string name="notif_bracket_title">Приближение к порогу 120 000 zł</string>
+    <string name="notif_bracket_text">Годовая прибыль приближается к 120 000 zł — доход сверх этой суммы облагается по 32%% вместо 12%%.</string>
+    <string name="notif_vat_title">Приближение к лимиту освобождения от VAT</string>
+    <string name="notif_vat_text">Годовой доход приближается к 200 000 zł — порогу освобождения от VAT.</string>
+    <string name="notif_advance_title">Напоминание об авансовом платеже</string>
+    <string name="notif_advance_text">Авансовые платежи по налогу нужно вносить до 20 числа каждого месяца.</string>
+    <string name="notif_pit_deadline_title">Напоминание о подаче годовой декларации</string>
+    <string name="notif_pit_deadline_text">Годовые декларации подаются с 15 февраля по 30 апреля.</string>
 </resources>

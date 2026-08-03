@@ -26,7 +26,10 @@ class Pit36Activity : BaseActivity() {
     private var lastResult: Pit36Calculator.Result? = null
 
     private val createPdfLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/pdf")) { uri ->
-        if (uri != null) writePdfTo(uri)
+        if (uri != null) writePdfTo(uri, official = false)
+    }
+    private val createOfficialPdfLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/pdf")) { uri ->
+        if (uri != null) writePdfTo(uri, official = true)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +45,8 @@ class Pit36Activity : BaseActivity() {
         findViewById<Button>(R.id.btn_edit_pit_data).setOnClickListener {
             startActivity(android.content.Intent(this, PitDataActivity::class.java))
         }
-        findViewById<Button>(R.id.btn_generate_pit36).setOnClickListener { generateClicked() }
+        findViewById<Button>(R.id.btn_generate_pit36).setOnClickListener { generateClicked(official = false) }
+        findViewById<Button>(R.id.btn_generate_official_pit36).setOnClickListener { generateClicked(official = true) }
 
         refreshYearLabel()
     }
@@ -59,11 +63,13 @@ class Pit36Activity : BaseActivity() {
     private fun recalculate() {
         val prefs = getSharedPreferences("settings", MODE_PRIVATE)
         val otherIncome = TaxHelper.getOtherIncome(prefs, selectedYear)
+        val activityType = ActivityTypeHelper.get(prefs)
+        val ryczaltRate = ActivityTypeHelper.getRyczaltRate(prefs)
         CoroutineScope(Dispatchers.IO).launch {
             val db = AppDatabase.getInstance(applicationContext)
             val (start, endExclusive) = TaxHelper.yearRange(selectedYear)
             val entries = db.entryDao().getBetween(start, endExclusive - 1)
-            val result = Pit36Calculator.calculate(entries, selectedYear, otherIncome)
+            val result = Pit36Calculator.calculate(entries, selectedYear, otherIncome, activityType, ryczaltRate)
             withContext(Dispatchers.Main) {
                 lastResult = result
                 showResult(result)
@@ -77,6 +83,8 @@ class Pit36Activity : BaseActivity() {
         findViewById<TextView>(R.id.tv_pit_koszty).text = money(r.koszty)
         findViewById<TextView>(R.id.tv_pit_dochod).text = money(r.dochod)
         findViewById<TextView>(R.id.tv_pit_tax).text = money(r.tax.tax)
+        findViewById<TextView>(R.id.tv_pit_form_code)?.text =
+            getString(R.string.pit_form_applicable, r.activityType.formCode)
 
         val data = PitDataStore.load(this)
         findViewById<TextView>(R.id.tv_pit_data_status).text = if (data.isComplete) {
@@ -86,7 +94,7 @@ class Pit36Activity : BaseActivity() {
         }
     }
 
-    private fun generateClicked() {
+    private fun generateClicked(official: Boolean) {
         val data = PitDataStore.load(this)
         if (!data.isComplete) {
             Toast.makeText(this, getString(R.string.pit_data_required_error), Toast.LENGTH_LONG).show()
@@ -97,20 +105,40 @@ class Pit36Activity : BaseActivity() {
             Toast.makeText(this, getString(R.string.pit36_calculating), Toast.LENGTH_SHORT).show()
             return
         }
-        val dateForName = SimpleDateFormat("yyyyMMdd_HHmm", Locale.US).format(Date())
-        createPdfLauncher.launch("PIT-36_pomocniczy_${selectedYear}_$dateForName.pdf")
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+        val activityType = ActivityTypeHelper.get(prefs)
+        val formCode = activityType.formCode
+
+        if (official) {
+            if (!Pit36FormFiller.isSupported(activityType)) {
+                Toast.makeText(this, getString(R.string.pit36_official_unsupported, formCode), Toast.LENGTH_LONG).show()
+                return
+            }
+            createOfficialPdfLauncher.launch(FileNaming.pitFileName("${formCode}_OFFICIAL", selectedYear))
+        } else {
+            createPdfLauncher.launch(FileNaming.pitFileName(formCode, selectedYear))
+        }
     }
 
-    private fun writePdfTo(uri: Uri) {
+    private fun writePdfTo(uri: Uri, official: Boolean) {
         val data = PitDataStore.load(this)
         val result = lastResult ?: return
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                contentResolver.openOutputStream(uri)?.use { out ->
-                    Pit36PdfGenerator.generate(this@Pit36Activity, data, result, out)
-                } ?: throw java.io.IOException("openOutputStream returned null")
+                var usedOfficial = false
+                if (official) {
+                    contentResolver.openOutputStream(uri)?.use { out ->
+                        usedOfficial = Pit36FormFiller.fill(this@Pit36Activity, data, result, out)
+                    } ?: throw java.io.IOException("openOutputStream returned null")
+                }
+                if (!official || !usedOfficial) {
+                    contentResolver.openOutputStream(uri)?.use { out ->
+                        Pit36PdfGenerator.generate(this@Pit36Activity, data, result, out)
+                    } ?: throw java.io.IOException("openOutputStream returned null")
+                }
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@Pit36Activity, getString(R.string.pit36_generated), Toast.LENGTH_LONG).show()
+                    val msgRes = if (official && usedOfficial) R.string.pit36_official_generated else R.string.pit36_generated
+                    Toast.makeText(this@Pit36Activity, getString(msgRes), Toast.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {

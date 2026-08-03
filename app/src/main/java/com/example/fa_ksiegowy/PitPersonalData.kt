@@ -13,6 +13,11 @@ data class PitPersonalData(
     val lastName: String = "",
     val pesel: String = "",
     val street: String = "",
+    val houseNumber: String = "",
+    val apartmentNumber: String = "",
+    val voivodeship: String = "",
+    val county: String = "",
+    val commune: String = "",
     val postalCode: String = "",
     val city: String = "",
     val taxOffice: String = "",
@@ -36,6 +41,11 @@ object PitDataStore {
             lastName = p.getString("lastName", "") ?: "",
             pesel = p.getString("pesel", "") ?: "",
             street = p.getString("street", "") ?: "",
+            houseNumber = p.getString("houseNumber", "") ?: "",
+            apartmentNumber = p.getString("apartmentNumber", "") ?: "",
+            voivodeship = p.getString("voivodeship", "") ?: "",
+            county = p.getString("county", "") ?: "",
+            commune = p.getString("commune", "") ?: "",
             postalCode = p.getString("postalCode", "") ?: "",
             city = p.getString("city", "") ?: "",
             taxOffice = p.getString("taxOffice", "") ?: "",
@@ -53,6 +63,11 @@ object PitDataStore {
             .putString("lastName", data.lastName)
             .putString("pesel", data.pesel)
             .putString("street", data.street)
+            .putString("houseNumber", data.houseNumber)
+            .putString("apartmentNumber", data.apartmentNumber)
+            .putString("voivodeship", data.voivodeship)
+            .putString("county", data.county)
+            .putString("commune", data.commune)
             .putString("postalCode", data.postalCode)
             .putString("city", data.city)
             .putString("taxOffice", data.taxOffice)

@@ -75,7 +75,7 @@ object Pit36PdfGenerator {
         }
         val dateFmt = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
 
-        line("FinArs — dane pomocnicze do PIT-36 za ${result.year} r.", titlePaint, 26f)
+        line("FinArs — dane pomocnicze do ${result.activityType.formCode} za ${result.year} r.", titlePaint, 26f)
         line("Wygenerowano: ${dateFmt.format(Date())}", hintPaint, 20f)
 
         line("Dane podatnika", headerPaint, 20f)
@@ -86,8 +86,13 @@ object Pit36PdfGenerator {
         line("Sposób rozliczenia: " + if (personal.jointWithSpouse) "Wspólnie z małżonkiem" else "Indywidualnie")
         y += 8f
 
-        line("Działalność nierejestrowana — sekcja E.1 (Inne źródła)", headerPaint, 20f)
-        wrappedLines("Wiersz: „Działalność nierejestrowana, określona w art. 20 ust. 1ba ustawy”.")
+        if (result.activityType.isRegisteredJdg) {
+            line("Pozarolnicza działalność gospodarcza — sekcja E.1, wiersz 3", headerPaint, 20f)
+            wrappedLines("Wiersz: „Pozarolnicza działalność gospodarcza”.")
+        } else {
+            line("Działalność nierejestrowana — sekcja E.1, wiersz 8", headerPaint, 20f)
+            wrappedLines("Wiersz: „Działalność nierejestrowana, określona w art. 20 ust. 1ba ustawy”.")
+        }
         y += 4f
         line("Przychód (kolumna „Przychód”):  ${money(result.przychod)}")
         line("Koszty uzyskania przychodów (kolumna „Koszty uzyskania przychodów”):  ${money(result.koszty)}")
@@ -95,11 +100,21 @@ object Pit36PdfGenerator {
         y += 8f
 
         line("Inne dochody i podatek", headerPaint, 20f)
-        if (result.otherIncome > 0) {
-            line("Inne dochody podane w ustawieniach (np. PIT-11 z etatu): ${money(result.otherIncome)}")
+        when (result.activityType) {
+            ActivityType.NIEZAREJESTROWANA, ActivityType.JDG_SKALA -> {
+                if (result.otherIncome > 0) {
+                    line("Inne dochody podane w ustawieniach (np. PIT-11 z etatu): ${money(result.otherIncome)}")
+                }
+                line("Łączny dochód do opodatkowania: ${money(result.tax.totalTaxable)}")
+                wrappedLines("Skala podatkowa (PIT-36): 0% do 30 000 zł, 12% od nadwyżki ponad 30 000 zł do 120 000 zł, 32% od nadwyżki ponad 120 000 zł.")
+            }
+            ActivityType.JDG_LINIOWY -> {
+                wrappedLines("Podatek liniowy (PIT-36L): stała stawka 19% od całego dochodu, bez kwoty wolnej i bez progów.")
+            }
+            ActivityType.JDG_RYCZALT -> {
+                wrappedLines("Ryczałt od przychodów ewidencjonowanych (PIT-28): podatek liczony od PRZYCHODU (bez pomniejszania o koszty) według stawki właściwej dla wykonywanej działalności (PKD) — ustaw ją w Ustawieniach.")
+            }
         }
-        line("Łączny dochód do opodatkowania: ${money(result.tax.totalTaxable)}")
-        wrappedLines("Skala podatkowa: 0% do 30 000 zł, 12% od nadwyżki ponad 30 000 zł do 120 000 zł, 32% od nadwyżki ponad 120 000 zł.")
         line("Podatek przypadający na dochód z tej aplikacji (szacunkowo): ${money(result.tax.tax)}")
         y += 8f
 

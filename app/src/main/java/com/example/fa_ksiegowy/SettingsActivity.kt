@@ -21,23 +21,6 @@ class SettingsActivity : BaseActivity() {
         findViewById<Button>(R.id.btn_menu_language).setOnClickListener {
             startActivity(Intent(this, SettingsLanguageActivity::class.java))
         }
-        findViewById<Button>(R.id.btn_menu_security).setOnClickListener {
-            startActivity(Intent(this, SettingsSecurityActivity::class.java))
-        }
-        findViewById<Button>(R.id.btn_menu_pit36).setOnClickListener {
-            if (BillingManager.isPro(this)) {
-                startActivity(Intent(this, Pit36Activity::class.java))
-            } else {
-                AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.pro_feature_locked_title))
-                    .setMessage(getString(R.string.pit36_pro_locked_message))
-                    .setPositiveButton(getString(R.string.settings_menu_pro)) { _, _ ->
-                        startActivity(Intent(this, SettingsProActivity::class.java))
-                    }
-                    .setNegativeButton(getString(R.string.dialog_close), null)
-                    .show()
-            }
-        }
         findViewById<Button>(R.id.btn_menu_backup).setOnClickListener {
             if (BillingManager.isPro(this)) {
                 startActivity(Intent(this, SettingsBackupActivity::class.java))

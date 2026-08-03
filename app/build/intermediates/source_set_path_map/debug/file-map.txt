@@ -44,10 +44,10 @@ com.example.fa_ksiegowy.app-appcompat-resources-1.6.1-42 /data/data/com.termux/f
 com.example.fa_ksiegowy.app-play-services-ads-lite-23.6.0-43 /data/data/com.termux/files/home/.gradle/caches/transforms-3/d79af07bd35232319380b9b61611161c/transformed/play-services-ads-lite-23.6.0/res
 com.example.fa_ksiegowy.app-emoji2-1.2.0-44 /data/data/com.termux/files/home/.gradle/caches/transforms-3/de3939381745461388f211bf31fe1e1b/transformed/emoji2-1.2.0/res
 com.example.fa_ksiegowy.app-webkit-1.11.0-alpha02-45 /data/data/com.termux/files/home/.gradle/caches/transforms-3/f149242429af2ef2c1185e98a32322b4/transformed/webkit-1.11.0-alpha02/res
-com.example.fa_ksiegowy.app-pngs-46 /data/data/com.termux/files/home/FA_ksiegowy/app/build/generated/res/pngs/debug
-com.example.fa_ksiegowy.app-resValues-47 /data/data/com.termux/files/home/FA_ksiegowy/app/build/generated/res/resValues/debug
-com.example.fa_ksiegowy.app-packageDebugResources-48 /data/data/com.termux/files/home/FA_ksiegowy/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
-com.example.fa_ksiegowy.app-packageDebugResources-49 /data/data/com.termux/files/home/FA_ksiegowy/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
-com.example.fa_ksiegowy.app-merged_res-50 /data/data/com.termux/files/home/FA_ksiegowy/app/build/intermediates/merged_res/debug
-com.example.fa_ksiegowy.app-debug-51 /data/data/com.termux/files/home/FA_ksiegowy/app/src/debug/res
-com.example.fa_ksiegowy.app-main-52 /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/res
+com.example.fa_ksiegowy.app-pngs-46 /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/build/generated/res/pngs/debug
+com.example.fa_ksiegowy.app-resValues-47 /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/build/generated/res/resValues/debug
+com.example.fa_ksiegowy.app-packageDebugResources-48 /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.example.fa_ksiegowy.app-packageDebugResources-49 /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.example.fa_ksiegowy.app-merged_res-50 /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/build/intermediates/merged_res/debug
+com.example.fa_ksiegowy.app-debug-51 /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/debug/res
+com.example.fa_ksiegowy.app-main-52 /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/res

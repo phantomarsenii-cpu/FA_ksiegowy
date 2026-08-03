@@ -1,20 +1,20 @@
 -- Merging decision tree log ---
 provider#androidx.core.content.FileProvider
-INJECTED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:34:9-42:20
+INJECTED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:34:9-42:20
 	android:grantUriPermissions
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:38:13-47
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:38:13-47
 	android:authorities
-		INJECTED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:36:13-64
+		INJECTED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:36:13-64
 	android:exported
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:37:13-37
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:37:13-37
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:35:13-62
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:35:13-62
 manifest
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:2:1-44:12
-INJECTED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:2:1-44:12
-INJECTED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:2:1-44:12
-INJECTED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:2:1-44:12
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:2:1-44:12
 MERGED from [com.google.android.material:material:1.9.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/9247062b82ff3d3a123b491c1bf5408a/transformed/material-1.9.0/AndroidManifest.xml:17:1-26:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /data/data/com.termux/files/home/.gradle/caches/transforms-3/4c54f28b8c8a839fa726004895d0f6ce/transformed/constraintlayout-2.1.4/AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /data/data/com.termux/files/home/.gradle/caches/transforms-3/d412bdb63d630c2697f8161327f26297/transformed/appcompat-resources-1.6.1/AndroidManifest.xml:17:1-22:12
@@ -91,15 +91,15 @@ MERGED from [androidx.print:print:1.0.0] /data/data/com.termux/files/home/.gradl
 MERGED from [com.google.firebase:firebase-encoders-json:18.0.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/9836e0ead72c4807ed2631c37009cb1d/transformed/firebase-encoders-json-18.0.0/AndroidManifest.xml:15:1-23:12
 MERGED from [androidx.multidex:multidex:2.0.1] /data/data/com.termux/files/home/.gradle/caches/transforms-3/888757716807928b3879471c58047cbb/transformed/multidex-2.0.1/AndroidManifest.xml:17:1-22:12
 	package
-		INJECTED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml
+		INJECTED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml
 	android:versionName
-		INJECTED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml
+		INJECTED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml
 	android:versionCode
-		INJECTED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml
+		INJECTED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:2:11-69
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:2:11-69
 uses-permission#android.permission.INTERNET
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:4:5-67
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:4:5-67
 MERGED from [com.google.android.gms:play-services-ads-lite:23.6.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/d79af07bd35232319380b9b61611161c/transformed/play-services-ads-lite-23.6.0/AndroidManifest.xml:24:5-67
 MERGED from [com.google.android.gms:play-services-ads-lite:23.6.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/d79af07bd35232319380b9b61611161c/transformed/play-services-ads-lite-23.6.0/AndroidManifest.xml:24:5-67
 MERGED from [com.google.android.gms:play-services-measurement-sdk-api:20.1.2] /data/data/com.termux/files/home/.gradle/caches/transforms-3/82bc5d6a6385250227bfe10d297a8a8e/transformed/play-services-measurement-sdk-api-20.1.2/AndroidManifest.xml:23:5-67
@@ -107,16 +107,16 @@ MERGED from [com.google.android.gms:play-services-measurement-sdk-api:20.1.2] /d
 MERGED from [com.google.android.datatransport:transport-backend-cct:3.1.8] /data/data/com.termux/files/home/.gradle/caches/transforms-3/5f27b9332b64ca09667c5e8c91c081dd/transformed/transport-backend-cct-3.1.8/AndroidManifest.xml:25:5-67
 MERGED from [com.google.android.datatransport:transport-backend-cct:3.1.8] /data/data/com.termux/files/home/.gradle/caches/transforms-3/5f27b9332b64ca09667c5e8c91c081dd/transformed/transport-backend-cct-3.1.8/AndroidManifest.xml:25:5-67
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:4:22-64
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:4:22-64
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:5:5-108
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:5:5-108
 	android:maxSdkVersion
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:5:79-105
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:5:79-105
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:5:22-78
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:5:22-78
 application
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:7:5-43:19
-INJECTED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:7:5-43:19
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:7:5-43:19
+INJECTED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:7:5-43:19
 MERGED from [com.google.android.material:material:1.9.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/9247062b82ff3d3a123b491c1bf5408a/transformed/material-1.9.0/AndroidManifest.xml:24:5-20
 MERGED from [com.google.android.material:material:1.9.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/9247062b82ff3d3a123b491c1bf5408a/transformed/material-1.9.0/AndroidManifest.xml:24:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /data/data/com.termux/files/home/.gradle/caches/transforms-3/4c54f28b8c8a839fa726004895d0f6ce/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
@@ -166,101 +166,101 @@ MERGED from [com.google.android.datatransport:transport-backend-cct:3.1.8] /data
 MERGED from [com.google.android.datatransport:transport-runtime:3.1.8] /data/data/com.termux/files/home/.gradle/caches/transforms-3/f9edb3fba9a7841bb2e4ec4fde384a63/transformed/transport-runtime-3.1.8/AndroidManifest.xml:25:5-39:19
 MERGED from [com.google.android.datatransport:transport-runtime:3.1.8] /data/data/com.termux/files/home/.gradle/caches/transforms-3/f9edb3fba9a7841bb2e4ec4fde384a63/transformed/transport-runtime-3.1.8/AndroidManifest.xml:25:5-39:19
 	android:extractNativeLibs
-		INJECTED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml
+		INJECTED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.10.1] /data/data/com.termux/files/home/.gradle/caches/transforms-3/5043ddfcf32a53d837547a7825860f4f/transformed/core-1.10.1/AndroidManifest.xml:28:18-86
 	android:label
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:10:9-41
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:10:9-41
 	android:roundIcon
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:12:9-54
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:12:9-54
 	android:icon
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:11:9-43
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:11:9-43
 	android:allowBackup
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:9:9-35
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:9:9-35
 	android:theme
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:13:9-40
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:13:9-40
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:8:9-30
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:8:9-30
 meta-data#com.google.android.gms.ads.APPLICATION_ID
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:16:9-18:70
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:16:9-18:70
 	android:value
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:18:13-67
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:18:13-67
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:17:13-69
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:17:13-69
 activity#com.example.fa_ksiegowy.SettingsActivity
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:20:9-79
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:20:9-79
 	android:exported
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:20:52-76
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:20:52-76
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:20:19-51
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:20:19-51
 activity#com.example.fa_ksiegowy.SettingsProActivity
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:21:9-82
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:21:9-82
 	android:exported
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:21:55-79
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:21:55-79
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:21:19-54
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:21:19-54
 activity#com.example.fa_ksiegowy.SettingsBackupActivity
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:22:9-85
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:22:9-85
 	android:exported
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:22:58-82
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:22:58-82
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:22:19-57
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:22:19-57
 activity#com.example.fa_ksiegowy.SettingsLanguageActivity
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:23:9-87
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:23:9-87
 	android:exported
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:23:60-84
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:23:60-84
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:23:19-59
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:23:19-59
 activity#com.example.fa_ksiegowy.SettingsTaxActivity
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:24:9-82
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:24:9-82
 	android:exported
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:24:55-79
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:24:55-79
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:24:19-54
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:24:19-54
 activity#com.example.fa_ksiegowy.AddEntryActivity
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:25:9-79
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:25:9-79
 	android:exported
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:25:52-76
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:25:52-76
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:25:19-51
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:25:19-51
 activity#com.example.fa_ksiegowy.ReportActivity
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:26:9-77
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:26:9-77
 	android:exported
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:26:50-74
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:26:50-74
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:26:19-49
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:26:19-49
 activity#com.example.fa_ksiegowy.HistoryActivity
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:27:9-78
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:27:9-78
 	android:exported
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:27:51-75
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:27:51-75
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:27:19-50
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:27:19-50
 activity#com.example.fa_ksiegowy.MineActivity
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:28:9-33:20
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:28:9-33:20
 	android:exported
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:28:48-71
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:28:48-71
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:28:19-47
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:28:19-47
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:29:13-32:29
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:29:13-32:29
 action#android.intent.action.MAIN
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:30:17-69
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:30:17-69
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:30:25-66
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:30:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:31:17-77
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:31:17-77
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:31:27-74
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:31:27-74
 meta-data#android.support.FILE_PROVIDER_PATHS
-ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:39:13-41:54
+ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:39:13-41:54
 	android:resource
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:41:17-51
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:41:17-51
 	android:name
-		ADDED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:40:17-67
+		ADDED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:40:17-67
 uses-sdk
-INJECTED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml
-INJECTED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml
+INJECTED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml
+INJECTED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml
 MERGED from [com.google.android.material:material:1.9.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/9247062b82ff3d3a123b491c1bf5408a/transformed/material-1.9.0/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.android.material:material:1.9.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/9247062b82ff3d3a123b491c1bf5408a/transformed/material-1.9.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /data/data/com.termux/files/home/.gradle/caches/transforms-3/4c54f28b8c8a839fa726004895d0f6ce/transformed/constraintlayout-2.1.4/AndroidManifest.xml:5:5-7:41
@@ -414,9 +414,9 @@ MERGED from [androidx.multidex:multidex:2.0.1] /data/data/com.termux/files/home/
 	tools:overrideLibrary
 		ADDED from [com.google.android.gms:play-services-ads:23.6.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/43ebd7a6d56bb2938e0fb9a6e96e6d52/transformed/play-services-ads-23.6.0/AndroidManifest.xml:23:9-49
 	android:targetSdkVersion
-		INJECTED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml
+		INJECTED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml
+		INJECTED from /storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml
 uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from [com.google.android.gms:play-services-ads-lite:23.6.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/d79af07bd35232319380b9b61611161c/transformed/play-services-ads-lite-23.6.0/AndroidManifest.xml:25:5-79
 MERGED from [com.google.android.gms:play-services-measurement-sdk-api:20.1.2] /data/data/com.termux/files/home/.gradle/caches/transforms-3/82bc5d6a6385250227bfe10d297a8a8e/transformed/play-services-measurement-sdk-api-20.1.2/AndroidManifest.xml:24:5-79

@@ -9,14 +9,14 @@
 9        android:targetSdkVersion="34" />
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:4:5-67
-11-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:4:22-64
+11-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:4:5-67
+11-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:4:22-64
 12    <uses-permission
-12-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:5:5-108
+12-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:5:5-108
 13        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-13-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:5:22-78
+13-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:5:22-78
 14        android:maxSdkVersion="28" />
-14-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:5:79-105
+14-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:5:79-105
 15    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 15-->[com.google.android.gms:play-services-ads-lite:23.6.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/d79af07bd35232319380b9b61611161c/transformed/play-services-ads-lite-23.6.0/AndroidManifest.xml:25:5-79
 15-->[com.google.android.gms:play-services-ads-lite:23.6.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/d79af07bd35232319380b9b61611161c/transformed/play-services-ads-lite-23.6.0/AndroidManifest.xml:25:22-76
@@ -125,113 +125,113 @@
 69-->[androidx.core:core:1.10.1] /data/data/com.termux/files/home/.gradle/caches/transforms-3/5043ddfcf32a53d837547a7825860f4f/transformed/core-1.10.1/AndroidManifest.xml:26:22-94
 70
 71    <application
-71-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:7:5-43:19
+71-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:7:5-43:19
 72        android:name="com.example.fa_ksiegowy.FaApp"
-72-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:8:9-30
+72-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:8:9-30
 73        android:allowBackup="true"
-73-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:9:9-35
+73-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:9:9-35
 74        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 74-->[androidx.core:core:1.10.1] /data/data/com.termux/files/home/.gradle/caches/transforms-3/5043ddfcf32a53d837547a7825860f4f/transformed/core-1.10.1/AndroidManifest.xml:28:18-86
 75        android:debuggable="true"
 76        android:extractNativeLibs="false"
 77        android:icon="@mipmap/ic_launcher"
-77-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:11:9-43
+77-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:11:9-43
 78        android:label="@string/app_name"
-78-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:10:9-41
+78-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:10:9-41
 79        android:roundIcon="@mipmap/ic_launcher_round"
-79-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:12:9-54
+79-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:12:9-54
 80        android:theme="@style/Theme.FA" >
-80-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:13:9-40
+80-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:13:9-40
 81
 82        <!-- ЗАМЕНИТЬ на реальный AdMob App ID из консоли AdMob (Apps -> Ваше приложение -> App settings) -->
 83        <meta-data
-83-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:16:9-18:70
+83-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:16:9-18:70
 84            android:name="com.google.android.gms.ads.APPLICATION_ID"
-84-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:17:13-69
+84-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:17:13-69
 85            android:value="ca-app-pub-9218963926031039~6835956339" />
-85-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:18:13-67
+85-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:18:13-67
 86
 87        <activity
-87-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:20:9-79
+87-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:20:9-79
 88            android:name="com.example.fa_ksiegowy.SettingsActivity"
-88-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:20:19-51
+88-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:20:19-51
 89            android:exported="false" />
-89-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:20:52-76
+89-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:20:52-76
 90        <activity
-90-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:21:9-82
+90-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:21:9-82
 91            android:name="com.example.fa_ksiegowy.SettingsProActivity"
-91-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:21:19-54
+91-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:21:19-54
 92            android:exported="false" />
-92-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:21:55-79
+92-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:21:55-79
 93        <activity
-93-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:22:9-85
+93-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:22:9-85
 94            android:name="com.example.fa_ksiegowy.SettingsBackupActivity"
-94-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:22:19-57
+94-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:22:19-57
 95            android:exported="false" />
-95-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:22:58-82
+95-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:22:58-82
 96        <activity
-96-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:23:9-87
+96-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:23:9-87
 97            android:name="com.example.fa_ksiegowy.SettingsLanguageActivity"
-97-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:23:19-59
+97-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:23:19-59
 98            android:exported="false" />
-98-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:23:60-84
+98-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:23:60-84
 99        <activity
-99-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:24:9-82
+99-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:24:9-82
 100            android:name="com.example.fa_ksiegowy.SettingsTaxActivity"
-100-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:24:19-54
+100-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:24:19-54
 101            android:exported="false" />
-101-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:24:55-79
+101-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:24:55-79
 102        <activity
-102-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:25:9-79
+102-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:25:9-79
 103            android:name="com.example.fa_ksiegowy.AddEntryActivity"
-103-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:25:19-51
+103-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:25:19-51
 104            android:exported="false" />
-104-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:25:52-76
+104-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:25:52-76
 105        <activity
-105-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:26:9-77
+105-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:26:9-77
 106            android:name="com.example.fa_ksiegowy.ReportActivity"
-106-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:26:19-49
+106-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:26:19-49
 107            android:exported="false" />
-107-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:26:50-74
+107-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:26:50-74
 108        <activity
-108-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:27:9-78
+108-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:27:9-78
 109            android:name="com.example.fa_ksiegowy.HistoryActivity"
-109-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:27:19-50
+109-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:27:19-50
 110            android:exported="false" />
-110-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:27:51-75
+110-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:27:51-75
 111        <activity
-111-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:28:9-33:20
+111-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:28:9-33:20
 112            android:name="com.example.fa_ksiegowy.MineActivity"
-112-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:28:19-47
+112-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:28:19-47
 113            android:exported="true" >
-113-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:28:48-71
+113-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:28:48-71
 114            <intent-filter>
-114-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:29:13-32:29
+114-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:29:13-32:29
 115                <action android:name="android.intent.action.MAIN" />
-115-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:30:17-69
-115-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:30:25-66
+115-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:30:17-69
+115-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:30:25-66
 116
 117                <category android:name="android.intent.category.LAUNCHER" />
-117-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:31:17-77
-117-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:31:27-74
+117-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:31:17-77
+117-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:31:27-74
 118            </intent-filter>
 119        </activity>
 120
 121        <provider
 122            android:name="androidx.core.content.FileProvider"
-122-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:35:13-62
+122-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:35:13-62
 123            android:authorities="com.example.fa_ksiegowy.fileprovider"
-123-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:36:13-64
+123-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:36:13-64
 124            android:exported="false"
-124-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:37:13-37
+124-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:37:13-37
 125            android:grantUriPermissions="true" >
-125-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:38:13-47
+125-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:38:13-47
 126            <meta-data
-126-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:39:13-41:54
+126-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:39:13-41:54
 127                android:name="android.support.FILE_PROVIDER_PATHS"
-127-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:40:17-67
+127-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:40:17-67
 128                android:resource="@xml/file_paths" />
-128-->/data/data/com.termux/files/home/FA_ksiegowy/app/src/main/AndroidManifest.xml:41:17-51
+128-->/storage/emulated/0/Download/DENIED/FA_ksiegowy_fixed-1 1/app/src/main/AndroidManifest.xml:41:17-51
 129        </provider>
 130        <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
 131        <activity

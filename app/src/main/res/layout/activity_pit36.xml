@@ -28,6 +28,10 @@
             android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"/>
     </LinearLayout>
 
+    <TextView android:id="@+id/tv_pit_form_code" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textSize="13sp" android:textStyle="bold"
+        android:textColor="@color/accent_cyan" android:layout_marginBottom="12dp"/>
+
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical" android:background="@drawable/card_bg" android:padding="16dp"
         android:layout_marginBottom="20dp">
@@ -74,7 +78,16 @@
     <Button android:id="@+id/btn_generate_pit36" android:layout_width="match_parent" android:layout_height="56dp"
         android:text="@string/pit36_generate_button" android:textAllCaps="false" android:textSize="16sp"
         android:textColor="@color/text_primary" android:background="@drawable/btn_pill_primary"
-        android:layout_marginBottom="14dp"/>
+        android:layout_marginBottom="10dp"/>
+
+    <Button android:id="@+id/btn_generate_official_pit36" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/pit36_generate_official_button" android:textAllCaps="false" android:textSize="15sp"
+        android:textColor="@color/accent_cyan" android:background="@drawable/btn_pill_outline"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="@string/pit36_official_hint" android:textSize="11sp"
+        android:textColor="@color/text_hint" android:layout_marginBottom="14dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
         android:text="@string/pit36_disclaimer" android:textSize="11sp"

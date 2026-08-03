@@ -6,7 +6,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 
-/** Форма личных данных, нужных для отчёта PIT-36 (см. Pit36PdfGenerator). */
+/** Форма личных данных, нужных для отчёта PIT-36 (см. Pit36PdfGenerator, Pit36FormFiller). */
 class PitDataActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,6 +18,11 @@ class PitDataActivity : BaseActivity() {
         findViewById<EditText>(R.id.et_last_name).setText(data.lastName)
         findViewById<EditText>(R.id.et_pesel).setText(data.pesel)
         findViewById<EditText>(R.id.et_street).setText(data.street)
+        findViewById<EditText>(R.id.et_house_number).setText(data.houseNumber)
+        findViewById<EditText>(R.id.et_apartment_number).setText(data.apartmentNumber)
+        findViewById<EditText>(R.id.et_voivodeship).setText(data.voivodeship)
+        findViewById<EditText>(R.id.et_county).setText(data.county)
+        findViewById<EditText>(R.id.et_commune).setText(data.commune)
         findViewById<EditText>(R.id.et_postal_code).setText(data.postalCode)
         findViewById<EditText>(R.id.et_city).setText(data.city)
         findViewById<EditText>(R.id.et_tax_office).setText(data.taxOffice)
@@ -49,6 +54,11 @@ class PitDataActivity : BaseActivity() {
             lastName = lastName,
             pesel = text(R.id.et_pesel),
             street = text(R.id.et_street),
+            houseNumber = text(R.id.et_house_number),
+            apartmentNumber = text(R.id.et_apartment_number),
+            voivodeship = text(R.id.et_voivodeship),
+            county = text(R.id.et_county),
+            commune = text(R.id.et_commune),
             postalCode = text(R.id.et_postal_code),
             city = text(R.id.et_city),
             taxOffice = taxOffice,

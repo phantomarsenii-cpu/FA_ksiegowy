@@ -20,6 +20,11 @@
     <EditText android:id="@+id/et_pesel" style="@style/PitInput" android:hint="@string/pit_pesel"
         android:inputType="number" android:maxLength="11"/>
     <EditText android:id="@+id/et_street" style="@style/PitInput" android:hint="@string/pit_street"/>
+    <EditText android:id="@+id/et_house_number" style="@style/PitInput" android:hint="@string/pit_house_number"/>
+    <EditText android:id="@+id/et_apartment_number" style="@style/PitInput" android:hint="@string/pit_apartment_number"/>
+    <EditText android:id="@+id/et_voivodeship" style="@style/PitInput" android:hint="@string/pit_voivodeship"/>
+    <EditText android:id="@+id/et_county" style="@style/PitInput" android:hint="@string/pit_county"/>
+    <EditText android:id="@+id/et_commune" style="@style/PitInput" android:hint="@string/pit_commune"/>
     <EditText android:id="@+id/et_postal_code" style="@style/PitInput" android:hint="@string/pit_postal_code"/>
     <EditText android:id="@+id/et_city" style="@style/PitInput" android:hint="@string/pit_city"/>
     <EditText android:id="@+id/et_tax_office" style="@style/PitInput" android:hint="@string/pit_tax_office"/>

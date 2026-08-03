@@ -30,6 +30,7 @@ class FaApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        LimitsNotificationWorker.createChannel(this)
         val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
             try {

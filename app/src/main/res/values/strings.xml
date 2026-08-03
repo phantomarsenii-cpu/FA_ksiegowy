@@ -8,6 +8,7 @@
     <string name="balance">Balance</string>
     <string name="enter_amount">Amount</string>
     <string name="enter_comment">Comment</string>
+    <string name="entry_date_label">Transaction date</string>
     <string name="attach_receipt">Attach receipt</string>
     <string name="save">Save</string>
     <string name="settings">Settings</string>
@@ -163,7 +164,12 @@ Contact: p.arsenii@interia.pl</string>
     <string name="pit_first_name">First name</string>
     <string name="pit_last_name">Last name</string>
     <string name="pit_pesel">PESEL (optional)</string>
-    <string name="pit_street">Street and house/apartment number</string>
+    <string name="pit_street">Street</string>
+    <string name="pit_house_number">House number</string>
+    <string name="pit_apartment_number">Apartment number (optional)</string>
+    <string name="pit_voivodeship">Voivodeship</string>
+    <string name="pit_county">County (powiat)</string>
+    <string name="pit_commune">Commune (gmina)</string>
     <string name="pit_postal_code">Postal code</string>
     <string name="pit_city">City</string>
     <string name="pit_tax_office">Tax office (urząd skarbowy)</string>
@@ -187,4 +193,62 @@ Contact: p.arsenii@interia.pl</string>
     <string name="pit36_disclaimer">This report is informational only and is not an official PIT-36 form, e-Deklaracja or tax advice. Always double-check the numbers before submitting your declaration.</string>
     <string name="pit36_calculating">Still calculating, please wait…</string>
     <string name="pit36_generated">PDF report generated</string>
+    <string name="pit36_generate_official_button">Fill official PIT-36 form (2025 template)</string>
+    <string name="pit36_official_hint">Fills the real PIT-36(32)/2025 government PDF: your ID, address and business income/expenses row. You still need to add other income sources and any deductions yourself before submitting — see the disclaimer below.</string>
+    <string name="pit36_official_unsupported">The official form is only available for PIT-36 (skala). Your current form is %1$s — use "Generate PIT-36 helper PDF" instead.</string>
+    <string name="pit36_official_generated">Official PIT-36 form filled. Please review sections E–K and add other income/deductions before submitting.</string>
+
+    <!-- Activity type / registration rules -->
+    <string name="activity_type_title">Activity type</string>
+    <string name="activity_type_hint">Choose how you operate — this decides which limit applies and which annual form you should file.</string>
+    <string name="activity_type_niezarejestrowana">Unregistered activity (bez rejestracji JDG)</string>
+    <string name="activity_type_niezarejestrowana_desc">Income must stay under 75% of the minimum wage per month. If exceeded, you must register a JDG within 7 days. Filed via PIT-36, tax scale.</string>
+    <string name="activity_type_jdg_skala">Registered JDG — tax scale 12%% / 32%% (PIT-36)</string>
+    <string name="activity_type_jdg_liniowy">Registered JDG — flat tax 19%% (PIT-36L)</string>
+    <string name="activity_type_jdg_ryczalt">Registered JDG — lump-sum tax (PIT-28)</string>
+    <string name="ryczalt_rate_label">Lump-sum tax rate for your activity (%%, depends on PKD)</string>
+    <string name="ryczalt_rate_hint">e.g. 3, 5.5, 8.5, 12, 17</string>
+    <string name="min_wage_label">Minimum monthly wage (zł) — used to calculate the unregistered-activity limit</string>
+    <string name="monthly_limit_preview">Monthly limit (75%%): %1$.2f zł</string>
+
+    <!-- Main screen limit gauges -->
+    <string name="limits_title">Limits</string>
+    <string name="limit_monthly_label">Unregistered activity, this month: %1$s / %2$s zł</string>
+    <string name="limit_bracket_label">First tax bracket (120,000 zł/year): %1$s / %2$s zł</string>
+    <string name="limit_vat_label">VAT exemption (200,000 zł/year): %1$s / %2$s zł</string>
+    <string name="limit_exceeded_warning">You have exceeded the unregistered-activity limit! You must register a JDG within 7 days.</string>
+
+    <!-- Dynamic tax label -->
+    <string name="tax_label_zero">Tax (0% — tax-free amount)</string>
+    <string name="tax_label_12">Tax (12%)</string>
+    <string name="tax_label_progressive">Tax (progressive scale 12% / 32%)</string>
+    <string name="tax_label_liniowy">Tax (flat 19%)</string>
+    <string name="tax_label_ryczalt">Tax (lump-sum, of revenue)</string>
+    <string name="pit_form_applicable">Applicable declaration: %1$s</string>
+
+    <!-- History table -->
+    <string name="history_col_receipt">Receipt</string>
+    <string name="history_col_amount">Amount</string>
+
+    <!-- Report columns -->
+    <string name="report_col_receipt">Receipt</string>
+    <string name="report_receipt_yes">Yes</string>
+
+    <!-- Notifications -->
+    <string name="notif_channel_name">Limits and deadlines</string>
+    <string name="notif_channel_description">Alerts about activity limits and tax deadlines</string>
+    <string name="notif_limit_exceeded_title">Unregistered activity limit exceeded</string>
+    <string name="notif_limit_exceeded_text">Your income this month exceeds 75% of the minimum wage. You must register a JDG within 7 days.</string>
+    <string name="notif_limit_95_title">95% of the monthly limit reached</string>
+    <string name="notif_limit_95_text">You are very close to the unregistered-activity limit for this month.</string>
+    <string name="notif_limit_80_title">80% of the monthly limit reached</string>
+    <string name="notif_limit_80_text">You have used 80% of the unregistered-activity limit for this month.</string>
+    <string name="notif_bracket_title">Approaching the 120,000 zł threshold</string>
+    <string name="notif_bracket_text">Your yearly profit is close to 120,000 zł — income above this is taxed at 32% instead of 12%.</string>
+    <string name="notif_vat_title">Approaching the VAT exemption limit</string>
+    <string name="notif_vat_text">Your yearly revenue is close to 200,000 zł — the VAT exemption threshold.</string>
+    <string name="notif_advance_title">Advance tax payment reminder</string>
+    <string name="notif_advance_text">Advance tax payments are due by the 20th of the month.</string>
+    <string name="notif_pit_deadline_title">Annual tax return reminder</string>
+    <string name="notif_pit_deadline_text">Annual tax returns are due between 15 February and 30 April.</string>
 </resources>

@@ -11,15 +11,4 @@
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorHint">@color/text_hint</item>
     </style>
-
-    <style name="PitInput">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">56dp</item>
-        <item name="android:background">@drawable/input_field_bg</item>
-        <item name="android:paddingStart">18dp</item>
-        <item name="android:paddingEnd">18dp</item>
-        <item name="android:textColor">@color/text_primary</item>
-        <item name="android:textColorHint">@color/text_hint</item>
-        <item name="android:layout_marginBottom">12dp</item>
-    </style>
 </resources>
