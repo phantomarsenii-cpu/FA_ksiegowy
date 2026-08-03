@@ -31,6 +31,11 @@
         android:textColor="@color/text_primary" android:background="@drawable/btn_pill_primary"
         android:layout_marginBottom="14dp"/>
 
+    <Button android:id="@+id/btn_menu_terms" android:layout_width="match_parent" android:layout_height="56dp"
+        android:text="@string/settings_menu_terms" android:textAllCaps="false" android:textSize="16sp"
+        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"
+        android:layout_marginBottom="14dp"/>
+
     <View android:layout_width="match_parent" android:layout_height="1dp"
         android:background="#2A2E60" android:layout_marginTop="10dp" android:layout_marginBottom="24dp"/>
 

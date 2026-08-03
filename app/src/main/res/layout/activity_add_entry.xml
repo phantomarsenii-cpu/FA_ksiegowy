@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:padding="24dp">
 
     <TextView
@@ -76,6 +81,20 @@
         android:inputType="text"/>
 
     <Button
+        android:id="@+id/btn_date"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginBottom="14dp"
+        android:background="@drawable/input_field_bg"
+        android:text="@string/entry_date_label"
+        android:textAllCaps="false"
+        android:textColor="@color/text_primary"
+        android:textSize="15sp"
+        android:gravity="start|center_vertical"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"/>
+
+    <Button
         android:id="@+id/btn_attach"
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -88,11 +107,6 @@
         android:gravity="start|center_vertical"
         android:paddingStart="18dp"
         android:paddingEnd="18dp"/>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
 
     <Button
         android:id="@+id/btn_delete"
@@ -118,3 +132,4 @@
         android:textStyle="bold"/>
 
 </LinearLayout>
+</ScrollView>

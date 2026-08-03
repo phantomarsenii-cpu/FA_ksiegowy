@@ -38,6 +38,11 @@ class SettingsActivity : BaseActivity() {
         findViewById<Button>(R.id.btn_menu_pro).setOnClickListener {
             startActivity(Intent(this, SettingsProActivity::class.java))
         }
+        findViewById<Button>(R.id.btn_menu_terms).setOnClickListener {
+            val i = Intent(this, TermsActivity::class.java)
+            i.putExtra(TermsActivity.EXTRA_READ_ONLY, true)
+            startActivity(i)
+        }
         findViewById<Button>(R.id.btn_menu_about).setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle(getString(R.string.about_app))

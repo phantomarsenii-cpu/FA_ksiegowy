@@ -20,7 +20,7 @@
     <string name="other_income_hint">Twój łączny dochód podlegający opodatkowaniu w tym roku z innych źródeł (etat, inna działalność itd.). Uwzględniany razem z dochodem z tej aplikacji przy sprawdzaniu rocznego limitu wolnego od podatku 30 000 zł.</string>
     <string name="saved">Zapisano</string>
     <string name="auto_tax_button">Oblicz automatycznie</string>
-    <string name="auto_tax_result">Sugerowana stawka: %1$.1f% (wg skali PIT: 12% do 120 000 zł/rok, 32% powyżej). Przed zapisaniem można poprawić ręcznie.</string>
+    <string name="auto_tax_result" formatted="false">Sugerowana stawka: %1$.1f% (wg skali PIT: 12% do 120 000 zł/rok, 32% powyżej). Przed zapisaniem można poprawić ręcznie.</string>
     <string name="export_report">Eksportuj raport</string>
     <string name="generate_report">Generuj raport</string>
     <string name="select_period">Wybierz okres</string>
@@ -35,7 +35,7 @@
     <string name="stat_income">Przychód</string>
     <string name="stat_expense">Wydatek</string>
     <string name="stat_profit">Zysk (brutto)</string>
-    <string name="stat_tax_format">Podatek (%1$.1f%)</string>
+    <string name="stat_tax_format" formatted="false">Podatek (%1$.1f%)</string>
 
     <string name="report_col_date">Data</string>
     <string name="report_col_income">Przychód</string>
@@ -197,7 +197,7 @@
     <string name="ryczalt_rate_label" formatted="false">Stawka ryczałtu dla Twojej działalności (%, zależy od PKD)</string>
     <string name="ryczalt_rate_hint">np. 3, 5.5, 8.5, 12, 17</string>
     <string name="min_wage_label">Minimalne wynagrodzenie miesięczne (zł) — do obliczenia limitu działalności nierejestrowanej</string>
-    <string name="monthly_limit_preview">Limit miesięczny (75%): %1$.2f zł</string>
+    <string name="monthly_limit_preview" formatted="false">Limit miesięczny (75%): %1$.2f zł</string>
 
     <!-- Wskaźniki limitów na ekranie głównym -->
     <string name="limits_title">Limity</string>
@@ -239,4 +239,11 @@
     <string name="notif_advance_text">Zaliczki na podatek należy wpłacać do 20 dnia każdego miesiąca.</string>
     <string name="notif_pit_deadline_title">Przypomnienie o rocznym zeznaniu podatkowym</string>
     <string name="notif_pit_deadline_text">Roczne zeznania podatkowe składa się od 15 lutego do 30 kwietnia.</string>
+    <string name="terms_title">Regulamin</string>
+    <string name="terms_full_text">Regulamin i wyłączenie odpowiedzialności (Terms of Service &amp; Legal Disclaimer)\n\nKlikając „Akceptuję”, potwierdzasz, że przeczytałeś/aś, zrozumiałeś/aś i w pełni akceptujesz warunki niniejszego regulaminu. Jeśli się nie zgadzasz, nie masz prawa korzystać z aplikacji FinArs.\n\n1. Wyłączenie usług księgowych i prawnych\n— Aplikacja FinArs jest wyłącznie narzędziem (kalkulatorem i organizerem danych).\n— Aplikacja, jej twórcy i właściciele NIE są akredytowanym biurem rachunkowym, doradcą podatkowym ani kancelarią prawną.\n— Wszystkie obliczenia i automatyczne generowanie deklaracji (PIT-36, PIT-36L, PIT-28) mają charakter wyłącznie informacyjny.\n\n2. Odpowiedzialność za dane\nUżytkownik ponosi pełną odpowiedzialność za poprawność wprowadzanych danych, weryfikację obliczeń i formularzy PDF przed złożeniem do urzędu skarbowego oraz za terminowość rozliczeń.\n\n3. Ograniczenie odpowiedzialności\nAplikacja jest dostarczana „tak jak jest”, bez żadnych gwarancji. Twórca nie odpowiada za kary, zaległości podatkowe, błędy algorytmów ani utratę danych na urządzeniu.\n\n4. Zmiany w przepisach\nPrzepisy podatkowe RP ulegają zmianom — zalecana jest weryfikacja na podatki.gov.pl lub u licencjonowanego księgowego.\n\n5. Poufność danych\nWszystkie dane i pliki PDF są przechowywane lokalnie na urządzeniu użytkownika.\n\n6. Prawo właściwe\nZastosowanie ma prawo Rzeczypospolitej Polskiej.\n\n7. Wycofanie zgody\nRegulamin akceptowany jest jednorazowo przy pierwszym uruchomieniu. Brak zgody oznacza obowiązek zaprzestania korzystania z aplikacji i jej usunięcia.</string>
+    <string name="terms_checkbox_label">Przeczytałem/am i akceptuję regulamin</string>
+    <string name="terms_accept_button">Akceptuję i kontynuuję</string>
+    <string name="terms_status_accepted">Status: Regulamin zaakceptowano (%1$s)</string>
+    <string name="terms_status_unknown">Status: Regulamin zaakceptowano</string>
+    <string name="settings_menu_terms">Regulamin</string>
 </resources>

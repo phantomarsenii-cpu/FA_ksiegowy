@@ -20,7 +20,7 @@
     <string name="other_income_hint">Your total taxable income this year from other sources (job, other business, etc.). Used together with income from this app to check the 30,000 zł annual tax-free limit.</string>
     <string name="saved">Saved</string>
     <string name="auto_tax_button">Calculate automatically</string>
-    <string name="auto_tax_result">Suggested rate: %1$.1f% (based on Polish PIT scale: 12% up to 120,000 zł/year, 32% above). You can edit it before saving.</string>
+    <string name="auto_tax_result" formatted="false">Suggested rate: %1$.1f% (based on Polish PIT scale: 12% up to 120,000 zł/year, 32% above). You can edit it before saving.</string>
     <string name="export_report">Export report</string>
     <string name="generate_report">Generate report</string>
     <string name="select_period">Select period</string>
@@ -35,7 +35,7 @@
     <string name="stat_income">Income</string>
     <string name="stat_expense">Expense</string>
     <string name="stat_profit">Profit (gross)</string>
-    <string name="stat_tax_format">Tax (%1$.1f%)</string>
+    <string name="stat_tax_format" formatted="false">Tax (%1$.1f%)</string>
 
     <string name="report_col_date">Date</string>
     <string name="report_col_income">Income</string>
@@ -209,7 +209,7 @@ Contact: p.arsenii@interia.pl</string>
     <string name="ryczalt_rate_label" formatted="false">Lump-sum tax rate for your activity (%, depends on PKD)</string>
     <string name="ryczalt_rate_hint">e.g. 3, 5.5, 8.5, 12, 17</string>
     <string name="min_wage_label">Minimum monthly wage (zł) — used to calculate the unregistered-activity limit</string>
-    <string name="monthly_limit_preview">Monthly limit (75%): %1$.2f zł</string>
+    <string name="monthly_limit_preview" formatted="false">Monthly limit (75%): %1$.2f zł</string>
 
     <!-- Main screen limit gauges -->
     <string name="limits_title">Limits</string>
@@ -251,4 +251,11 @@ Contact: p.arsenii@interia.pl</string>
     <string name="notif_advance_text">Advance tax payments are due by the 20th of the month.</string>
     <string name="notif_pit_deadline_title">Annual tax return reminder</string>
     <string name="notif_pit_deadline_text">Annual tax returns are due between 15 February and 30 April.</string>
+    <string name="terms_title">Terms of Service</string>
+    <string name="terms_full_text">Terms of Service and Legal Disclaimer\n\nBy tapping “Accept”, you confirm that you have read, understood and fully agree to these terms. If you do not agree, you may not use the FinArs app.\n\n1. No accounting or legal services\nFinArs is a tool only (an automated calculator and record organizer). Neither the app nor its developers are an accredited accounting firm, tax advisor, or law office. All calculations and auto-generated declarations (PIT-36, PIT-36L, PIT-28) are for informational purposes only.\n\n2. Your responsibility\nYou are solely responsible for the accuracy of entered data and for verifying calculations and PDF forms before filing them with tax authorities, and for meeting filing deadlines.\n\n3. Limitation of liability\nThe app is provided “as is”, without warranties. The developer is not liable for fines, tax adjustments, algorithm errors, or data loss on your device.\n\n4. Legal changes\nPolish tax law changes regularly; verify results against podatki.gov.pl or a licensed accountant.\n\n5. Data privacy\nAll data and generated PDFs are stored locally on your device only.\n\n6. Governing law\nThe laws of the Republic of Poland apply.\n\n7. Withdrawal\nThese terms are accepted once, on first launch. If you stop agreeing, you must stop using the app and uninstall it.</string>
+    <string name="terms_checkbox_label">I have read and accept the Terms of Service</string>
+    <string name="terms_accept_button">Accept and continue</string>
+    <string name="terms_status_accepted">Status: Terms accepted (%1$s)</string>
+    <string name="terms_status_unknown">Status: Terms accepted</string>
+    <string name="settings_menu_terms">Terms of Service</string>
 </resources>
