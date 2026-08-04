@@ -253,8 +253,8 @@
 
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/ad_container"
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/ad_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

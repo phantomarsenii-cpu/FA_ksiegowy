@@ -13,7 +13,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -29,7 +28,6 @@ import java.util.Locale
 
 class MineActivity : BaseActivity() {
     private lateinit var db: AppDatabase
-    private var bannerAdView: AdView? = null
 
     private val notificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { /* результат не критичен для UI */ }
@@ -59,11 +57,7 @@ class MineActivity : BaseActivity() {
         }
 
 
-        bannerAdView = AdsManager.setupAndLoadBanner(
-            this,
-            findViewById<FrameLayout>(R.id.ad_container),
-            findViewById(R.id.tv_ad_debug)
-        )
+        AdsManager.setupAndLoadBanner(this, findViewById(R.id.ad_banner), findViewById(R.id.tv_ad_debug))
         setupHiddenDevCodeGesture()
         requestNotificationPermissionIfNeeded()
         LimitsNotificationWorker.schedule(this)
@@ -127,7 +121,7 @@ class MineActivity : BaseActivity() {
     }
 
     override fun onDestroy() {
-        bannerAdView?.destroy()
+        findViewById<AdView>(R.id.ad_banner).destroy()
         super.onDestroy()
     }
 
@@ -136,7 +130,7 @@ class MineActivity : BaseActivity() {
         loadData()
         loadLimits()
         if (BillingManager.isPro(this)) {
-            bannerAdView?.let { AdsManager.hideBanner(findViewById(R.id.ad_container), it) }
+            AdsManager.hideBanner(findViewById(R.id.ad_banner))
         }
     }
 
