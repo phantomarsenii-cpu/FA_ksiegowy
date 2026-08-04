@@ -30,11 +30,6 @@
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="no_entries">No entries</string>
-    <string name="search_no_results">Nothing found</string>
-    <string name="history_search_hint">Search by comment or amount</string>
-    <string name="invoice_search_hint">Search by number, client or amount</string>
-    <string name="filter_date_range">Date range</string>
-    <string name="filter_clear">Clear filters</string>
 
     <string name="statistics">Statistics</string>
     <string name="stat_income">Income</string>

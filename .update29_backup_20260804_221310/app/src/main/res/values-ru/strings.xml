@@ -30,11 +30,6 @@
     <string name="from">От</string>
     <string name="to">До</string>
     <string name="no_entries">Нет записей</string>
-    <string name="search_no_results">Ничего не найдено</string>
-    <string name="history_search_hint">Поиск по комментарию или сумме</string>
-    <string name="invoice_search_hint">Поиск по номеру, клиенту или сумме</string>
-    <string name="filter_date_range">Диапазон дат</string>
-    <string name="filter_clear">Сбросить фильтры</string>
 
     <string name="statistics">Статистика</string>
     <string name="stat_income">Доход</string>

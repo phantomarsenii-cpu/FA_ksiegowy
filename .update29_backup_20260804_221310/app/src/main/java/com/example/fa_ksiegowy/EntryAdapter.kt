@@ -4,17 +4,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 class EntryAdapter(
-    initialItems: List<Entry> = emptyList(),
+    private val items: List<Entry>,
     private val onItemClick: (Entry) -> Unit = {}
 ) : RecyclerView.Adapter<EntryAdapter.VH>() {
-    private var items: List<Entry> = initialItems
     private val dateFmt = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
 
     class VH(view: View) : RecyclerView.ViewHolder(view) {
@@ -23,26 +21,6 @@ class EntryAdapter(
         val tvComment = view.findViewById<TextView>(R.id.tv_comment)
         val tvReceiptFlag = view.findViewById<TextView>(R.id.tv_receipt_flag)
     }
-
-    /**
-     * Заменяет список записей с расчётом разницы через DiffUtil — это избегает
-     * полной перерисовки RecyclerView при каждом изменении поискового запроса
-     * или фильтра и остаётся эффективным даже на больших списках операций.
-     */
-    fun submitList(newItems: List<Entry>) {
-        val old = items
-        val diff = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-            override fun getOldListSize() = old.size
-            override fun getNewListSize() = newItems.size
-            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-                old[oldItemPosition].id == newItems[newItemPosition].id
-            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-                old[oldItemPosition] == newItems[newItemPosition]
-        })
-        items = newItems
-        diff.dispatchUpdatesTo(this)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_entry, parent, false)
         return VH(v)

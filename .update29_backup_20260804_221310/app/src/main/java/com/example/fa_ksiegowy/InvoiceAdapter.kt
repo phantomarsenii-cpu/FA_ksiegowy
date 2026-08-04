@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -12,11 +11,10 @@ import java.util.Locale
 
 /** Список выставленных счетов/фактур — используется на экране InvoiceHistoryActivity. */
 class InvoiceAdapter(
-    initialItems: List<Invoice> = emptyList(),
+    private val items: List<Invoice>,
     private val onItemClick: (Invoice) -> Unit = {},
     private val onDeleteClick: (Invoice) -> Unit = {}
 ) : RecyclerView.Adapter<InvoiceAdapter.VH>() {
-    private var items: List<Invoice> = initialItems
     private val dateFmt = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
 
     class VH(view: View) : RecyclerView.ViewHolder(view) {
@@ -25,25 +23,6 @@ class InvoiceAdapter(
         val tvMeta = view.findViewById<TextView>(R.id.tv_invoice_meta)
         val tvAmount = view.findViewById<TextView>(R.id.tv_invoice_amount)
         val btnDelete = view.findViewById<TextView>(R.id.btn_delete_invoice)
-    }
-
-    /**
-     * Заменяет список счетов с расчётом разницы через DiffUtil — избегаем полной
-     * перерисовки при вводе в поиске или смене фильтра дат, что важно для
-     * больших списков фактур.
-     */
-    fun submitList(newItems: List<Invoice>) {
-        val old = items
-        val diff = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-            override fun getOldListSize() = old.size
-            override fun getNewListSize() = newItems.size
-            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-                old[oldItemPosition].id == newItems[newItemPosition].id
-            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-                old[oldItemPosition] == newItems[newItemPosition]
-        })
-        items = newItems
-        diff.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
