@@ -75,7 +75,6 @@
     <string name="pro_feature_locked_title">Функция Pro</string>
     <string name="pro_feature_locked_message">Годовые и произвольные отчёты доступны только в Pro-версии. Разблокируйте Pro в настройках.</string>
     <string name="pro_feature_locked_go_settings">Перейти в настройки</string>
-    <string name="invoice_pro_locked_message">Выставление фактур доступно только в Pro-версии. Разблокируйте Pro в настройках.</string>
     <string name="backup_pro_locked_message">Резервное копирование и восстановление — Pro-функция. Разблокируйте Pro, чтобы сохранить данные в файл на случай потери.</string>
     <string name="pro_purchase_error">Не удалось открыть окно оплаты. Проверьте соединение и попробуйте снова.</string>
     <string name="pro_info_title">Pro-версия</string>

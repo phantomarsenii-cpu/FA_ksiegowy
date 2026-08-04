@@ -55,18 +55,7 @@ class MineActivity : BaseActivity() {
             startActivity(Intent(this, HistoryActivity::class.java))
         }
         findViewById<Button>(R.id.btn_invoices).setOnClickListener {
-            if (BillingManager.isPro(this)) {
-                startActivity(Intent(this, AddInvoiceActivity::class.java))
-            } else {
-                androidx.appcompat.app.AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.pro_feature_locked_title))
-                    .setMessage(getString(R.string.invoice_pro_locked_message))
-                    .setPositiveButton(getString(R.string.pro_feature_locked_go_settings)) { _, _ ->
-                        startActivity(Intent(this, SettingsActivity::class.java))
-                    }
-                    .setNegativeButton(getString(R.string.dialog_close), null)
-                    .show()
-            }
+            startActivity(Intent(this, AddInvoiceActivity::class.java))
         }
 
 

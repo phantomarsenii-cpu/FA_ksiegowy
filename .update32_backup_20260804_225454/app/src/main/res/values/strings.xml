@@ -87,7 +87,6 @@ Contact: p.arsenii@interia.pl</string>
     <string name="pro_feature_locked_title">Pro feature</string>
     <string name="pro_feature_locked_message">Yearly and custom reports are a Pro feature. Unlock Pro in Settings to use them.</string>
     <string name="pro_feature_locked_go_settings">Go to Settings</string>
-    <string name="invoice_pro_locked_message">Issuing invoices is a Pro feature. Unlock Pro in Settings to use it.</string>
     <string name="backup_pro_locked_message">Backup and restore is a Pro feature. Unlock Pro to keep your data safe with a backup file.</string>
     <string name="pro_purchase_error">Could not start the purchase. Check your connection and try again.</string>
     <string name="pro_info_title">Pro version</string>
