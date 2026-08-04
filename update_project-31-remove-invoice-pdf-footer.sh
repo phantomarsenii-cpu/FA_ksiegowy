@@ -1,3 +1,40 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -e
+
+echo "=== Обновление 31: убираем дисклеймер со счетов/фактур PDF ==="
+echo "Раньше внизу каждого сгенерированного PDF счёта печаталась строка"
+echo "\"Dokument wygenerowany w aplikacji FinArs. Nie stanowi oficjalnej porady...\""
+echo "(и её EN/RU варианты). Теперь эта строка больше не рисуется на PDF —"
+echo "документ выглядит как обычная фактура/rachunek без служебной пометки."
+echo ""
+
+if [ ! -f "settings.gradle" ] || [ ! -d "app/src/main/java/com/example/fa_ksiegowy" ]; then
+    echo "!!! Запусти скрипт из корня проекта FA_ksiegowy-main (там, где settings.gradle)"
+    exit 1
+fi
+
+if [ ! -f "app/src/main/java/com/example/fa_ksiegowy/InvoicePdfGenerator.kt" ]; then
+    echo "!!! Не найден InvoicePdfGenerator.kt — сначала примени предыдущие обновления с фактурами (26)"
+    exit 1
+fi
+
+BACKUP_DIR=".update31_backup_$(date +%Y%m%d_%H%M%S)"
+mkdir -p "$BACKUP_DIR"
+for f in \
+    "app/src/main/java/com/example/fa_ksiegowy/InvoicePdfGenerator.kt"
+do
+    if [ -f "$f" ]; then
+        mkdir -p "$BACKUP_DIR/$(dirname "$f")"
+        cp "$f" "$BACKUP_DIR/$f"
+    fi
+done
+echo "--- Бэкап изменяемых файлов сохранён в $BACKUP_DIR ---"
+
+echo ""
+echo "--- Записываю обновлённые файлы ---"
+
+mkdir -p "$(dirname "app/src/main/java/com/example/fa_ksiegowy/InvoicePdfGenerator.kt")"
+cat > app/src/main/java/com/example/fa_ksiegowy/InvoicePdfGenerator.kt << 'EOF_APP_SRC_MAIN_JAVA_COM_EXAMPLE_FA_KSIEGOWY_INVOICEPDFGENERATOR_KT'
 package com.example.fa_ksiegowy
 
 import android.content.Context
@@ -250,3 +287,18 @@ object InvoicePdfGenerator {
         document.close()
     }
 }
+EOF_APP_SRC_MAIN_JAVA_COM_EXAMPLE_FA_KSIEGOWY_INVOICEPDFGENERATOR_KT
+echo "OK: app/src/main/java/com/example/fa_ksiegowy/InvoicePdfGenerator.kt"
+
+echo ""
+echo "=== Готово. Дальше вручную: ==="
+echo "1) Пересобери APK:  ./gradlew assembleDebug"
+echo "2) Сгенерируй тестовый счёт и проверь: внизу PDF больше нет строки"
+echo "   про 'Dokument wygenerowany w aplikacji FinArs...' — документ заканчивается"
+echo "   на статусе оплаты / пометке ZAPLACONO."
+echo "3) Если всё ок:"
+echo "   git add -A"
+echo "   git commit -m 'Remove FinArs disclaimer footer line from generated invoice PDFs'"
+echo "   git push"
+echo ""
+echo "Бэкап изменённых файлов лежит в: $BACKUP_DIR — можно удалить после проверки."

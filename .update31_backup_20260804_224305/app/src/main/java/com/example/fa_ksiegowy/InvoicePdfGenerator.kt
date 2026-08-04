@@ -43,7 +43,8 @@ object InvoicePdfGenerator {
         val sumLabel: String,
         val paidStamp: String,
         val paymentDateLabel: String,
-        val paymentStatusLine: String
+        val paymentStatusLine: String,
+        val footer: String
     )
 
     private fun buildLabels(context: Context, isVatPayer: Boolean, paymentMethod: PaymentMethod): Labels = Labels(
@@ -65,7 +66,8 @@ object InvoicePdfGenerator {
         sumLabel = context.getString(R.string.invoice_pdf_sum_label),
         paidStamp = context.getString(R.string.invoice_pdf_paid_stamp),
         paymentDateLabel = context.getString(R.string.invoice_pdf_payment_date),
-        paymentStatusLine = context.getString(paymentMethod.paidLabelResId)
+        paymentStatusLine = context.getString(paymentMethod.paidLabelResId),
+        footer = context.getString(R.string.invoice_pdf_footer)
     )
 
     fun generate(
@@ -244,6 +246,11 @@ object InvoicePdfGenerator {
         line(l.paymentStatusLine, textPaint, 20f)
         canvas.drawText("✓ ${l.paidStamp}", tableRight - 130f, y - 4f, stampPaint)
         y += 4f
+
+        // --- Stopka ---
+        y += 14f
+        newPageIfNeeded(40f)
+        wrappedLines(l.footer, 96, hintPaint, 12f)
 
         document.finishPage(page)
         document.writeTo(out)
