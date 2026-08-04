@@ -32,61 +32,6 @@
         android:textSize="13sp" android:textStyle="bold"
         android:textColor="@color/accent_cyan" android:layout_marginBottom="12dp"/>
 
-    <!-- Чекбокс совместной подачи с супругом -->
-    <CheckBox android:id="@+id/cb_joint_tax" android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="@string/pit_joint_spouse" android:textColor="@color/text_primary" android:textSize="14sp"
-        android:layout_marginBottom="16dp" android:paddingBottom="8dp"/>
-
-    <!-- Блок полей супруга (скрыт по умолчанию) -->
-    <LinearLayout android:id="@+id/layout_spouse_block" android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical" android:visibility="gone" android:background="@drawable/card_bg"
-        android:padding="16dp" android:layout_marginBottom="16dp">
-
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Spouse Personal Data" android:textSize="14sp" android:textStyle="bold"
-            android:textColor="@color/text_primary" android:layout_marginBottom="12dp"/>
-
-        <!-- Переключатель NIP/PESEL для супруга -->
-        <RadioGroup android:id="@+id/rg_spouse_id_type" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:layout_marginBottom="12dp">
-            <RadioButton android:id="@+id/rb_spouse_nip" android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="wrap_content" android:text="NIP" android:textColor="@color/text_primary" android:textSize="12sp" android:checked="true"/>
-            <RadioButton android:id="@+id/rb_spouse_pesel" android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="wrap_content" android:text="PESEL" android:textColor="@color/text_primary" android:textSize="12sp"/>
-        </RadioGroup>
-
-        <!-- NIP/PESEL супруга -->
-        <EditText android:id="@+id/et_spouse_id" android:layout_width="match_parent" android:layout_height="56dp"
-            android:background="@drawable/input_field_bg" android:paddingStart="18dp" android:paddingEnd="18dp"
-            android:textColor="@color/text_primary" android:hint="Spouse NIP/PESEL"
-            android:layout_marginBottom="12dp"/>
-
-        <!-- Имя супруга -->
-        <EditText android:id="@+id/et_spouse_first_name" android:layout_width="match_parent" android:layout_height="56dp"
-            android:background="@drawable/input_field_bg" android:paddingStart="18dp" android:paddingEnd="18dp"
-            android:textColor="@color/text_primary" android:hint="Spouse first name"
-            android:layout_marginBottom="12dp"/>
-
-        <!-- Фамилия супруга -->
-        <EditText android:id="@+id/et_spouse_last_name" android:layout_width="match_parent" android:layout_height="56dp"
-            android:background="@drawable/input_field_bg" android:paddingStart="18dp" android:paddingEnd="18dp"
-            android:textColor="@color/text_primary" android:hint="Spouse last name"
-            android:layout_marginBottom="12dp"/>
-
-        <!-- Дата рождения супруга -->
-        <EditText android:id="@+id/et_spouse_birth_date" android:layout_width="match_parent" android:layout_height="56dp"
-            android:background="@drawable/input_field_bg" android:paddingStart="18dp" android:paddingEnd="18dp"
-            android:textColor="@color/text_primary" android:hint="DD.MM.YYYY"
-            android:inputType="date" android:layout_marginBottom="12dp"/>
-
-        <!-- Доходы супруга (опционально) -->
-        <EditText android:id="@+id/et_spouse_income" android:layout_width="match_parent" android:layout_height="56dp"
-            android:background="@drawable/input_field_bg" android:paddingStart="18dp" android:paddingEnd="18dp"
-            android:textColor="@color/text_primary" android:hint="Spouse income (optional)"
-            android:inputType="numberDecimal"/>
-
-    </LinearLayout>
-
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical" android:background="@drawable/card_bg" android:padding="16dp"
         android:layout_marginBottom="20dp">
@@ -140,8 +85,8 @@
         android:textColor="@color/accent_cyan" android:background="@drawable/btn_pill_outline"
         android:layout_marginBottom="8dp"/>
 
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="@string/pit36_official_hint" android:textSize="11sp"
+    <TextView android:id="@+id/tv_pit36_official_hint" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textSize="11sp"
         android:textColor="@color/text_hint" android:layout_marginBottom="14dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"

@@ -128,10 +128,16 @@ object TaxHelper {
         return TaxResult(p, p, tax, ratePercent)
     }
 
-    /** Текст динамической подписи налога на главном экране/в отчётах — см. п.2 требований. */
+    /**
+     * Текст динамической подписи налога на главном экране/в отчётах — см. п.2 требований.
+     * Как только доход попадает во второй порог (>120 000 zł), надпись однозначно
+     * называет действующую предельную ставку — 32% — вместо "12% / 32%", которая
+     * при переносе строки на узком экране визуально сливалась с суммой налога
+     * и вводила пользователя в заблуждение (12 или 32?).
+     */
     fun taxLabelResId(taxableBase: Double): Int = when {
         taxableBase <= ANNUAL_LIMIT -> R.string.tax_label_zero
         taxableBase <= SECOND_BRACKET_THRESHOLD -> R.string.tax_label_12
-        else -> R.string.tax_label_progressive
+        else -> R.string.tax_label_32
     }
 }

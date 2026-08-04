@@ -4,9 +4,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,12 +17,16 @@ import java.util.Date
 import java.util.Locale
 
 /**
- * Экран "PIT-36 (PRO)": выбор года, предпросмотр Przychód/Koszty/Dochód/podatek,
+ * Экран генерации PIT (PRO): выбор года, предпросмотр Przychód/Koszty/Dochód/podatek,
  * ссылка на форму личных данных и кнопка генерации PDF-отчёта (см. Pit36PdfGenerator).
  * Доступен только пользователям с Pro (проверка — в SettingsActivity перед стартом).
- * 
- * Добавлена поддержка совместной подачи с супругом: динамические поля для ввода
- * данных супруга (NIP/PESEL, имя, фамилия, дата рождения, доходы).
+ *
+ * Какая декларация нужна (PIT-36 / PIT-36L / PIT-28) определяется автоматически
+ * по выбранному в настройках виду деятельности (см. ActivityTypeHelper.formCode) —
+ * экран и его заголовок не привязаны к одной конкретной декларации.
+ *
+ * Данные супруга(и) для совместного rozliczenia редактируются на экране личных
+ * данных (PitDataActivity), а не здесь — см. cb_joint_spouse и layout_spouse_block.
  */
 class Pit36Activity : BaseActivity() {
 
@@ -55,30 +56,12 @@ class Pit36Activity : BaseActivity() {
         findViewById<Button>(R.id.btn_generate_pit36).setOnClickListener { generateClicked(official = false) }
         findViewById<Button>(R.id.btn_generate_official_pit36).setOnClickListener { generateClicked(official = true) }
 
-        // Динамическое отображение/скрытие полей супруга
-        setupSpouseFields()
-
         refreshYearLabel()
     }
 
     override fun onResume() {
         super.onResume()
         recalculate()
-    }
-
-    private fun setupSpouseFields() {
-        val cbJointTax = findViewById<CheckBox>(R.id.cb_joint_tax)
-        val layoutSpouseBlock = findViewById<View>(R.id.layout_spouse_block)
-
-        cbJointTax.setOnCheckedChangeListener { _, isChecked ->
-            layoutSpouseBlock.visibility = if (isChecked) View.VISIBLE else View.GONE
-        }
-
-        // Инициализировать видимость в зависимости от сохраненного состояния
-        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
-        val isJointTax = prefs.getBoolean("pit36_joint_tax", false)
-        cbJointTax.isChecked = isJointTax
-        layoutSpouseBlock.visibility = if (isJointTax) View.VISIBLE else View.GONE
     }
 
     private fun refreshYearLabel() {
@@ -111,6 +94,16 @@ class Pit36Activity : BaseActivity() {
         findViewById<TextView>(R.id.tv_pit_form_code)?.text =
             getString(R.string.pit_form_applicable, r.activityType.formCode)
 
+        // Официальный (готовый к подаче) бланк сейчас доступен только для PIT-36 —
+        // для PIT-36L/PIT-28 показываем только вспомогательный информационный PDF.
+        val officialSupported = Pit36FormFiller.isSupported(r.activityType)
+        findViewById<Button>(R.id.btn_generate_official_pit36).visibility =
+            if (officialSupported) View.VISIBLE else View.GONE
+        findViewById<TextView>(R.id.tv_pit36_official_hint).apply {
+            visibility = if (officialSupported) View.VISIBLE else View.GONE
+            if (officialSupported) text = getString(R.string.pit36_official_hint, r.activityType.formCode)
+        }
+
         val data = PitDataStore.load(this)
         findViewById<TextView>(R.id.tv_pit_data_status).text = if (data.isComplete) {
             getString(R.string.pit_data_status_ready, "${data.firstName} ${data.lastName}".trim())
@@ -133,10 +126,6 @@ class Pit36Activity : BaseActivity() {
         val prefs = getSharedPreferences("settings", MODE_PRIVATE)
         val activityType = ActivityTypeHelper.get(prefs)
         val formCode = activityType.formCode
-
-        // Сохранить состояние совместной подачи
-        val cbJointTax = findViewById<CheckBox>(R.id.cb_joint_tax)
-        prefs.edit().putBoolean("pit36_joint_tax", cbJointTax.isChecked).apply()
 
         if (official) {
             if (!Pit36FormFiller.isSupported(activityType)) {

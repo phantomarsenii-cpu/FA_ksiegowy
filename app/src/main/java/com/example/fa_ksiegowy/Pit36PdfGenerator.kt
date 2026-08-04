@@ -84,6 +84,13 @@ object Pit36PdfGenerator {
         line("Adres: ${personal.street}, ${personal.postalCode} ${personal.city}".trim(' ', ','))
         line("Właściwy urząd skarbowy: ${personal.taxOffice}")
         line("Sposób rozliczenia: " + if (personal.jointWithSpouse) "Wspólnie z małżonkiem" else "Indywidualnie")
+        if (personal.jointWithSpouse) {
+            val idLabel = if (personal.spouseIsNip) "NIP" else "PESEL"
+            line("Małżonek — $idLabel: ${personal.spouseId}")
+            line("Małżonek — imię i nazwisko: ${personal.spouseFirstName} ${personal.spouseLastName}".trim())
+            if (personal.spouseBirthDate.isNotBlank()) line("Małżonek — data urodzenia: ${personal.spouseBirthDate}")
+            if (personal.spouseIncome > 0) line("Małżonek — dochód (informacyjnie): ${money(personal.spouseIncome)}")
+        }
         y += 8f
 
         if (result.activityType.isRegisteredJdg) {

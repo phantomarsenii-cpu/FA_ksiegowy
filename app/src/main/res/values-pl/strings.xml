@@ -118,7 +118,7 @@
     <string name="backup_last_time">Ostatnia kopia: %1$s</string>
 
     <string name="settings_menu_security">Bezpieczeństwo (PIN / odcisk palca)</string>
-    <string name="settings_menu_pit36">Generuj PIT-36 (Pro)</string>
+    <string name="settings_menu_pit36">Generuj PIT (Pro)</string>
     <string name="pit36_pro_locked_message">Generowanie PIT-36 to funkcja Pro. Odblokuj Pro w Ustawieniach, aby z niej skorzystać.</string>
 
     <string name="lock_title">FinArs jest zablokowany</string>
@@ -147,8 +147,8 @@
     <string name="security_enter_current_pin">Wpisz aktualny PIN, aby kontynuować</string>
     <string name="security_pin_disabled">Ochrona PIN-em wyłączona</string>
 
-    <string name="pit_data_title">Dane osobowe do PIT-36</string>
-    <string name="pit_data_hint">Używane wyłącznie do wypełnienia pomocniczego raportu PIT-36. Wszystko zostaje na Twoim urządzeniu.</string>
+    <string name="pit_data_title">Dane osobowe do zeznania podatkowego</string>
+    <string name="pit_data_hint">Używane wyłącznie do wypełnienia pomocniczego raportu PIT (PIT-36 / PIT-36L / PIT-28 — zależnie od rodzaju działalności). Wszystko zostaje na Twoim urządzeniu.</string>
     <string name="pit_first_name">Imię</string>
     <string name="pit_last_name">Nazwisko</string>
     <string name="pit_pesel">PESEL (opcjonalnie)</string>
@@ -167,9 +167,15 @@
     <string name="pit_ikze">Wpłaty na IKZE</string>
     <string name="pit_donations">Darowizny</string>
     <string name="pit_joint_spouse">Rozliczenie wspólnie z małżonkiem</string>
+    <string name="pit_spouse_data_title">Dane osobowe małżonka</string>
+    <string name="pit_spouse_id_hint">NIP/PESEL małżonka</string>
+    <string name="pit_spouse_first_name_hint">Imię małżonka</string>
+    <string name="pit_spouse_last_name_hint">Nazwisko małżonka</string>
+    <string name="pit_spouse_birth_date_hint">Data urodzenia (DD.MM.RRRR)</string>
+    <string name="pit_spouse_income_hint">Dochód małżonka (opcjonalnie)</string>
     <string name="pit_data_required_error">Uzupełnij najpierw imię, nazwisko i urząd skarbowy</string>
 
-    <string name="pit36_hint">Wybierz pełny rok kalendarzowy, sprawdź swoje dane osobowe, a następnie wygeneruj pomocniczy plik PDF z liczbami i wskazówkami do wypełnienia oficjalnego PIT-36 na podatki.gov.pl (Twój e-PIT) lub na papierze.</string>
+    <string name="pit36_hint">Wybierz pełny rok kalendarzowy, sprawdź swoje dane osobowe, a następnie wygeneruj pomocniczy plik PDF z liczbami i wskazówkami do wypełnienia Twojej właściwej deklaracji na podatki.gov.pl (Twój e-PIT) lub na papierze.</string>
     <string name="pit_row_przychod">Przychód</string>
     <string name="pit_row_koszty">Koszty</string>
     <string name="pit_row_dochod">Dochód</string>
@@ -177,13 +183,13 @@
     <string name="pit_data_status_missing">Dane osobowe nie zostały jeszcze uzupełnione — są wymagane przed wygenerowaniem raportu.</string>
     <string name="pit_data_status_ready">Dane osobowe gotowe: %1$s</string>
     <string name="pit_edit_data_button">Edytuj dane osobowe</string>
-    <string name="pit36_generate_button">Wygeneruj pomocniczy PDF PIT-36</string>
-    <string name="pit36_disclaimer">Ten raport ma charakter wyłącznie informacyjny i nie jest oficjalnym formularzem PIT-36, e-Deklaracją ani poradą podatkową. Zawsze zweryfikuj liczby przed złożeniem deklaracji.</string>
+    <string name="pit36_generate_button">Wygeneruj pomocniczy PDF</string>
+    <string name="pit36_disclaimer">Ten raport ma charakter wyłącznie informacyjny i nie jest oficjalnym formularzem, e-Deklaracją ani poradą podatkową. Zawsze zweryfikuj liczby przed złożeniem deklaracji.</string>
     <string name="pit36_calculating">Trwa obliczanie, chwila…</string>
     <string name="pit36_generated">Raport PDF wygenerowany</string>
-    <string name="pit36_generate_official_button">Wypełnij oficjalny formularz PIT-36 (szablon 2025)</string>
-    <string name="pit36_official_hint">Wypełnia prawdziwy urzędowy PDF PIT-36(32)/2025: Twoje dane, adres i wiersz przychodów/kosztów działalności. Pozostałe źródła dochodu i odliczenia musisz uzupełnić samodzielnie — zobacz zastrzeżenie poniżej.</string>
-    <string name="pit36_official_unsupported">Oficjalny formularz jest dostępny tylko dla PIT-36 (skala). Twoja aktualna forma to %1$s — użyj przycisku „Wygeneruj PDF pomocniczy PIT-36”.</string>
+    <string name="pit36_generate_official_button">Wypełnij oficjalny formularz (szablon 2025)</string>
+    <string name="pit36_official_hint">Wypełnia prawdziwy urzędowy PDF %1$s(32)/2025: Twoje dane, adres i wiersz przychodów/kosztów działalności. Pozostałe źródła dochodu i odliczenia musisz uzupełnić samodzielnie — zobacz zastrzeżenie poniżej.</string>
+    <string name="pit36_official_unsupported">Oficjalny wypełniony formularz jest dostępny tylko dla PIT-36 (skala). Twoja aktualna forma to %1$s — użyj przycisku „Wygeneruj pomocniczy PDF”.</string>
     <string name="pit36_official_generated">Oficjalny formularz PIT-36 wypełniony. Sprawdź sekcje E–K i dodaj inne dochody/odliczenia przed złożeniem.</string>
 
     <!-- Rodzaj działalności / zasady rejestracji -->
@@ -209,6 +215,7 @@
     <!-- Dynamiczna etykieta podatku -->
     <string name="tax_label_zero" formatted="false">Podatek (0% — kwota wolna)</string>
     <string name="tax_label_12" formatted="false">Podatek (12%)</string>
+    <string name="tax_label_32" formatted="false">Podatek (próg 32%)</string>
     <string name="tax_label_progressive" formatted="false">Podatek (skala progresywna 12% / 32%)</string>
     <string name="tax_label_liniowy" formatted="false">Podatek (liniowy 19%)</string>
     <string name="tax_label_ryczalt">Podatek (ryczałt, od przychodu)</string>

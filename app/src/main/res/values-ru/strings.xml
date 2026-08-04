@@ -118,7 +118,7 @@
     <string name="backup_last_time">Последняя копия: %1$s</string>
 
     <string name="settings_menu_security">Безопасность (PIN / отпечаток)</string>
-    <string name="settings_menu_pit36">Сформировать PIT-36 (Pro)</string>
+    <string name="settings_menu_pit36">Сформировать PIT (Pro)</string>
     <string name="pit36_pro_locked_message">Генерация PIT-36 — функция Pro. Разблокируйте Pro в настройках, чтобы ей пользоваться.</string>
 
     <string name="lock_title">FinArs заблокирован</string>
@@ -147,8 +147,8 @@
     <string name="security_enter_current_pin">Введите текущий PIN, чтобы продолжить</string>
     <string name="security_pin_disabled">Защита PIN-ом отключена</string>
 
-    <string name="pit_data_title">Личные данные для PIT-36</string>
-    <string name="pit_data_hint">Используются только для заполнения вспомогательного отчёта PIT-36. Всё остаётся на вашем устройстве.</string>
+    <string name="pit_data_title">Личные данные для налоговой декларации</string>
+    <string name="pit_data_hint">Используются только для заполнения вспомогательного отчёта PIT (PIT-36 / PIT-36L / PIT-28 — в зависимости от вида деятельности). Всё остаётся на вашем устройстве.</string>
     <string name="pit_first_name">Имя</string>
     <string name="pit_last_name">Фамилия</string>
     <string name="pit_pesel">PESEL (необязательно)</string>
@@ -167,9 +167,15 @@
     <string name="pit_ikze">Взносы на IKZE</string>
     <string name="pit_donations">Пожертвования (darowizny)</string>
     <string name="pit_joint_spouse">Совместная подача с супругом</string>
+    <string name="pit_spouse_data_title">Личные данные супруга(и)</string>
+    <string name="pit_spouse_id_hint">NIP/PESEL супруга(и)</string>
+    <string name="pit_spouse_first_name_hint">Имя супруга(и)</string>
+    <string name="pit_spouse_last_name_hint">Фамилия супруга(и)</string>
+    <string name="pit_spouse_birth_date_hint">Дата рождения (ДД.ММ.ГГГГ)</string>
+    <string name="pit_spouse_income_hint">Доход супруга(и) (опционально)</string>
     <string name="pit_data_required_error">Сначала укажите имя, фамилию и налоговую инспекцию</string>
 
-    <string name="pit36_hint">Выберите полный календарный год, проверьте личные данные, затем сформируйте вспомогательный PDF с цифрами и подсказками для заполнения официального PIT-36 на podatki.gov.pl (Twój e-PIT) или на бумаге.</string>
+    <string name="pit36_hint">Выберите полный календарный год, проверьте личные данные, затем сформируйте вспомогательный PDF с цифрами и подсказками для заполнения вашей декларации на podatki.gov.pl (Twój e-PIT) или на бумаге.</string>
     <string name="pit_row_przychod">Przychód (доход)</string>
     <string name="pit_row_koszty">Koszty (расходы)</string>
     <string name="pit_row_dochod">Dochód (прибыль)</string>
@@ -177,13 +183,13 @@
     <string name="pit_data_status_missing">Личные данные ещё не заполнены — это нужно сделать перед формированием отчёта.</string>
     <string name="pit_data_status_ready">Личные данные готовы: %1$s</string>
     <string name="pit_edit_data_button">Изменить личные данные</string>
-    <string name="pit36_generate_button">Сформировать вспомогательный PDF PIT-36</string>
-    <string name="pit36_disclaimer">Этот отчёт носит исключительно информационный характер и не является официальным бланком PIT-36, e-Deklaracją или налоговой консультацией. Всегда перепроверяйте цифры перед подачей декларации.</string>
+    <string name="pit36_generate_button">Сформировать вспомогательный PDF</string>
+    <string name="pit36_disclaimer">Этот отчёт носит исключительно информационный характер и не является официальным бланком, e-Deklaracją или налоговой консультацией. Всегда перепроверяйте цифры перед подачей декларации.</string>
     <string name="pit36_calculating">Идёт расчёт, подождите…</string>
     <string name="pit36_generated">PDF-отчёт сформирован</string>
-    <string name="pit36_generate_official_button">Заполнить официальный бланк PIT-36 (шаблон 2025)</string>
-    <string name="pit36_official_hint">Заполняет настоящий государственный PDF PIT-36(32)/2025: ваши данные, адрес и строку доходов/расходов бизнеса. Остальные источники дохода и вычеты нужно дозаполнить самостоятельно — см. предупреждение ниже.</string>
-    <string name="pit36_official_unsupported">Официальный бланк доступен только для PIT-36 (skala). Ваша текущая форма — %1$s, используйте кнопку «Сформировать PDF-помощник PIT-36».</string>
+    <string name="pit36_generate_official_button">Заполнить официальный бланк (шаблон 2025)</string>
+    <string name="pit36_official_hint">Заполняет настоящий государственный PDF %1$s(32)/2025: ваши данные, адрес и строку доходов/расходов бизнеса. Остальные источники дохода и вычеты нужно дозаполнить самостоятельно — см. предупреждение ниже.</string>
+    <string name="pit36_official_unsupported">Официальный заполненный бланк доступен только для PIT-36 (skala). Ваша текущая форма — %1$s, используйте кнопку «Сформировать вспомогательный PDF».</string>
     <string name="pit36_official_generated">Официальный бланк PIT-36 заполнен. Проверьте разделы E–K и добавьте другие доходы/вычеты перед подачей.</string>
 
     <!-- Тип деятельности / правила регистрации -->
@@ -209,6 +215,7 @@
     <!-- Динамическая подпись налога -->
     <string name="tax_label_zero" formatted="false">Налог (0% — необлагаемый минимум)</string>
     <string name="tax_label_12" formatted="false">Налог (12%)</string>
+    <string name="tax_label_32" formatted="false">Налог (ставка 32%)</string>
     <string name="tax_label_progressive" formatted="false">Налог (прогрессивная шкала 12% / 32%)</string>
     <string name="tax_label_liniowy" formatted="false">Налог (плоский 19%)</string>
     <string name="tax_label_ryczalt">Налог (ryczałt, от дохода)</string>
