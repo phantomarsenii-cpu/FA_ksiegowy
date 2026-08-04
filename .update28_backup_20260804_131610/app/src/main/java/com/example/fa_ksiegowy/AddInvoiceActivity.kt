@@ -69,7 +69,6 @@ class AddInvoiceActivity : BaseActivity() {
                 findViewById<EditText>(R.id.et_seller_street).setText(seller.street)
                 findViewById<EditText>(R.id.et_seller_postal).setText(seller.postalCode)
                 findViewById<EditText>(R.id.et_seller_city).setText(seller.city)
-                findViewById<EditText>(R.id.et_seller_bank_account).setText(seller.bankAccount)
             }
         }
     }
@@ -117,18 +116,9 @@ class AddInvoiceActivity : BaseActivity() {
         val cash = findViewById<Button>(R.id.btn_payment_cash)
         val transfer = findViewById<Button>(R.id.btn_payment_transfer)
         val blik = findViewById<Button>(R.id.btn_payment_blik)
-        setPaymentButtonState(cash, paymentMethod == PaymentMethod.CASH)
-        setPaymentButtonState(transfer, paymentMethod == PaymentMethod.TRANSFER)
-        setPaymentButtonState(blik, paymentMethod == PaymentMethod.BLIK)
-    }
-
-    /** Явно выделяем выбранный способ оплаты: яркий фон + жирный белый текст против
-     *  приглушённого фона и серого текста у невыбранных — чтобы было сразу видно,
-     *  какой способ активен. */
-    private fun setPaymentButtonState(button: Button, selected: Boolean) {
-        button.setBackgroundResource(if (selected) R.drawable.btn_pill_payment_selected else R.drawable.btn_pill_payment_unselected)
-        button.setTextColor(resources.getColor(if (selected) R.color.text_primary else R.color.text_secondary, theme))
-        button.alpha = if (selected) 1.0f else 0.75f
+        cash.setBackgroundResource(if (paymentMethod == PaymentMethod.CASH) R.drawable.btn_pill_primary else R.drawable.btn_pill_outline)
+        transfer.setBackgroundResource(if (paymentMethod == PaymentMethod.TRANSFER) R.drawable.btn_pill_primary else R.drawable.btn_pill_outline)
+        blik.setBackgroundResource(if (paymentMethod == PaymentMethod.BLIK) R.drawable.btn_pill_primary else R.drawable.btn_pill_outline)
     }
 
     private fun showDatePicker(isServiceDate: Boolean) {
@@ -162,7 +152,6 @@ class AddInvoiceActivity : BaseActivity() {
         val sellerStreet = findViewById<EditText>(R.id.et_seller_street).text.toString().trim()
         val sellerPostal = findViewById<EditText>(R.id.et_seller_postal).text.toString().trim()
         val sellerCity = findViewById<EditText>(R.id.et_seller_city).text.toString().trim()
-        val sellerBankAccount = findViewById<EditText>(R.id.et_seller_bank_account).text.toString().trim()
 
         val buyerName = findViewById<EditText>(R.id.et_buyer_name).text.toString().trim()
         val buyerNip = findViewById<EditText>(R.id.et_buyer_nip).text.toString().trim()
@@ -179,7 +168,7 @@ class AddInvoiceActivity : BaseActivity() {
         }
 
         findViewById<Button>(R.id.btn_generate).isEnabled = false
-        val seller = InvoiceSellerData(sellerName, sellerNip, sellerStreet, sellerPostal, sellerCity, sellerBankAccount)
+        val seller = InvoiceSellerData(sellerName, sellerNip, sellerStreet, sellerPostal, sellerCity)
         val issueDateMillis = System.currentTimeMillis()
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -191,7 +180,7 @@ class AddInvoiceActivity : BaseActivity() {
 
                 val saved = InvoiceFileStorage.savePdf(applicationContext, fileName) { out ->
                     InvoicePdfGenerator.generate(
-                        context = this@AddInvoiceActivity,
+                        context = applicationContext,
                         seller = seller,
                         invoiceNumber = invoiceNumber,
                         issueDateMillis = issueDateMillis,

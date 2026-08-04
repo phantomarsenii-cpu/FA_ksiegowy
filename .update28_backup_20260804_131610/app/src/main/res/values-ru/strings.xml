@@ -300,31 +300,4 @@
     <string name="invoice_history_title">История счетов</string>
     <string name="no_invoices">Вы ещё не выставили ни одного счёта</string>
 
-
-    <!-- Метки PDF счёта -->
-    <string name="invoice_pdf_faktura">СЧЁТ-ФАКТУРА</string>
-    <string name="invoice_pdf_rachunek">СЧЁТ</string>
-    <string name="invoice_pdf_issue_date">Дата выставления</string>
-    <string name="invoice_pdf_sale_date">Дата продажи</string>
-    <string name="invoice_pdf_seller">Продавец</string>
-    <string name="invoice_pdf_buyer">Покупатель</string>
-    <string name="invoice_pdf_nip">NIP</string>
-    <string name="invoice_pdf_bank_account">Счёт</string>
-    <string name="invoice_pdf_buyer_private">Физическое лицо без предпринимательской деятельности (без NIP).</string>
-    <string name="invoice_pdf_table_lp">№</string>
-    <string name="invoice_pdf_table_name">Наименование товара/услуги</string>
-    <string name="invoice_pdf_table_unit">Ед.</string>
-    <string name="invoice_pdf_table_qty">Кол-во</string>
-    <string name="invoice_pdf_table_price">Цена</string>
-    <string name="invoice_pdf_table_total">Сумма</string>
-    <string name="invoice_pdf_unit_piece">шт</string>
-    <string name="invoice_pdf_sum_label">Итого</string>
-    <string name="invoice_pdf_paid_stamp">ОПЛАЧЕНО</string>
-    <string name="invoice_pdf_payment_date">Дата оплаты</string>
-    <string name="invoice_pdf_footer">Документ создан в приложении FinArs. Не является официальной бухгалтерской или налоговой консультацией — в случае сомнений обратитесь к налоговому консультанту.</string>
-    <string name="seller_bank_account">Номер счёта (необязательно)</string>
-    <string name="delete_invoice_confirm_title">Удалить счёт?</string>
-    <string name="delete_invoice_confirm_message">Запись и PDF-файл счёта будут безвозвратно удалены. Это действие нельзя отменить.</string>
-    <string name="invoice_deleted">Счёт удалён</string>
-
 </resources>

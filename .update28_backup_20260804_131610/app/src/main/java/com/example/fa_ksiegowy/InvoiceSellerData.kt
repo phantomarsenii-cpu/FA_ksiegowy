@@ -13,8 +13,7 @@ data class InvoiceSellerData(
     val nip: String = "",
     val street: String = "",
     val postalCode: String = "",
-    val city: String = "",
-    val bankAccount: String = ""
+    val city: String = ""
 )
 
 object InvoiceSellerDataStore {
@@ -32,8 +31,7 @@ object InvoiceSellerDataStore {
                     nip = "",
                     street = listOf(pit.street, pit.houseNumber).filter { it.isNotBlank() }.joinToString(" "),
                     postalCode = pit.postalCode,
-                    city = pit.city,
-                    bankAccount = ""
+                    city = pit.city
                 )
             }
         }
@@ -42,8 +40,7 @@ object InvoiceSellerDataStore {
             nip = p.getString("nip", "") ?: "",
             street = p.getString("street", "") ?: "",
             postalCode = p.getString("postalCode", "") ?: "",
-            city = p.getString("city", "") ?: "",
-            bankAccount = p.getString("bankAccount", "") ?: ""
+            city = p.getString("city", "") ?: ""
         )
     }
 
@@ -54,7 +51,6 @@ object InvoiceSellerDataStore {
             .putString("street", data.street)
             .putString("postalCode", data.postalCode)
             .putString("city", data.city)
-            .putString("bankAccount", data.bankAccount)
             .apply()
     }
 }

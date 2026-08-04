@@ -116,18 +116,4 @@ object InvoiceFileStorage {
     }
 
     val displayFolderPath: String get() = "Documents/$RELATIVE_FOLDER"
-
-    /**
-     * Usuwa zapisany plik PDF (dziala zarowno dla URI z MediaStore, jak i z
-     * FileProvider na starszych Androidach) — uzywane przy kasowaniu bledngo
-     * wpisu z historii faktur.
-     */
-    fun deleteFile(context: Context, uriString: String): Boolean {
-        return try {
-            val uri = Uri.parse(uriString)
-            context.contentResolver.delete(uri, null, null) > 0
-        } catch (e: Exception) {
-            false
-        }
-    }
 }

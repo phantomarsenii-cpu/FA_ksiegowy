@@ -12,8 +12,7 @@ import java.util.Locale
 /** Список выставленных счетов/фактур — используется на экране InvoiceHistoryActivity. */
 class InvoiceAdapter(
     private val items: List<Invoice>,
-    private val onItemClick: (Invoice) -> Unit = {},
-    private val onDeleteClick: (Invoice) -> Unit = {}
+    private val onItemClick: (Invoice) -> Unit = {}
 ) : RecyclerView.Adapter<InvoiceAdapter.VH>() {
     private val dateFmt = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
 
@@ -22,7 +21,6 @@ class InvoiceAdapter(
         val tvBuyer = view.findViewById<TextView>(R.id.tv_invoice_buyer)
         val tvMeta = view.findViewById<TextView>(R.id.tv_invoice_meta)
         val tvAmount = view.findViewById<TextView>(R.id.tv_invoice_amount)
-        val btnDelete = view.findViewById<TextView>(R.id.btn_delete_invoice)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -38,7 +36,6 @@ class InvoiceAdapter(
         holder.tvMeta.text = "№${inv.invoiceNumber} · " + context.getString(inv.paymentMethod.labelResId)
         holder.tvAmount.text = String.format(Locale.getDefault(), "%.2f", inv.amount)
         holder.itemView.setOnClickListener { onItemClick(inv) }
-        holder.btnDelete.setOnClickListener { onDeleteClick(inv) }
     }
 
     override fun getItemCount(): Int = items.size

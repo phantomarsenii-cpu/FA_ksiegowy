@@ -1,6 +1,5 @@
 package com.example.fa_ksiegowy
 
-import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.net.Uri
 import android.os.Bundle
@@ -18,8 +17,6 @@ import kotlinx.coroutines.withContext
  * Экран истории всех выставленных счетов/фактур (Faktura imienna / Rachunek).
  * Тап по строке открывает сохранённый PDF в системном просмотрщике; если
  * подходящее приложение не найдено — показываем путь к папке текстом.
- * Кнопка "✕" на строке удаляет ошибочно выставленный счёт (запись из БД
- * и сохранённый PDF-файл) после подтверждения.
  */
 class InvoiceHistoryActivity : BaseActivity() {
 
@@ -41,11 +38,9 @@ class InvoiceHistoryActivity : BaseActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val allInvoices = AppDatabase.getInstance(applicationContext).invoiceDao().getAll()
             withContext(Dispatchers.Main) {
-                findViewById<RecyclerView>(R.id.rv_invoices).adapter = InvoiceAdapter(
-                    items = allInvoices,
-                    onItemClick = { invoice -> openInvoicePdf(invoice) },
-                    onDeleteClick = { invoice -> confirmDelete(invoice) }
-                )
+                findViewById<RecyclerView>(R.id.rv_invoices).adapter = InvoiceAdapter(allInvoices) { invoice ->
+                    openInvoicePdf(invoice)
+                }
                 findViewById<TextView>(R.id.tv_no_invoices).visibility =
                     if (allInvoices.isEmpty()) View.VISIBLE else View.GONE
             }
@@ -58,23 +53,5 @@ class InvoiceHistoryActivity : BaseActivity() {
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(this, getString(R.string.open_folder_error, InvoiceFileStorage.displayFolderPath), Toast.LENGTH_LONG).show()
         }
-    }
-
-    private fun confirmDelete(invoice: Invoice) {
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.delete_invoice_confirm_title))
-            .setMessage(getString(R.string.delete_invoice_confirm_message))
-            .setPositiveButton(getString(R.string.delete_confirm_yes)) { _, _ ->
-                CoroutineScope(Dispatchers.IO).launch {
-                    InvoiceFileStorage.deleteFile(applicationContext, invoice.pdfFilePath)
-                    AppDatabase.getInstance(applicationContext).invoiceDao().delete(invoice)
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(this@InvoiceHistoryActivity, getString(R.string.invoice_deleted), Toast.LENGTH_SHORT).show()
-                        loadData()
-                    }
-                }
-            }
-            .setNegativeButton(getString(R.string.dialog_close), null)
-            .show()
     }
 }

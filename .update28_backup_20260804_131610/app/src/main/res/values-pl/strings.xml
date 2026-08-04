@@ -300,31 +300,4 @@
     <string name="invoice_history_title">Historia faktur</string>
     <string name="no_invoices">Nie wystawiono jeszcze żadnych faktur</string>
 
-
-    <!-- Etykiety PDF faktury -->
-    <string name="invoice_pdf_faktura">FAKTURA</string>
-    <string name="invoice_pdf_rachunek">RACHUNEK</string>
-    <string name="invoice_pdf_issue_date">Data wystawienia</string>
-    <string name="invoice_pdf_sale_date">Data sprzedaży</string>
-    <string name="invoice_pdf_seller">Sprzedawca</string>
-    <string name="invoice_pdf_buyer">Nabywca</string>
-    <string name="invoice_pdf_nip">NIP</string>
-    <string name="invoice_pdf_bank_account">Konto</string>
-    <string name="invoice_pdf_buyer_private">Osoba fizyczna nieprowadząca działalności gospodarczej (bez NIP).</string>
-    <string name="invoice_pdf_table_lp">Lp</string>
-    <string name="invoice_pdf_table_name">Nazwa towaru/usługi</string>
-    <string name="invoice_pdf_table_unit">Jedn.</string>
-    <string name="invoice_pdf_table_qty">Ilość</string>
-    <string name="invoice_pdf_table_price">Cena</string>
-    <string name="invoice_pdf_table_total">Razem</string>
-    <string name="invoice_pdf_unit_piece">szt</string>
-    <string name="invoice_pdf_sum_label">Łącznie</string>
-    <string name="invoice_pdf_paid_stamp">ZAPŁACONO</string>
-    <string name="invoice_pdf_payment_date">Data zapłaty</string>
-    <string name="invoice_pdf_footer">Dokument wygenerowany w aplikacji FinArs. Nie stanowi oficjalnej porady księgowej ani podatkowej — w razie wątpliwości skonsultuj się z doradcą podatkowym.</string>
-    <string name="seller_bank_account">Numer konta (opcjonalnie)</string>
-    <string name="delete_invoice_confirm_title">Usunąć fakturę?</string>
-    <string name="delete_invoice_confirm_message">Wpis oraz plik PDF faktury zostaną trwale usunięte. Tej operacji nie można cofnąć.</string>
-    <string name="invoice_deleted">Faktura usunięta</string>
-
 </resources>

@@ -58,7 +58,6 @@
             <EditText android:id="@+id/et_seller_postal" style="@style/InvoiceInputHalfStart" android:hint="@string/seller_address_postal" android:inputType="text"/>
             <EditText android:id="@+id/et_seller_city" style="@style/InvoiceInputHalfEnd" android:hint="@string/seller_address_city" android:inputType="text"/>
         </LinearLayout>
-        <EditText android:id="@+id/et_seller_bank_account" style="@style/InvoiceInput" android:hint="@string/seller_bank_account" android:inputType="text"/>
 
     </LinearLayout>
 
@@ -181,7 +180,7 @@
                 android:id="@+id/btn_payment_cash"
                 android:layout_width="0dp" android:layout_height="46dp" android:layout_weight="1"
                 android:layout_marginEnd="6dp"
-                android:background="@drawable/btn_pill_payment_selected"
+                android:background="@drawable/btn_pill_primary"
                 android:text="@string/payment_method_cash"
                 android:textAllCaps="false" android:textColor="@color/text_primary" android:textSize="13sp"/>
 
@@ -189,7 +188,7 @@
                 android:id="@+id/btn_payment_transfer"
                 android:layout_width="0dp" android:layout_height="46dp" android:layout_weight="1"
                 android:layout_marginStart="3dp" android:layout_marginEnd="3dp"
-                android:background="@drawable/btn_pill_payment_unselected"
+                android:background="@drawable/btn_pill_outline"
                 android:text="@string/payment_method_transfer"
                 android:textAllCaps="false" android:textColor="@color/text_primary" android:textSize="13sp"/>
 
@@ -197,7 +196,7 @@
                 android:id="@+id/btn_payment_blik"
                 android:layout_width="0dp" android:layout_height="46dp" android:layout_weight="1"
                 android:layout_marginStart="6dp"
-                android:background="@drawable/btn_pill_payment_unselected"
+                android:background="@drawable/btn_pill_outline"
                 android:text="@string/payment_method_blik"
                 android:textAllCaps="false" android:textColor="@color/text_primary" android:textSize="13sp"/>
 
