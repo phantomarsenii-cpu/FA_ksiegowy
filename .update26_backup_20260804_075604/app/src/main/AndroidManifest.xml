@@ -30,8 +30,6 @@
         <activity android:name=".PitDataActivity" android:exported="false" />
         <activity android:name=".Pit36Activity" android:exported="false" />
         <activity android:name=".AddEntryActivity" android:exported="false" />
-        <activity android:name=".AddInvoiceActivity" android:exported="false" />
-        <activity android:name=".InvoiceHistoryActivity" android:exported="false" />
         <activity android:name=".ReportActivity" android:exported="false" />
         <activity android:name=".HistoryActivity" android:exported="false" />
         <activity android:name=".MineActivity" android:exported="true">

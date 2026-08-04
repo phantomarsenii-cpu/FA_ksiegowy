@@ -295,9 +295,4 @@
     <string name="open_invoices_folder_button">Otwórz folder z fakturami</string>
     <string name="open_folder_error">Nie udało się otworzyć folderu. Pliki są zapisane w %1$s</string>
     <string name="invoice_fill_required_fields">Uzupełnij dane nabywcy, usługę i kwotę</string>
-
-    <!-- Historia faktur -->
-    <string name="invoice_history_title">Historia faktur</string>
-    <string name="no_invoices">Nie wystawiono jeszcze żadnych faktur</string>
-
 </resources>

@@ -52,9 +52,6 @@ class MineActivity : BaseActivity() {
         findViewById<Button>(R.id.btn_history).setOnClickListener {
             startActivity(Intent(this, HistoryActivity::class.java))
         }
-        findViewById<Button>(R.id.btn_invoices).setOnClickListener {
-            startActivity(Intent(this, AddInvoiceActivity::class.java))
-        }
 
 
         AdsManager.setupAndLoadBanner(this, findViewById(R.id.ad_banner), findViewById(R.id.tv_ad_debug))

@@ -295,9 +295,4 @@
     <string name="open_invoices_folder_button">Открыть папку со счетами</string>
     <string name="open_folder_error">Не удалось открыть папку. Файлы сохранены в %1$s</string>
     <string name="invoice_fill_required_fields">Заполните данные покупателя, услугу и сумму</string>
-
-    <!-- История счетов -->
-    <string name="invoice_history_title">История счетов</string>
-    <string name="no_invoices">Вы ещё не выставили ни одного счёта</string>
-
 </resources>

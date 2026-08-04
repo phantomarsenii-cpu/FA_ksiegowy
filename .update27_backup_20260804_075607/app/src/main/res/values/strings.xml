@@ -307,9 +307,4 @@ Contact: p.arsenii@interia.pl</string>
     <string name="open_invoices_folder_button">Open invoices folder</string>
     <string name="open_folder_error">Could not open the folder. Files are saved in %1$s</string>
     <string name="invoice_fill_required_fields">Please fill in the buyer, item and amount</string>
-
-    <!-- Invoice history -->
-    <string name="invoice_history_title">Invoice history</string>
-    <string name="no_invoices">No invoices yet</string>
-
 </resources>
