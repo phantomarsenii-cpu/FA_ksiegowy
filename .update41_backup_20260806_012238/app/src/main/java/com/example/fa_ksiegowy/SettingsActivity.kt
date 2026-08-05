@@ -15,9 +15,6 @@ class SettingsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        findViewById<Button>(R.id.btn_menu_business).setOnClickListener {
-            startActivity(Intent(this, SettingsBusinessActivity::class.java))
-        }
         findViewById<Button>(R.id.btn_menu_tax).setOnClickListener {
             startActivity(Intent(this, SettingsTaxActivity::class.java))
         }

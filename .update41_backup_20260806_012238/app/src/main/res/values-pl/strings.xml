@@ -347,38 +347,4 @@
     <string name="invoice_status_filter_all">Wszystkie</string>
 
     <string name="invoice_pdf_pending_stamp">OCZEKUJE NA ZAPŁATĘ</string>
-
-    <!-- Update 41: rodzaj działalności, magazyn, kody kreskowe, OCR paragonów -->
-    <string name="settings_menu_business">Rodzaj działalności</string>
-    <string name="business_kind_title">Rodzaj działalności</string>
-    <string name="business_kind_description">Wybierz to, co najlepiej pasuje do Twojej działalności. Przy wyborze \"Sprzedaż\" lub \"Mieszana\" na ekranie głównym pojawi się przycisk \"Magazyn\".</string>
-    <string name="business_kind_sales">Sprzedaż</string>
-    <string name="business_kind_services">Usługi</string>
-    <string name="business_kind_mixed">Mieszana (sprzedaż i usługi)</string>
-    <string name="nav_magazin">Magazyn</string>
-    <string name="magazin_title">Magazyn</string>
-    <string name="magazin_empty">Brak produktów. Dodaj ręcznie lub zeskanuj kod kreskowy.</string>
-    <string name="add_product_manually">Dodaj ręcznie</string>
-    <string name="scan_barcode">Skanuj kod kreskowy</string>
-    <string name="scan_short">Skanuj</string>
-    <string name="scan_barcode_prompt">Skieruj aparat na kod kreskowy</string>
-    <string name="looking_up_product">Szukam produktu w bazie…</string>
-    <string name="product_name">Nazwa produktu</string>
-    <string name="product_barcode">Kod kreskowy (opcjonalnie)</string>
-    <string name="product_quantity">Ilość w magazynie</string>
-    <string name="product_unit">Jednostka (szt., kg itp.)</string>
-    <string name="product_low_stock">Próg \"kończy się\"</string>
-    <string name="product_price">Cena jednostkowa</string>
-    <string name="product_saved">Produkt zapisany</string>
-    <string name="low_stock_banner">Kończy się: %1$d produkt(ów)</string>
-    <string name="notif_low_stock_title">Produkt się kończy</string>
-    <string name="notif_low_stock_text">%1$s: zostało %2$s %3$s</string>
-    <string name="add_from_warehouse">Dodaj towary z magazynu</string>
-    <string name="select_products_title">Wybór produktów</string>
-    <string name="in_stock_suffix">w magazynie</string>
-    <string name="select_at_least_one_product">Wybierz co najmniej jeden produkt</string>
-    <string name="scan_receipt_button">Skanuj paragon (autouzupełnianie)</string>
-    <string name="receipt_scan_processing">Rozpoznaję paragon…</string>
-    <string name="receipt_scan_done">Paragon rozpoznany, sprawdź pola</string>
-    <string name="receipt_scan_no_text">Nie udało się odczytać paragonu, wpisz ręcznie</string>
 </resources>

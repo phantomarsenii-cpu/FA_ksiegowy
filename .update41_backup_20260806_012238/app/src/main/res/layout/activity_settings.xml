@@ -11,11 +11,6 @@
         android:text="@string/settings" android:textSize="22sp" android:textStyle="bold"
         android:textColor="@color/accent_cyan" android:layout_marginBottom="24dp"/>
 
-    <Button android:id="@+id/btn_menu_business" android:layout_width="match_parent" android:layout_height="56dp"
-        android:text="@string/settings_menu_business" android:textAllCaps="false" android:textSize="16sp"
-        android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"
-        android:layout_marginBottom="14dp"/>
-
     <Button android:id="@+id/btn_menu_tax" android:layout_width="match_parent" android:layout_height="56dp"
         android:text="@string/settings_menu_tax" android:textAllCaps="false" android:textSize="16sp"
         android:textColor="@color/text_primary" android:background="@drawable/btn_pill_outline"

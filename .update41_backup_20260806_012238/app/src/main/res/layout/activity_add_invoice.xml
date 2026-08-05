@@ -136,18 +136,6 @@
         <EditText android:id="@+id/et_amount" style="@style/InvoiceInput" android:hint="@string/service_amount" android:inputType="numberDecimal"/>
 
         <Button
-            android:id="@+id/btn_add_warehouse_items"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/btn_pill_outline"
-            android:text="@string/add_from_warehouse"
-            android:textAllCaps="false"
-            android:textColor="@color/accent_cyan"
-            android:textSize="13sp"/>
-
-        <Button
             android:id="@+id/btn_service_date"
             android:layout_width="match_parent"
             android:layout_height="56dp"

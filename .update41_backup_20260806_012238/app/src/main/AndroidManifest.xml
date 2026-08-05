@@ -4,8 +4,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:name=".FaApp"
@@ -36,10 +34,6 @@
         <activity android:name=".InvoiceHistoryActivity" android:exported="false" />
         <activity android:name=".ReportActivity" android:exported="false" />
         <activity android:name=".HistoryActivity" android:exported="false" />
-        <activity android:name=".SettingsBusinessActivity" android:exported="false" />
-        <activity android:name=".MagazinActivity" android:exported="false" />
-        <activity android:name=".AddEditProductActivity" android:exported="false" />
-        <activity android:name=".SelectProductsActivity" android:exported="false" />
         <activity android:name=".MineActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

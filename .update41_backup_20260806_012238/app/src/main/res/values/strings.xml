@@ -347,38 +347,4 @@
     <string name="invoice_status_filter_all">All</string>
 
     <string name="invoice_pdf_pending_stamp">AWAITING PAYMENT</string>
-
-    <!-- Update 41: business kind, magazin, barcode, receipt OCR -->
-    <string name="settings_menu_business">Business type</string>
-    <string name="business_kind_title">Business type</string>
-    <string name="business_kind_description">Choose what best matches your activity. Selecting Sales or Mixed adds a Warehouse (Magazyn) button on the main screen for tracking stock.</string>
-    <string name="business_kind_sales">Sales</string>
-    <string name="business_kind_services">Services</string>
-    <string name="business_kind_mixed">Mixed (sales and services)</string>
-    <string name="nav_magazin">Warehouse</string>
-    <string name="magazin_title">Warehouse</string>
-    <string name="magazin_empty">No products yet. Add one manually or scan a barcode.</string>
-    <string name="add_product_manually">Add manually</string>
-    <string name="scan_barcode">Scan barcode</string>
-    <string name="scan_short">Scan</string>
-    <string name="scan_barcode_prompt">Point the camera at the barcode</string>
-    <string name="looking_up_product">Looking up product…</string>
-    <string name="product_name">Product name</string>
-    <string name="product_barcode">Barcode (optional)</string>
-    <string name="product_quantity">Quantity in stock</string>
-    <string name="product_unit">Unit (e.g. pcs, kg)</string>
-    <string name="product_low_stock">Low stock threshold</string>
-    <string name="product_price">Unit price</string>
-    <string name="product_saved">Product saved</string>
-    <string name="low_stock_banner">%1$d product(s) running low</string>
-    <string name="notif_low_stock_title">Stock running low</string>
-    <string name="notif_low_stock_text">%1$s: only %2$s %3$s left</string>
-    <string name="add_from_warehouse">Add items from warehouse</string>
-    <string name="select_products_title">Select products</string>
-    <string name="in_stock_suffix">in stock</string>
-    <string name="select_at_least_one_product">Select at least one product</string>
-    <string name="scan_receipt_button">Scan receipt (auto-fill)</string>
-    <string name="receipt_scan_processing">Recognizing receipt…</string>
-    <string name="receipt_scan_done">Receipt recognized, please check the fields</string>
-    <string name="receipt_scan_no_text">Could not read the receipt, please enter manually</string>
 </resources>

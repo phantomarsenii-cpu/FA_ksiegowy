@@ -68,9 +68,6 @@ class MineActivity : BaseActivity() {
                     .show()
             }
         }
-        findViewById<Button>(R.id.btn_magazin).setOnClickListener {
-            startActivity(Intent(this, MagazinActivity::class.java))
-        }
 
 
         bannerAdView = AdsManager.setupAndLoadBanner(
@@ -83,7 +80,6 @@ class MineActivity : BaseActivity() {
         LimitsNotificationWorker.schedule(this)
         InvoiceReminderWorker.schedule(this)
         RecurringEntryWorker.schedule(this)
-        StockNotificationWorker.schedule(this)
     }
 
     /** На Android 13+ уведомления требуют явного разрешения — запрашиваем один раз при первом запуске экрана. */
@@ -152,17 +148,9 @@ class MineActivity : BaseActivity() {
         super.onResume()
         loadData()
         loadLimits()
-        applyBusinessKindUi()
         if (BillingManager.isPro(this)) {
             bannerAdView?.let { AdsManager.hideBanner(findViewById(R.id.ad_container), it) }
         }
-    }
-
-    /** Кнопка "Склад" видна только если в настройках выбран тип деятельности Продажи/Смешанная. */
-    private fun applyBusinessKindUi() {
-        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
-        val showsMagazin = BusinessKindHelper.get(prefs).showsMagazin
-        findViewById<Button>(R.id.btn_magazin).visibility = if (showsMagazin) View.VISIBLE else View.GONE
     }
 
     private fun loadData() {

@@ -2,7 +2,6 @@ package com.example.fa_ksiegowy
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -11,7 +10,6 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.FileProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,14 +39,6 @@ class AddEntryActivity : BaseActivity() {
     // существующей) — иначе неясно, что должно произойти с уже созданными
     // на основе шаблона транзакциями.
     private var wantsRecurring: Boolean = false
-
-    // Фото для распознавания чека (ML Kit OCR) — пишется в полном разрешении через
-    // системную камеру (FileProvider), затем прогоняется через ReceiptOcrHelper.
-    private var ocrPhotoFile: File? = null
-
-    private val takeOcrPhoto = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-        if (success) runOcr()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +71,6 @@ class AddEntryActivity : BaseActivity() {
 
         setupTypeToggle()
         findViewById<Button>(R.id.btn_attach).setOnClickListener { pickImage.launch("image/*") }
-        findViewById<Button>(R.id.btn_scan_receipt).setOnClickListener { launchReceiptScan() }
         findViewById<Button>(R.id.btn_delete).setOnClickListener { confirmDelete() }
         findViewById<Button>(R.id.btn_date).setOnClickListener { showDatePicker() }
         findViewById<android.widget.Switch>(R.id.sw_recurring).setOnCheckedChangeListener { _, checked ->
@@ -190,64 +179,6 @@ class AddEntryActivity : BaseActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                     finish()
-                }
-            }
-        }
-    }
-
-    /** Запускает системную камеру для фото чека и сохраняет полноразмерный файл через FileProvider. */
-    private fun launchReceiptScan() {
-        val file = File(getExternalFilesDir(null), "ocr_tmp_${System.currentTimeMillis()}.jpg")
-        ocrPhotoFile = file
-        val uri = FileProvider.getUriForFile(this, "$packageName.fileprovider", file)
-        takeOcrPhoto.launch(uri)
-    }
-
-    /** Прогоняет сделанное фото через ML Kit и подставляет распознанные сумму/дату/продавца. */
-    private fun runOcr() {
-        val file = ocrPhotoFile ?: return
-        Toast.makeText(this, getString(R.string.receipt_scan_processing), Toast.LENGTH_SHORT).show()
-        CoroutineScope(Dispatchers.IO).launch {
-            val bmp = try {
-                BitmapFactory.decodeFile(file.absolutePath)
-            } catch (e: Exception) {
-                null
-            }
-            if (bmp == null) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(this@AddEntryActivity, getString(R.string.receipt_scan_no_text), Toast.LENGTH_SHORT).show()
-                }
-                return@launch
-            }
-            val result = try {
-                ReceiptOcrHelper.recognize(bmp)
-            } catch (e: Exception) {
-                null
-            }
-            withContext(Dispatchers.Main) {
-                if (result == null) {
-                    Toast.makeText(this@AddEntryActivity, getString(R.string.receipt_scan_no_text), Toast.LENGTH_LONG).show()
-                    return@withContext
-                }
-                if (result.amount != null) {
-                    findViewById<EditText>(R.id.et_amount).setText(formatAmount(result.amount))
-                }
-                if (result.dateMillis != null) {
-                    selectedDateMillis = result.dateMillis
-                    updateDateButtonText()
-                }
-                if (!result.sellerName.isNullOrBlank()) {
-                    val existingComment = findViewById<EditText>(R.id.et_comment).text.toString()
-                    if (existingComment.isBlank()) {
-                        findViewById<EditText>(R.id.et_comment).setText(result.sellerName)
-                    }
-                }
-                selectedImagePath = file.absolutePath
-                findViewById<Button>(R.id.btn_attach).text = getString(R.string.attach_receipt) + " ✓"
-                if (result.amount == null && result.dateMillis == null) {
-                    Toast.makeText(this@AddEntryActivity, getString(R.string.receipt_scan_no_text), Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(this@AddEntryActivity, getString(R.string.receipt_scan_done), Toast.LENGTH_SHORT).show()
                 }
             }
         }

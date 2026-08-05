@@ -347,38 +347,4 @@
     <string name="invoice_status_filter_all">Все</string>
 
     <string name="invoice_pdf_pending_stamp">ОЖИДАЕТ ОПЛАТЫ</string>
-
-    <!-- Update 41: тип деятельности, склад, штрихкоды, OCR чеков -->
-    <string name="settings_menu_business">Тип деятельности</string>
-    <string name="business_kind_title">Тип деятельности</string>
-    <string name="business_kind_description">Выберите, что больше подходит вашему бизнесу. При выборе \"Продажи\" или \"Смешанная\" на главном экране появится кнопка \"Склад\" для учёта товаров.</string>
-    <string name="business_kind_sales">Продажи</string>
-    <string name="business_kind_services">Услуги</string>
-    <string name="business_kind_mixed">Смешанная (продажи и услуги)</string>
-    <string name="nav_magazin">Склад</string>
-    <string name="magazin_title">Склад</string>
-    <string name="magazin_empty">Пока нет товаров. Добавьте вручную или отсканируйте штрихкод.</string>
-    <string name="add_product_manually">Добавить вручную</string>
-    <string name="scan_barcode">Сканировать штрихкод</string>
-    <string name="scan_short">Скан</string>
-    <string name="scan_barcode_prompt">Наведите камеру на штрихкод</string>
-    <string name="looking_up_product">Ищу товар в базе…</string>
-    <string name="product_name">Название товара</string>
-    <string name="product_barcode">Штрихкод (необязательно)</string>
-    <string name="product_quantity">Количество на складе</string>
-    <string name="product_unit">Единица (шт., кг и т.п.)</string>
-    <string name="product_low_stock">Порог \"заканчивается\"</string>
-    <string name="product_price">Цена за единицу</string>
-    <string name="product_saved">Товар сохранён</string>
-    <string name="low_stock_banner">Заканчивается: %1$d товар(ов)</string>
-    <string name="notif_low_stock_title">Товар заканчивается</string>
-    <string name="notif_low_stock_text">%1$s: осталось %2$s %3$s</string>
-    <string name="add_from_warehouse">Добавить товары со склада</string>
-    <string name="select_products_title">Выбор товаров</string>
-    <string name="in_stock_suffix">в наличии</string>
-    <string name="select_at_least_one_product">Выберите хотя бы один товар</string>
-    <string name="scan_receipt_button">Сканировать чек (автозаполнение)</string>
-    <string name="receipt_scan_processing">Распознаю чек…</string>
-    <string name="receipt_scan_done">Чек распознан, проверьте поля</string>
-    <string name="receipt_scan_no_text">Не удалось распознать чек, заполните вручную</string>
 </resources>

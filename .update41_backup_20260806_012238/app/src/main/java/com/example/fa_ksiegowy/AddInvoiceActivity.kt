@@ -12,7 +12,6 @@ import android.widget.ProgressBar
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,12 +25,6 @@ import java.util.Locale
  * bez NIP lub firmy z NIP): formularz danych, kontrola rocznego limitu
  * 20 000 PLN gotówki, generowanie PDF (zapis do Documents/FinArs/Invoices
  * przez MediaStore) oraz otwarcie/udostępnienie wygenerowanego pliku.
- *
- * Jeśli użytkownik wybierze pozycje ze magazynu (btn_add_warehouse_items),
- * ich suma zastępuje pole kwoty, a same pozycje zapisujemy osobno w tabeli
- * invoice_items i odejmujemy ze stanu magazynowego — PDF nadal generuje się
- * jako jedna usługa/pozycja (serviceName/amount), żeby nie ruszać ryzykownej
- * logiki rysowania PDF w InvoicePdfGenerator.
  */
 class AddInvoiceActivity : BaseActivity() {
 
@@ -42,14 +35,6 @@ class AddInvoiceActivity : BaseActivity() {
     private var invoiceStatus: InvoiceStatus = InvoiceStatus.PAID
     private var dueDateMillis: Long = System.currentTimeMillis() + 14L * 24 * 60 * 60 * 1000
     private var lastSavedUri: Uri? = null
-    private var warehouseItems: List<PickedProduct> = emptyList()
-
-    private val selectProductsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val data = result.data?.getStringExtra("picked_items")
-            if (!data.isNullOrBlank()) applyPickedItems(data)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,10 +57,6 @@ class AddInvoiceActivity : BaseActivity() {
             findViewById<EditText>(R.id.et_buyer_nip).visibility = if (checked) View.GONE else View.VISIBLE
         }
 
-        findViewById<Button>(R.id.btn_add_warehouse_items).setOnClickListener {
-            selectProductsLauncher.launch(Intent(this, SelectProductsActivity::class.java))
-        }
-
         findViewById<Button>(R.id.btn_generate).setOnClickListener { generateInvoice() }
         findViewById<Button>(R.id.btn_open_pdf).setOnClickListener { openLastPdf() }
         findViewById<Button>(R.id.btn_share).setOnClickListener { shareLastPdf() }
@@ -87,28 +68,6 @@ class AddInvoiceActivity : BaseActivity() {
         loadSellerData()
         refreshCashLimit()
     }
-
-    /** Позиции со склада выбраны: подставляем сводное название и сумму в форму. Списание
-     *  остатков происходит только после успешного сохранения фактуры (см. generateInvoice). */
-    private fun applyPickedItems(serialized: String) {
-        warehouseItems = serialized.lines().filter { it.isNotBlank() }.mapNotNull { line ->
-            val parts = line.split("|")
-            if (parts.size == 4) {
-                try {
-                    PickedProduct(parts[0].toLong(), parts[1], parts[2].toDouble(), parts[3].toDouble())
-                } catch (e: Exception) {
-                    null
-                }
-            } else null
-        }
-        if (warehouseItems.isEmpty()) return
-        val summary = warehouseItems.joinToString(", ") { "${it.name} x${formatQty(it.quantity)}" }
-        val total = warehouseItems.sumOf { it.quantity * it.unitPrice }
-        findViewById<EditText>(R.id.et_service_name).setText(summary)
-        findViewById<EditText>(R.id.et_amount).setText(formatMoney(total))
-    }
-
-    private fun formatQty(v: Double): String = if (v == v.toLong().toDouble()) v.toLong().toString() else v.toString()
 
     private fun loadSellerData() {
         CoroutineScope(Dispatchers.IO).launch {
@@ -253,7 +212,6 @@ class AddInvoiceActivity : BaseActivity() {
         findViewById<Button>(R.id.btn_generate).isEnabled = false
         val seller = InvoiceSellerData(sellerName, sellerNip, sellerStreet, sellerPostal, sellerCity, sellerBankAccount)
         val issueDateMillis = System.currentTimeMillis()
-        val itemsForThisInvoice = warehouseItems
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -285,7 +243,7 @@ class AddInvoiceActivity : BaseActivity() {
                     )
                 }
 
-                val invoiceId = dao.insert(
+                dao.insert(
                     Invoice(
                         invoiceNumber = invoiceNumber,
                         issueDateMillis = issueDateMillis,
@@ -307,22 +265,8 @@ class AddInvoiceActivity : BaseActivity() {
                     )
                 )
 
-                // Многопозиционная разбивка + автосписание со склада (только если
-                // пользователь выбирал позиции через "Товары со склада").
-                if (itemsForThisInvoice.isNotEmpty()) {
-                    val items = itemsForThisInvoice.map {
-                        InvoiceItem(invoiceId = invoiceId, productId = it.productId, name = it.name, quantity = it.quantity, unitPrice = it.unitPrice)
-                    }
-                    AppDatabase.getInstance(applicationContext).invoiceItemDao().insertAll(items)
-                    val productDao = AppDatabase.getInstance(applicationContext).productDao()
-                    for (item in itemsForThisInvoice) {
-                        productDao.decrementQuantity(item.productId, item.quantity)
-                    }
-                }
-
                 withContext(Dispatchers.Main) {
                     lastSavedUri = saved.uri
-                    warehouseItems = emptyList()
                     findViewById<Button>(R.id.btn_generate).isEnabled = true
                     findViewById<View>(R.id.row_after_generate).visibility = View.VISIBLE
                     Toast.makeText(
