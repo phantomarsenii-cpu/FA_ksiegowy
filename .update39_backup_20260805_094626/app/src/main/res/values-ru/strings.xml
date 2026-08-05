@@ -346,5 +346,4 @@
     <string name="chart_title">Доходы и расходы за последние 6 месяцев</string>
     <string name="invoice_status_filter_all">Все</string>
 
-    <string name="invoice_pdf_pending_stamp">ОЖИДАЕТ ОПЛАТЫ</string>
 </resources>

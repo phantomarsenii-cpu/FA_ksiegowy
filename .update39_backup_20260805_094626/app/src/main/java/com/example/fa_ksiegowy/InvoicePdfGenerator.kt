@@ -13,12 +13,10 @@ import java.util.Locale
  * Buduje PDF dokumentu sprzedaży dla osoby fizycznej (Faktura imienna, gdy
  * sprzedawca jest VAT-owcem, lub Rachunek, gdy nie jest) — z pozycją
  * towaru/usługi w formie tabeli, danymi sprzedawcy/nabywcy obok siebie
- * i pieczątką statusu płatności ("ZAPŁACONO" dla opłaconych, "OCZEKUJE NA
- * ZAPŁATĘ" + termin płatności dla nieopłaconych — patrz [InvoiceStatus]).
- * Wszystkie etykiety pochodzą z zasobów string — dokument jest w pełni w
- * języku aktualnie wybranym w aplikacji (kontekst przekazywany przez
- * wywołującego musi mieć już zastosowaną lokalizację, patrz
- * [BaseActivity]/[LocaleHelper] — nie używamy tu applicationContext).
+ * i pieczątką "ZAPŁACONO". Wszystkie etykiety pochodzą z zasobów string —
+ * dokument jest w pełni w języku aktualnie wybranym w aplikacji (kontekst
+ * przekazywany przez wywołującego musi mieć już zastosowaną lokalizację,
+ * patrz [BaseActivity]/[LocaleHelper] — nie używamy tu applicationContext).
  */
 object InvoicePdfGenerator {
 
@@ -44,10 +42,7 @@ object InvoicePdfGenerator {
         val unitPiece: String,
         val sumLabel: String,
         val paidStamp: String,
-        val pendingStamp: String,
         val paymentDateLabel: String,
-        val dueDateLabel: String,
-        val paymentMethodLabel: String,
         val paymentStatusLine: String
     )
 
@@ -69,10 +64,7 @@ object InvoicePdfGenerator {
         unitPiece = context.getString(R.string.invoice_pdf_unit_piece),
         sumLabel = context.getString(R.string.invoice_pdf_sum_label),
         paidStamp = context.getString(R.string.invoice_pdf_paid_stamp),
-        pendingStamp = context.getString(R.string.invoice_pdf_pending_stamp),
         paymentDateLabel = context.getString(R.string.invoice_pdf_payment_date),
-        dueDateLabel = context.getString(R.string.invoice_due_date_label),
-        paymentMethodLabel = context.getString(R.string.payment_method_label),
         paymentStatusLine = context.getString(paymentMethod.paidLabelResId)
     )
 
@@ -92,8 +84,6 @@ object InvoicePdfGenerator {
         serviceName: String,
         amount: Double,
         paymentMethod: PaymentMethod,
-        invoiceStatus: InvoiceStatus = InvoiceStatus.PAID,
-        dueDateMillis: Long? = null,
         out: OutputStream
     ) {
         val isVatPayer = seller.nip.isNotBlank()
@@ -111,7 +101,6 @@ object InvoicePdfGenerator {
         val tableHeaderPaint = Paint().apply { color = 0xFF12162E.toInt(); textSize = 9.5f; typeface = Typeface.DEFAULT_BOLD; isAntiAlias = true }
         val tableCellPaint = Paint().apply { color = 0xFF12162E.toInt(); textSize = 10f; isAntiAlias = true }
         val stampPaint = Paint().apply { color = 0xFF1B7F3C.toInt(); textSize = 13f; typeface = Typeface.DEFAULT_BOLD; isAntiAlias = true }
-        val pendingStampPaint = Paint().apply { color = 0xFFCC6A00.toInt(); textSize = 13f; typeface = Typeface.DEFAULT_BOLD; isAntiAlias = true }
         val linePaint = Paint().apply { color = 0xFFB0B0B0.toInt(); strokeWidth = 0.75f; isAntiAlias = true }
         val headerFillPaint = Paint().apply { color = 0xFFEDEEF5.toInt() }
 
@@ -250,24 +239,10 @@ object InvoicePdfGenerator {
         y = tableBottom + 26f
 
         // --- Status płatności / pieczątka ---
-        // Dokument musi wiernie odzwierciedlać rzeczywisty status faktury:
-        // dla PAID pokazujemy datę zapłaty i pieczątkę "ZAPŁACONO", a dla
-        // PENDING — termin płatności i pieczątkę "OCZEKUJE NA ZAPŁATĘ".
-        // Wcześniej PDF zawsze pokazywał "ZAPŁACONO" niezależnie od
-        // rzeczywistego statusu faktury — to był błąd.
         newPageIfNeeded(40f)
-        if (invoiceStatus == InvoiceStatus.PAID) {
-            line("${l.paymentDateLabel}: ${dateFmt.format(Date(paymentDateMillis))}", textPaint, 16f)
-            line(l.paymentStatusLine, textPaint, 20f)
-            val stampText = "✓ ${l.paidStamp}"
-            canvas.drawText(stampText, tableRight - stampPaint.measureText(stampText), y - 4f, stampPaint)
-        } else {
-            val due = dueDateMillis ?: paymentDateMillis
-            line("${l.dueDateLabel}: ${dateFmt.format(Date(due))}", textPaint, 16f)
-            line("${l.paymentMethodLabel}: ${context.getString(paymentMethod.labelResId)}", textPaint, 20f)
-            val stampText = "⏳ ${l.pendingStamp}"
-            canvas.drawText(stampText, tableRight - pendingStampPaint.measureText(stampText), y - 4f, pendingStampPaint)
-        }
+        line("${l.paymentDateLabel}: ${dateFmt.format(Date(paymentDateMillis))}", textPaint, 16f)
+        line(l.paymentStatusLine, textPaint, 20f)
+        canvas.drawText("✓ ${l.paidStamp}", tableRight - 130f, y - 4f, stampPaint)
         y += 4f
 
         document.finishPage(page)

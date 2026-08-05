@@ -358,5 +358,4 @@ Contact: p.arsenii@interia.pl</string>
     <string name="chart_title">Income and expenses, last 6 months</string>
     <string name="invoice_status_filter_all">All</string>
 
-    <string name="invoice_pdf_pending_stamp">AWAITING PAYMENT</string>
 </resources>

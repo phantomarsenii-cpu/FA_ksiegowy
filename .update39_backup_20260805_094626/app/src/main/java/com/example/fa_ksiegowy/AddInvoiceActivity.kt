@@ -237,8 +237,6 @@ class AddInvoiceActivity : BaseActivity() {
                         serviceName = serviceName,
                         amount = amount,
                         paymentMethod = paymentMethod,
-                        invoiceStatus = invoiceStatus,
-                        dueDateMillis = if (invoiceStatus == InvoiceStatus.PENDING) dueDateMillis else null,
                         out = out
                     )
                 }
