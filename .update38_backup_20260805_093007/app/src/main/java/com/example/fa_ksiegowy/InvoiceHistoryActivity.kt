@@ -129,7 +129,6 @@ class InvoiceHistoryActivity : BaseActivity() {
             button.setBackgroundResource(if (selected) R.drawable.btn_pill_payment_selected else R.drawable.btn_pill_payment_unselected)
             button.setTextColor(resources.getColor(if (selected) R.color.text_primary else R.color.text_secondary, theme))
         }
-    }
 
     /** Небольшой дебаунс — фильтрация не запускается на каждый символ, а через 250 мс после паузы в наборе. */
     private fun scheduleFilter() {
