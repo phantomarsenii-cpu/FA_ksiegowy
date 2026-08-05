@@ -10,11 +10,4 @@ class Converters {
     @TypeConverter
     fun toPaymentMethod(value: String): PaymentMethod =
         PaymentMethod.values().firstOrNull { it.name == value } ?: PaymentMethod.CASH
-
-    @TypeConverter
-    fun fromInvoiceStatus(value: InvoiceStatus): String = value.name
-
-    @TypeConverter
-    fun toInvoiceStatus(value: String): InvoiceStatus =
-        InvoiceStatus.values().firstOrNull { it.name == value } ?: InvoiceStatus.PAID
 }

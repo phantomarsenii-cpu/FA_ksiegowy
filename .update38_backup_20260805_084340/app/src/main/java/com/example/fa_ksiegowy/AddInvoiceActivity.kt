@@ -32,8 +32,6 @@ class AddInvoiceActivity : BaseActivity() {
     private var paymentMethod: PaymentMethod = PaymentMethod.CASH
     private var serviceDateMillis: Long = System.currentTimeMillis()
     private var paymentDateMillis: Long = System.currentTimeMillis()
-    private var invoiceStatus: InvoiceStatus = InvoiceStatus.PAID
-    private var dueDateMillis: Long = System.currentTimeMillis() + 14L * 24 * 60 * 60 * 1000
     private var lastSavedUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,13 +42,6 @@ class AddInvoiceActivity : BaseActivity() {
         findViewById<Button>(R.id.btn_service_date).setOnClickListener { showDatePicker(isServiceDate = true) }
         findViewById<Button>(R.id.btn_payment_date).setOnClickListener { showDatePicker(isServiceDate = false) }
         updateDateButtons()
-
-        findViewById<Switch>(R.id.sw_invoice_paid).setOnCheckedChangeListener { _, checked ->
-            invoiceStatus = if (checked) InvoiceStatus.PAID else InvoiceStatus.PENDING
-            findViewById<Button>(R.id.btn_due_date).visibility = if (checked) View.GONE else View.VISIBLE
-        }
-        findViewById<Button>(R.id.btn_due_date).setOnClickListener { showDueDatePicker() }
-        updateDueDateButton()
 
         findViewById<Switch>(R.id.sw_physical_person).setOnCheckedChangeListener { _, checked ->
             isPhysicalPerson = checked
@@ -157,28 +148,6 @@ class AddInvoiceActivity : BaseActivity() {
         ).show()
     }
 
-    private fun showDueDatePicker() {
-        val cal = Calendar.getInstance().apply { timeInMillis = dueDateMillis }
-        DatePickerDialog(
-            this,
-            { _, year, month, dayOfMonth ->
-                val picked = Calendar.getInstance().apply {
-                    set(year, month, dayOfMonth, 12, 0, 0)
-                    set(Calendar.MILLISECOND, 0)
-                }
-                dueDateMillis = picked.timeInMillis
-                updateDueDateButton()
-            },
-            cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)
-        ).show()
-    }
-
-    private fun updateDueDateButton() {
-        val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-        findViewById<Button>(R.id.btn_due_date).text =
-            getString(R.string.invoice_due_date_label) + ": " + sdf.format(dueDateMillis)
-    }
-
     private fun updateDateButtons() {
         val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         findViewById<Button>(R.id.btn_service_date).text =
@@ -257,9 +226,7 @@ class AddInvoiceActivity : BaseActivity() {
                         amount = amount,
                         paymentMethod = paymentMethod,
                         pdfFilePath = saved.uri.toString(),
-                        pdfFileName = fileName,
-                        status = invoiceStatus,
-                        dueDateMillis = if (invoiceStatus == InvoiceStatus.PENDING) dueDateMillis else null
+                        pdfFileName = fileName
                     )
                 )
 

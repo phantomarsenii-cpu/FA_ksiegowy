@@ -6,14 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Entry::class, Invoice::class, RecurringEntry::class], version = 3, exportSchema = false)
+@Database(entities = [Entry::class, Invoice::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun entryDao(): EntryDao
 
     abstract fun invoiceDao(): InvoiceDao
-
-    abstract fun recurringEntryDao(): RecurringEntryDao
     companion object {
         @Volatile private var INSTANCE: AppDatabase? = null
         fun getInstance(context: Context): AppDatabase {

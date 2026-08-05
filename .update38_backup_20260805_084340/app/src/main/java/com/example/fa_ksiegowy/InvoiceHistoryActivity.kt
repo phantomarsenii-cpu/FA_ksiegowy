@@ -45,7 +45,6 @@ class InvoiceHistoryActivity : BaseActivity() {
     private var searchQuery: String = ""
     private var filterFrom: Long? = null
     private var filterTo: Long? = null
-    private var statusFilter: InvoiceStatus? = null
 
     private val searchHandler = Handler(Looper.getMainLooper())
     private var pendingFilter: Runnable? = null
@@ -103,32 +102,7 @@ class InvoiceHistoryActivity : BaseActivity() {
             updateClearFiltersVisibility()
             applyFilters()
         }
-
-        findViewById<Button>(R.id.btn_status_all).setOnClickListener { setStatusFilter(null) }
-        findViewById<Button>(R.id.btn_status_paid).setOnClickListener { setStatusFilter(InvoiceStatus.PAID) }
-        findViewById<Button>(R.id.btn_status_pending).setOnClickListener { setStatusFilter(InvoiceStatus.PENDING) }
-        applyStatusFilterUi()
     }
-
-    private fun setStatusFilter(status: InvoiceStatus?) {
-        statusFilter = status
-        applyStatusFilterUi()
-        applyFilters()
-    }
-
-    /** Явно выделяем активный фильтр статуса — тот же приём, что и для способа оплаты на экране выставления счёта. */
-    private fun applyStatusFilterUi() {
-        val all = findViewById<Button>(R.id.btn_status_all)
-        val paid = findViewById<Button>(R.id.btn_status_paid)
-        val pending = findViewById<Button>(R.id.btn_status_pending)
-        for ((button, selected) in listOf(
-            all to (statusFilter == null),
-            paid to (statusFilter == InvoiceStatus.PAID),
-            pending to (statusFilter == InvoiceStatus.PENDING)
-        )) {
-            button.setBackgroundResource(if (selected) R.drawable.btn_pill_payment_selected else R.drawable.btn_pill_payment_unselected)
-            button.setTextColor(resources.getColor(if (selected) R.color.text_primary else R.color.text_secondary, theme))
-        }
 
     /** Небольшой дебаунс — фильтрация не запускается на каждый символ, а через 250 мс после паузы в наборе. */
     private fun scheduleFilter() {
@@ -196,7 +170,6 @@ class InvoiceHistoryActivity : BaseActivity() {
         val query = searchQuery
         val from = filterFrom
         val to = filterTo
-        val status = statusFilter
         val source = allInvoices
 
         CoroutineScope(Dispatchers.Default).launch {
@@ -204,7 +177,6 @@ class InvoiceHistoryActivity : BaseActivity() {
                 val inRange = (from == null || inv.issueDateMillis >= from) &&
                         (to == null || inv.issueDateMillis <= to)
                 if (!inRange) return@filter false
-                if (status != null && inv.status != status) return@filter false
                 if (query.isEmpty()) return@filter true
 
                 val amountStr = String.format(Locale.getDefault(), "%.2f", inv.amount)

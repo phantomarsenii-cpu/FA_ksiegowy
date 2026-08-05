@@ -56,20 +56,8 @@ class InvoiceAdapter(
         val context = holder.itemView.context
         holder.tvDate.text = dateFmt.format(Date(inv.issueDateMillis))
         holder.tvBuyer.text = inv.buyerName
-        val statusLabel = if (inv.isOverdue) context.getString(R.string.invoice_status_overdue)
-            else context.getString(inv.status.labelResId)
-        holder.tvMeta.text = "№${inv.invoiceNumber} · " + context.getString(inv.paymentMethod.labelResId) +
-            " · " + statusLabel
+        holder.tvMeta.text = "№${inv.invoiceNumber} · " + context.getString(inv.paymentMethod.labelResId)
         holder.tvAmount.text = String.format(Locale.getDefault(), "%.2f", inv.amount)
-        val amountColor = when {
-            inv.isOverdue -> "#FF6B6B"
-            inv.status == InvoiceStatus.PENDING -> "#FFB74D"
-            else -> null
-        }
-        holder.tvAmount.setTextColor(
-            if (amountColor != null) android.graphics.Color.parseColor(amountColor)
-            else context.getColor(R.color.text_primary)
-        )
         holder.itemView.setOnClickListener { onItemClick(inv) }
         holder.btnDelete.setOnClickListener { onDeleteClick(inv) }
     }

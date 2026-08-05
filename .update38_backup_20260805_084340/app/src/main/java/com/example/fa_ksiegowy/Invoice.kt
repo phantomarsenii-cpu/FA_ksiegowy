@@ -34,14 +34,5 @@ data class Invoice(
 
     /** Content URI (MediaStore) lub ścieżka do zapisanego pliku PDF. */
     val pdfFilePath: String,
-    val pdfFileName: String,
-
-    /** Status opłacenia — PAID (domyślnie, zgodność wsteczna ze starymi rekordami) lub PENDING. */
-    val status: InvoiceStatus = InvoiceStatus.PAID,
-    /** Termin płatności — używany tylko gdy status = PENDING (przypomnienia, oznaczenie "zaległa"). */
-    val dueDateMillis: Long? = null
-) {
-    /** true, jeśli faktura oczekuje na zapłatę i termin już minął. Liczone na bieżąco, nie zapisywane w bazie. */
-    val isOverdue: Boolean
-        get() = status == InvoiceStatus.PENDING && dueDateMillis != null && dueDateMillis < System.currentTimeMillis()
-}
+    val pdfFileName: String
+)

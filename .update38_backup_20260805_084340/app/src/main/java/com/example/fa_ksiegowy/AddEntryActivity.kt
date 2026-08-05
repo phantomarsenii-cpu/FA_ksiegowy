@@ -35,10 +35,6 @@ class AddEntryActivity : BaseActivity() {
     // так как лимиты działalność nierejestrowana считаются строго по месяцам/кварталам,
     // и запись должна попадать в правильный период, а не всегда в "сейчас".
     private var selectedDateMillis: Long = System.currentTimeMillis()
-    // Повтор доступен только при создании новой записи (не при редактировании
-    // существующей) — иначе неясно, что должно произойти с уже созданными
-    // на основе шаблона транзакциями.
-    private var wantsRecurring: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,9 +69,6 @@ class AddEntryActivity : BaseActivity() {
         findViewById<Button>(R.id.btn_attach).setOnClickListener { pickImage.launch("image/*") }
         findViewById<Button>(R.id.btn_delete).setOnClickListener { confirmDelete() }
         findViewById<Button>(R.id.btn_date).setOnClickListener { showDatePicker() }
-        findViewById<android.widget.Switch>(R.id.sw_recurring).setOnCheckedChangeListener { _, checked ->
-            wantsRecurring = checked
-        }
 
         updateTypeToggleUi()
         updateTitle()
@@ -83,7 +76,6 @@ class AddEntryActivity : BaseActivity() {
 
         if (entryId != -1L) {
             findViewById<Button>(R.id.btn_delete).visibility = View.VISIBLE
-            findViewById<View>(R.id.row_recurring).visibility = View.GONE
             CoroutineScope(Dispatchers.IO).launch {
                 val entry = AppDatabase.getInstance(applicationContext).entryDao().getById(entryId)
                 withContext(Dispatchers.Main) {
@@ -153,21 +145,6 @@ class AddEntryActivity : BaseActivity() {
                             Entry(
                                 id = newId, amount = amt, isIncome = currentIsIncome,
                                 comment = comment, dateMillis = selectedDateMillis, receiptPath = renamedAgain
-                            )
-                        )
-                    }
-                    if (wantsRecurring) {
-                        val cal = java.util.Calendar.getInstance().apply { timeInMillis = selectedDateMillis }
-                        val dayOfMonth = cal.get(java.util.Calendar.DAY_OF_MONTH).coerceIn(1, 28)
-                        cal.add(java.util.Calendar.MONTH, 1)
-                        cal.set(java.util.Calendar.DAY_OF_MONTH, dayOfMonth)
-                        AppDatabase.getInstance(applicationContext).recurringEntryDao().insert(
-                            RecurringEntry(
-                                amount = amt,
-                                isIncome = currentIsIncome,
-                                comment = comment,
-                                dayOfMonth = dayOfMonth,
-                                nextRunMillis = cal.timeInMillis
                             )
                         )
                     }

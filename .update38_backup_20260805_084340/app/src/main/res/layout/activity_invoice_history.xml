@@ -95,55 +95,6 @@
             android:visibility="gone"/>
     </LinearLayout>
 
-    <!-- Фильтр по статусу оплаты -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="14dp">
-
-        <Button
-            android:id="@+id/btn_status_all"
-            android:layout_width="0dp"
-            android:layout_height="38dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="6dp"
-            android:background="@drawable/btn_pill_payment_selected"
-            android:text="@string/invoice_status_filter_all"
-            android:textAllCaps="false"
-            android:textColor="@color/text_primary"
-            android:textSize="12sp"
-            android:minWidth="0dp"
-            android:minHeight="0dp"/>
-
-        <Button
-            android:id="@+id/btn_status_paid"
-            android:layout_width="0dp"
-            android:layout_height="38dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="6dp"
-            android:background="@drawable/btn_pill_payment_unselected"
-            android:text="@string/invoice_status_paid"
-            android:textAllCaps="false"
-            android:textColor="@color/text_secondary"
-            android:textSize="12sp"
-            android:minWidth="0dp"
-            android:minHeight="0dp"/>
-
-        <Button
-            android:id="@+id/btn_status_pending"
-            android:layout_width="0dp"
-            android:layout_height="38dp"
-            android:layout_weight="1"
-            android:background="@drawable/btn_pill_payment_unselected"
-            android:text="@string/invoice_status_pending"
-            android:textAllCaps="false"
-            android:textColor="@color/text_secondary"
-            android:textSize="12sp"
-            android:minWidth="0dp"
-            android:minHeight="0dp"/>
-    </LinearLayout>
-
     <TextView
         android:id="@+id/tv_no_invoices"
         android:layout_width="match_parent"

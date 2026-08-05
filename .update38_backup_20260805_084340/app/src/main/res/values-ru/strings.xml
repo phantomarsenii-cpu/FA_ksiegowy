@@ -333,17 +333,4 @@
     <string name="delete_invoice_confirm_message">Запись и PDF-файл счёта будут безвозвратно удалены. Это действие нельзя отменить.</string>
     <string name="invoice_deleted">Счёт удалён</string>
 
-    <string name="invoice_status_paid">Оплачена</string>
-    <string name="invoice_status_pending">Ожидает оплаты</string>
-    <string name="invoice_status_overdue">Просрочена</string>
-    <string name="invoice_paid_switch_label">Оплачена</string>
-    <string name="invoice_due_date_label">Срок оплаты</string>
-    <string name="notif_invoice_overdue_title">Просроченная фактура</string>
-    <string name="notif_invoice_overdue_text">Фактура №%2$d для %1$s просрочена.</string>
-    <string name="notif_invoice_due_soon_title">Скоро срок оплаты</string>
-    <string name="notif_invoice_due_soon_text">Срок оплаты фактуры №%2$d для %1$s истекает в течение 3 дней.</string>
-    <string name="recurring_switch_label">Повторять ежемесячно</string>
-    <string name="chart_title">Доходы и расходы за последние 6 месяцев</string>
-    <string name="invoice_status_filter_all">Все</string>
-
 </resources>

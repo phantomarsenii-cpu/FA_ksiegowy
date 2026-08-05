@@ -78,8 +78,6 @@ class MineActivity : BaseActivity() {
         setupHiddenDevCodeGesture()
         requestNotificationPermissionIfNeeded()
         LimitsNotificationWorker.schedule(this)
-        InvoiceReminderWorker.schedule(this)
-        RecurringEntryWorker.schedule(this)
     }
 
     /** На Android 13+ уведомления требуют явного разрешения — запрашиваем один раз при первом запуске экрана. */

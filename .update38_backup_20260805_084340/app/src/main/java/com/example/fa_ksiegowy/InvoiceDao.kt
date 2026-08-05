@@ -35,8 +35,4 @@ interface InvoiceDao {
      */
     @Query("SELECT * FROM invoices WHERE issueDateMillis BETWEEN :from AND :to ORDER BY issueDateMillis ASC")
     suspend fun getBetween(from: Long, to: Long): List<Invoice>
-
-    /** Неоплаченные фактуры, отсортированные по ближайшему сроку — для напоминаний и фильтра статуса. */
-    @Query("SELECT * FROM invoices WHERE status = 'PENDING' ORDER BY dueDateMillis ASC")
-    suspend fun getPending(): List<Invoice>
 }

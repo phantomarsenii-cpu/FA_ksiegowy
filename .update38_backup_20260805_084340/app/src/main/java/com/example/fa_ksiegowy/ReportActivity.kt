@@ -40,37 +40,6 @@ class ReportActivity : BaseActivity() {
         findViewById<Button>(R.id.btn_report_custom).setOnClickListener {
             runIfPro { showCustomRangePicker() }
         }
-        loadChart()
-    }
-
-    /** Загружает суммы доходов/расходов за последние 6 месяцев для графика на экране отчётов. */
-    private fun loadChart() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val cal = Calendar.getInstance()
-            val monthFmt = SimpleDateFormat("LLL", Locale.getDefault())
-            val points = mutableListOf<MonthlyBarChartView.MonthPoint>()
-
-            for (i in 5 downTo 0) {
-                val monthCal = cal.clone() as Calendar
-                monthCal.add(Calendar.MONTH, -i)
-                monthCal.set(Calendar.DAY_OF_MONTH, 1)
-                monthCal.set(Calendar.HOUR_OF_DAY, 0); monthCal.set(Calendar.MINUTE, 0)
-                monthCal.set(Calendar.SECOND, 0); monthCal.set(Calendar.MILLISECOND, 0)
-                val from = monthCal.timeInMillis
-                val label = monthFmt.format(monthCal.time)
-                monthCal.add(Calendar.MONTH, 1)
-                val to = monthCal.timeInMillis - 1
-
-                val entries = db.entryDao().getBetween(from, to)
-                val income = entries.filter { it.isIncome }.sumOf { it.amount }
-                val expense = entries.filter { !it.isIncome }.sumOf { it.amount }
-                points.add(MonthlyBarChartView.MonthPoint(label, income, expense))
-            }
-
-            withContext(Dispatchers.Main) {
-                findViewById<MonthlyBarChartView>(R.id.chart_monthly).submitData(points)
-            }
-        }
     }
 
     /** Годовой и произвольный отчёт — платная функция; месячный остаётся бесплатным. */

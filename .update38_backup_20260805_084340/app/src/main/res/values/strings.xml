@@ -345,17 +345,4 @@ Contact: p.arsenii@interia.pl</string>
     <string name="delete_invoice_confirm_message">The invoice record and its PDF file will be permanently deleted. This cannot be undone.</string>
     <string name="invoice_deleted">Invoice deleted</string>
 
-    <string name="invoice_status_paid">Paid</string>
-    <string name="invoice_status_pending">Pending</string>
-    <string name="invoice_status_overdue">Overdue</string>
-    <string name="invoice_paid_switch_label">Paid</string>
-    <string name="invoice_due_date_label">Due date</string>
-    <string name="notif_invoice_overdue_title">Overdue invoice</string>
-    <string name="notif_invoice_overdue_text">Invoice №%2$d for %1$s is overdue.</string>
-    <string name="notif_invoice_due_soon_title">Payment due soon</string>
-    <string name="notif_invoice_due_soon_text">Invoice №%2$d for %1$s is due within 3 days.</string>
-    <string name="recurring_switch_label">Repeat monthly</string>
-    <string name="chart_title">Income and expenses, last 6 months</string>
-    <string name="invoice_status_filter_all">All</string>
-
 </resources>

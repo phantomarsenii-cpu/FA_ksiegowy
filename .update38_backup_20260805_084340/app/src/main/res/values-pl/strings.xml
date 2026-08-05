@@ -333,17 +333,4 @@
     <string name="delete_invoice_confirm_message">Wpis oraz plik PDF faktury zostaną trwale usunięte. Tej operacji nie można cofnąć.</string>
     <string name="invoice_deleted">Faktura usunięta</string>
 
-    <string name="invoice_status_paid">Zapłacona</string>
-    <string name="invoice_status_pending">Oczekuje na zapłatę</string>
-    <string name="invoice_status_overdue">Zaległa</string>
-    <string name="invoice_paid_switch_label">Zapłacona</string>
-    <string name="invoice_due_date_label">Termin płatności</string>
-    <string name="notif_invoice_overdue_title">Zaległa faktura</string>
-    <string name="notif_invoice_overdue_text">Faktura nr %2$d dla %1$s jest zaległa.</string>
-    <string name="notif_invoice_due_soon_title">Zbliża się termin płatności</string>
-    <string name="notif_invoice_due_soon_text">Termin płatności faktury nr %2$d dla %1$s upływa w ciągu 3 dni.</string>
-    <string name="recurring_switch_label">Powtarzaj co miesiąc</string>
-    <string name="chart_title">Przychody i wydatki — ostatnie 6 miesięcy</string>
-    <string name="invoice_status_filter_all">Wszystkie</string>
-
 </resources>
