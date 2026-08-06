@@ -18,11 +18,6 @@ class InvoiceReminderWorker(context: Context, params: WorkerParameters) : Corout
 
     override suspend fun doWork(): Result {
         return try {
-            // Уведомления должны быть на языке, выбранном В ПРИЛОЖЕНИИ (LocaleHelper),
-            // а не на системном языке телефона — раньше ctx.getString(...)
-            // брал системную локаль напрямую, из-за чего уведомления могли отличаться
-            // от языка интерфейса приложения.
-            val ctx = LocaleHelper.applyLocale(applicationContext)
             val dao = AppDatabase.getInstance(applicationContext).invoiceDao()
             val prefs = applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
             val now = System.currentTimeMillis()
@@ -34,15 +29,13 @@ class InvoiceReminderWorker(context: Context, params: WorkerParameters) : Corout
                 when {
                     due < now -> notifyOnce(
                         prefs, "invoice_overdue_${inv.id}",
-                        ctx.getString(R.string.notif_invoice_overdue_title),
-                        ctx.getString(R.string.notif_invoice_overdue_text, inv.buyerName, inv.invoiceNumber),
-                        InvoiceHistoryActivity::class.java
+                        applicationContext.getString(R.string.notif_invoice_overdue_title),
+                        applicationContext.getString(R.string.notif_invoice_overdue_text, inv.buyerName, inv.invoiceNumber)
                     )
                     due - now <= threeDaysMs -> notifyOnce(
                         prefs, "invoice_due_soon_${inv.id}",
-                        ctx.getString(R.string.notif_invoice_due_soon_title),
-                        ctx.getString(R.string.notif_invoice_due_soon_text, inv.buyerName, inv.invoiceNumber),
-                        InvoiceHistoryActivity::class.java
+                        applicationContext.getString(R.string.notif_invoice_due_soon_title),
+                        applicationContext.getString(R.string.notif_invoice_due_soon_text, inv.buyerName, inv.invoiceNumber)
                     )
                 }
             }
@@ -52,13 +45,10 @@ class InvoiceReminderWorker(context: Context, params: WorkerParameters) : Corout
         }
     }
 
-    private fun notifyOnce(
-        prefs: android.content.SharedPreferences, key: String, title: String, text: String,
-        targetActivity: Class<*>? = null
-    ) {
+    private fun notifyOnce(prefs: android.content.SharedPreferences, key: String, title: String, text: String) {
         if (prefs.getBoolean("notif_shown_$key", false)) return
         prefs.edit().putBoolean("notif_shown_$key", true).apply()
-        LimitsNotificationWorker.showNotification(applicationContext, key.hashCode(), title, text, targetActivity)
+        LimitsNotificationWorker.showNotification(applicationContext, key.hashCode(), title, text)
     }
 
     companion object {

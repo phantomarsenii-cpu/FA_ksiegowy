@@ -2,8 +2,6 @@ package com.example.fa_ksiegowy
 
 import android.Manifest
 import android.app.NotificationChannel
-import android.app.PendingIntent
-import android.content.Intent
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
@@ -29,11 +27,6 @@ class LimitsNotificationWorker(context: Context, params: WorkerParameters) : Cor
 
     override suspend fun doWork(): Result {
         try {
-            // Уведомления должны быть на языке, выбранном В ПРИЛОЖЕНИИ (LocaleHelper),
-            // а не на системном языке телефона — раньше ctx.getString(...)
-            // брал системную локаль напрямую, из-за чего уведомления могли отличаться
-            // от языка интерфейса приложения.
-            val ctx = LocaleHelper.applyLocale(applicationContext)
             val limits = LimitsHelper.compute(applicationContext)
             val prefs = applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
             val today = SDF_DAY.format(java.util.Date())
@@ -44,18 +37,18 @@ class LimitsNotificationWorker(context: Context, params: WorkerParameters) : Cor
                 when {
                     m.exceeded -> notifyOnce(
                         prefs, "n_exceeded_$today",
-                        ctx.getString(R.string.notif_limit_exceeded_title),
-                        ctx.getString(R.string.notif_limit_exceeded_text)
+                        applicationContext.getString(R.string.notif_limit_exceeded_title),
+                        applicationContext.getString(R.string.notif_limit_exceeded_text)
                     )
                     m.percent >= 95 -> notifyOnce(
                         prefs, "n_95_$today",
-                        ctx.getString(R.string.notif_limit_95_title),
-                        ctx.getString(R.string.notif_limit_95_text)
+                        applicationContext.getString(R.string.notif_limit_95_title),
+                        applicationContext.getString(R.string.notif_limit_95_text)
                     )
                     m.percent >= 80 -> notifyOnce(
                         prefs, "n_80_$today",
-                        ctx.getString(R.string.notif_limit_80_title),
-                        ctx.getString(R.string.notif_limit_80_text)
+                        applicationContext.getString(R.string.notif_limit_80_title),
+                        applicationContext.getString(R.string.notif_limit_80_text)
                     )
                 }
             }
@@ -64,8 +57,8 @@ class LimitsNotificationWorker(context: Context, params: WorkerParameters) : Cor
             if (limits.bracket.percent in 90..999) {
                 notifyOnce(
                     prefs, "bracket90_${TaxHelper.currentYear()}",
-                    ctx.getString(R.string.notif_bracket_title),
-                    ctx.getString(R.string.notif_bracket_text)
+                    applicationContext.getString(R.string.notif_bracket_title),
+                    applicationContext.getString(R.string.notif_bracket_text)
                 )
             }
 
@@ -73,8 +66,8 @@ class LimitsNotificationWorker(context: Context, params: WorkerParameters) : Cor
             if (limits.vat.percent in 90..999) {
                 notifyOnce(
                     prefs, "vat90_${TaxHelper.currentYear()}",
-                    ctx.getString(R.string.notif_vat_title),
-                    ctx.getString(R.string.notif_vat_text)
+                    applicationContext.getString(R.string.notif_vat_title),
+                    applicationContext.getString(R.string.notif_vat_text)
                 )
             }
 
@@ -84,8 +77,8 @@ class LimitsNotificationWorker(context: Context, params: WorkerParameters) : Cor
             if (day in 15..20) {
                 notifyOnce(
                     prefs, "advance_${cal.get(Calendar.YEAR)}_${cal.get(Calendar.MONTH)}",
-                    ctx.getString(R.string.notif_advance_title),
-                    ctx.getString(R.string.notif_advance_text)
+                    applicationContext.getString(R.string.notif_advance_title),
+                    applicationContext.getString(R.string.notif_advance_text)
                 )
             }
 
@@ -96,8 +89,8 @@ class LimitsNotificationWorker(context: Context, params: WorkerParameters) : Cor
             ) {
                 notifyOnce(
                     prefs, "pit_deadline_${cal.get(Calendar.YEAR)}_$month",
-                    ctx.getString(R.string.notif_pit_deadline_title),
-                    ctx.getString(R.string.notif_pit_deadline_text)
+                    applicationContext.getString(R.string.notif_pit_deadline_title),
+                    applicationContext.getString(R.string.notif_pit_deadline_text)
                 )
             }
 
@@ -132,31 +125,19 @@ class LimitsNotificationWorker(context: Context, params: WorkerParameters) : Cor
             }
         }
 
-        fun showNotification(context: Context, id: Int, title: String, text: String, targetActivity: Class<*>? = null) {
+        fun showNotification(context: Context, id: Int, title: String, text: String) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 val granted = ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) ==
                     PackageManager.PERMISSION_GRANTED
                 if (!granted) return
             }
-            val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+            val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.ic_dialog_alert)
                 .setContentTitle(title)
                 .setContentText(text)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(text))
                 .setAutoCancel(true)
-            // Тап по уведомлению должен открывать соответствующий экран приложения —
-            // раньше при тапе ничего не происходило, так как contentIntent не задавался.
-            if (targetActivity != null) {
-                val openIntent = Intent(context, targetActivity).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                }
-                val pendingIntent = PendingIntent.getActivity(
-                    context, id, openIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
-                builder.setContentIntent(pendingIntent)
-            }
-            val notification = builder.build()
+                .build()
             androidx.core.app.NotificationManagerCompat.from(context).apply {
                 try {
                     notify(id, notification)

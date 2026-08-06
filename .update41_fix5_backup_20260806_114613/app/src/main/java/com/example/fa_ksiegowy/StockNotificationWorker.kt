@@ -17,11 +17,6 @@ class StockNotificationWorker(context: Context, params: WorkerParameters) : Coro
 
     override suspend fun doWork(): Result {
         return try {
-            // Уведомления должны быть на языке, выбранном В ПРИЛОЖЕНИИ (LocaleHelper),
-            // а не на системном языке телефона — раньше ctx.getString(...)
-            // брал системную локаль напрямую, из-за чего уведомления могли отличаться
-            // от языка интерфейса приложения.
-            val ctx = LocaleHelper.applyLocale(applicationContext)
             val prefs = applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
             if (!BusinessKindHelper.get(prefs).showsMagazin) return Result.success()
             val dao = AppDatabase.getInstance(applicationContext).productDao()
@@ -29,8 +24,8 @@ class StockNotificationWorker(context: Context, params: WorkerParameters) : Coro
             for (p in dao.getLowStock()) {
                 notifyOnce(
                     prefs, "stock_low_${p.id}_$today",
-                    ctx.getString(R.string.notif_low_stock_title),
-                    ctx.getString(
+                    applicationContext.getString(R.string.notif_low_stock_title),
+                    applicationContext.getString(
                         R.string.notif_low_stock_text,
                         p.name,
                         String.format(Locale.getDefault(), "%.1f", p.quantity),
