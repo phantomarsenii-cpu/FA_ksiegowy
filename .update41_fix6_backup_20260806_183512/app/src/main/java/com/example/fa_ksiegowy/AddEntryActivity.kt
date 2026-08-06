@@ -269,19 +269,8 @@ class AddEntryActivity : BaseActivity() {
     private fun updateTypeToggleUi() {
         val income = findViewById<Button>(R.id.btn_type_income)
         val expense = findViewById<Button>(R.id.btn_type_expense)
-        // Явное выделение выбранного варианта — тот же приём, что и для способа оплаты
-        // на экране фактуры: яркий фон + белый текст против приглушённого фона и
-        // серого текста у невыбранного варианта.
-        income.setBackgroundResource(if (currentIsIncome) R.drawable.btn_pill_payment_selected else R.drawable.btn_pill_payment_unselected)
-        expense.setBackgroundResource(if (!currentIsIncome) R.drawable.btn_pill_payment_selected else R.drawable.btn_pill_payment_unselected)
-        income.setTextColor(resources.getColor(if (currentIsIncome) R.color.text_primary else R.color.text_secondary, theme))
-        expense.setTextColor(resources.getColor(if (!currentIsIncome) R.color.text_primary else R.color.text_secondary, theme))
-        income.alpha = if (currentIsIncome) 1.0f else 0.75f
-        expense.alpha = if (!currentIsIncome) 1.0f else 0.75f
-        // Прикладывать/сканировать чек имеет смысл только для расходов (чек подтверждает трату) —
-        // для приходов эти кнопки только путают.
-        findViewById<Button>(R.id.btn_attach).visibility = if (currentIsIncome) View.GONE else View.VISIBLE
-        findViewById<Button>(R.id.btn_scan_receipt).visibility = if (currentIsIncome) View.GONE else View.VISIBLE
+        income.setBackgroundResource(if (currentIsIncome) R.drawable.btn_pill_primary else R.drawable.btn_pill_outline)
+        expense.setBackgroundResource(if (!currentIsIncome) R.drawable.btn_pill_primary else R.drawable.btn_pill_outline)
     }
 
     private fun updateTitle() {
@@ -368,4 +357,3 @@ class AddEntryActivity : BaseActivity() {
             getString(R.string.entry_date_label) + ": " + formatted
     }
 }
-

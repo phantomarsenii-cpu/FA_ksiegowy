@@ -349,8 +349,8 @@
     <string name="invoice_pdf_pending_stamp">AWAITING PAYMENT</string>
 
     <!-- Update 41: business kind, magazin, barcode, receipt OCR -->
-    <string name="settings_menu_business">Sales type (goods/services)</string>
-    <string name="business_kind_title">Sales type (goods/services)</string>
+    <string name="settings_menu_business">Business type</string>
+    <string name="business_kind_title">Business type</string>
     <string name="business_kind_description">Choose what best matches your activity. Selecting Sales or Mixed adds a Warehouse (Magazyn) button on the main screen for tracking stock.</string>
     <string name="business_kind_sales">Sales</string>
     <string name="business_kind_services">Services</string>
@@ -381,11 +381,4 @@
     <string name="receipt_scan_processing">Recognizing receipt…</string>
     <string name="receipt_scan_done">Receipt recognized, please check the fields</string>
     <string name="receipt_scan_no_text">Could not read the receipt, please enter manually</string>
-
-    <!-- Update 41 fix 6 -->
-    <string name="invoice_mark_paid_confirm_title">Mark as paid?</string>
-    <string name="invoice_mark_paid_confirm_message">This sets the invoice status to paid today and updates the saved PDF file to reflect the new status.</string>
-    <string name="invoice_marked_paid_toast">Invoice marked as paid</string>
-    <string name="invoice_marked_paid_pdf_warning">Status updated, but the PDF file could not be regenerated</string>
 </resources>
-

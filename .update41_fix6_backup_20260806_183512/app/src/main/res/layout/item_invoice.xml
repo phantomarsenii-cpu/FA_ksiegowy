@@ -53,21 +53,6 @@
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/btn_mark_paid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:padding="6dp"
-        android:text="✓"
-        android:textColor="#4CD964"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:visibility="gone"/>
-
-    <TextView
         android:id="@+id/btn_delete_invoice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,4 +67,3 @@
         android:background="?android:attr/selectableItemBackgroundBorderless"/>
 
 </LinearLayout>
-

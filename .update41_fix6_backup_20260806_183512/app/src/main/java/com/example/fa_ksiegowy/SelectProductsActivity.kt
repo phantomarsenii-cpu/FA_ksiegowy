@@ -62,29 +62,6 @@ class SelectProductsActivity : BaseActivity() {
             etQty.setText("1")
             etQty.isEnabled = false
 
-            val btnMinus = row.findViewById<TextView>(R.id.btn_qty_minus)
-            val btnPlus = row.findViewById<TextView>(R.id.btn_qty_plus)
-            // "+" на невыбранном товаре сначала просто отмечает его (количество остаётся 1),
-            // повторные нажатия увеличивают на 1 — так поведение интуитивно совпадает с
-            // "добавить ещё одну единицу этого товара". "−" на количестве 1 снимает отметку.
-            btnPlus.setOnClickListener {
-                if (!cb.isChecked) {
-                    cb.isChecked = true
-                } else {
-                    val cur = etQty.text.toString().toDoubleOrNull() ?: 1.0
-                    etQty.setText(formatNum(cur + 1))
-                }
-            }
-            btnMinus.setOnClickListener {
-                if (!cb.isChecked) return@setOnClickListener
-                val cur = etQty.text.toString().toDoubleOrNull() ?: 1.0
-                if (cur <= 1.0) {
-                    cb.isChecked = false
-                } else {
-                    etQty.setText(formatNum(cur - 1))
-                }
-            }
-
             cb.setOnCheckedChangeListener { _, isChecked ->
                 etQty.isEnabled = isChecked
                 if (isChecked) {
@@ -120,4 +97,3 @@ class SelectProductsActivity : BaseActivity() {
 
     private fun formatNum(v: Double): String = if (v == v.toLong().toDouble()) v.toLong().toString() else v.toString()
 }
-

@@ -56,8 +56,7 @@ class InvoiceHistoryActivity : BaseActivity() {
 
         adapter = InvoiceAdapter(
             onItemClick = { invoice -> openInvoicePdf(invoice) },
-            onDeleteClick = { invoice -> confirmDelete(invoice) },
-            onMarkPaidClick = { invoice -> confirmMarkPaid(invoice) }
+            onDeleteClick = { invoice -> confirmDelete(invoice) }
         )
         findViewById<RecyclerView>(R.id.rv_invoices).apply {
             layoutManager = LinearLayoutManager(this@InvoiceHistoryActivity)
@@ -232,67 +231,11 @@ class InvoiceHistoryActivity : BaseActivity() {
     }
 
     private fun openInvoicePdf(invoice: Invoice) {
-        // openPdfSafely сам ловит и ActivityNotFoundException, и SecurityException
-        // (известная проблема на части устройств с MediaStore-URI — раньше это
-        // приводило к падению всего приложения при тапе по фактуре) и делает
-        // одну попытку через локальную копию файла, прежде чем сдаться.
-        val opened = InvoiceFileStorage.openPdfSafely(this, invoice.pdfFilePath)
-        if (!opened) {
+        try {
+            startActivity(InvoiceFileStorage.viewIntent(Uri.parse(invoice.pdfFilePath)))
+        } catch (e: ActivityNotFoundException) {
             Toast.makeText(this, getString(R.string.open_folder_error, InvoiceFileStorage.displayFolderPath), Toast.LENGTH_LONG).show()
         }
-    }
-
-    /** Меняет статус на "оплачено" (сегодняшней датой) прямо из истории и
-     *  перезаписывает уже сохранённый PDF-файл, чтобы он отражал новый статус —
-     *  иначе документ продолжал бы показывать старую пометку "ожидает оплаты". */
-    private fun confirmMarkPaid(invoice: Invoice) {
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.invoice_mark_paid_confirm_title))
-            .setMessage(getString(R.string.invoice_mark_paid_confirm_message))
-            .setPositiveButton(getString(R.string.delete_confirm_yes)) { _, _ ->
-                CoroutineScope(Dispatchers.IO).launch {
-                    val paidInvoice = invoice.copy(status = InvoiceStatus.PAID, paymentDateMillis = System.currentTimeMillis(), dueDateMillis = null)
-                    AppDatabase.getInstance(applicationContext).invoiceDao().update(paidInvoice)
-                    val items = AppDatabase.getInstance(applicationContext).invoiceItemDao().getForInvoice(invoice.id)
-                    val regenerated = try {
-                        InvoiceFileStorage.overwritePdf(applicationContext, invoice.pdfFilePath) { out ->
-                            InvoicePdfGenerator.generate(
-                                context = this@InvoiceHistoryActivity,
-                                seller = InvoiceSellerDataStore.load(applicationContext),
-                                invoiceNumber = paidInvoice.invoiceNumber,
-                                issueDateMillis = paidInvoice.issueDateMillis,
-                                paymentDateMillis = paidInvoice.paymentDateMillis,
-                                serviceDateMillis = paidInvoice.serviceDateMillis,
-                                isPhysicalPerson = paidInvoice.isPhysicalPerson,
-                                buyerName = paidInvoice.buyerName,
-                                buyerNip = paidInvoice.buyerNip,
-                                buyerStreet = paidInvoice.buyerStreet,
-                                buyerPostalCode = paidInvoice.buyerPostalCode,
-                                buyerCity = paidInvoice.buyerCity,
-                                serviceName = paidInvoice.serviceName,
-                                amount = paidInvoice.amount,
-                                paymentMethod = paidInvoice.paymentMethod,
-                                invoiceStatus = InvoiceStatus.PAID,
-                                dueDateMillis = null,
-                                items = items,
-                                out = out
-                            )
-                        }
-                    } catch (e: Exception) {
-                        false
-                    }
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(
-                            this@InvoiceHistoryActivity,
-                            getString(if (regenerated) R.string.invoice_marked_paid_toast else R.string.invoice_marked_paid_pdf_warning),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        loadData()
-                    }
-                }
-            }
-            .setNegativeButton(getString(R.string.dialog_close), null)
-            .show()
     }
 
     private fun confirmDelete(invoice: Invoice) {
@@ -313,4 +256,3 @@ class InvoiceHistoryActivity : BaseActivity() {
             .show()
     }
 }
-

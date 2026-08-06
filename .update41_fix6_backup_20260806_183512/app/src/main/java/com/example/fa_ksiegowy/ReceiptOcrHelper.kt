@@ -93,33 +93,6 @@ object ReceiptOcrHelper {
         return null
     }
 
-    // Строки чека, которые точно НЕ название продавца: номер документа/паragonu,
-    // NIP, телефон, касса/кассир, дата — раньше extractSeller брал просто первую
-    // непустую строку и часто попадал на "nr: 24216" вместо имени магазина.
-    private val SELLER_SKIP_KEYWORDS = listOf(
-        "PARAGON", "NR.", "NR:", " NR ", "NIP", "TEL", "TEL.", "TEL:", "KASA", "KASJER",
-        "FISKALNY", "FISKALNA", "NUMER", "ID:", "REGON",
-        "ЧЕК", "КАССА", "КАССИР", "НОМЕР", "ИНН", "ТЕЛ"
-    )
-    private val DATE_LIKE: Pattern = Pattern.compile("\\d{1,4}[./-]\\d{1,2}[./-]\\d{1,4}")
-    private val MOSTLY_DIGITS: Pattern = Pattern.compile("^[\\s0-9:\\-./#]+$")
-
-    /** Ищет наиболее похожую на название продавца строку чека: пропускает номера
-     *  документа/NIP/телефона/даты и строки, где цифр больше, чем букв. */
-    private fun extractSeller(text: String): String? {
-        for (rawLine in text.lines()) {
-            val line = rawLine.trim()
-            if (line.length !in 3..40) continue
-            val upper = line.uppercase(Locale.ROOT)
-            if (SELLER_SKIP_KEYWORDS.any { upper.contains(it) }) continue
-            if (AMOUNT_KEYWORDS.any { upper.contains(it) }) continue
-            if (MOSTLY_DIGITS.matcher(line).matches()) continue
-            if (DATE_LIKE.matcher(line).find()) continue
-            val letters = line.count { it.isLetter() }
-            if (letters < line.length / 2) continue
-            return line
-        }
-        return null
-    }
+    private fun extractSeller(text: String): String? =
+        text.lines().map { it.trim() }.firstOrNull { it.isNotBlank() && it.length in 3..40 }
 }
-

@@ -94,11 +94,6 @@ object InvoicePdfGenerator {
         paymentMethod: PaymentMethod,
         invoiceStatus: InvoiceStatus = InvoiceStatus.PAID,
         dueDateMillis: Long? = null,
-        /** Позиции склада, выбранные для этой фактуры — если не пусто, таблица PDF
-         *  рисует отдельную строку на каждую позицию (с реальным количеством) вместо
-         *  одной строки на всю сумму. Если пусто — поведение как раньше: одна строка
-         *  из serviceName/amount (ручной ввод без склада). */
-        items: List<InvoiceItem> = emptyList(),
         out: OutputStream
     ) {
         val isVatPayer = seller.nip.isNotBlank()
@@ -215,77 +210,44 @@ object InvoicePdfGenerator {
         val colTotal = colPrice + 72f
         val colStops = floatArrayOf(colLp, colName, colUnit, colQty, colPrice, colTotal, tableRight)
 
-        // Список строк таблицы: если переданы позиции склада — по строке на каждую
-        // (с реальным количеством), иначе — одна строка на всю сумму (как раньше,
-        // для счетов без привязки к складу).
-        data class Row(val name: String, val qty: Double, val unitPrice: Double)
-        val rows: List<Row> = if (items.isNotEmpty()) items.map { Row(it.name, it.quantity, it.unitPrice) }
-            else listOf(Row(serviceName, 1.0, amount))
-        val totalAmount = rows.sumOf { it.qty * it.unitPrice }
-        val qtyStr: (Double) -> String = { q -> if (q == q.toLong().toDouble()) q.toLong().toString() else q.toString() }
-
-        val headerRowHeight = 20f
-        val dataRowHeight = 22f
-        val totalRowHeight = 22f
-
         newPageIfNeeded(70f)
-        var segmentTop = y - 10f
+        val headerRowTop = y - 10f
+        val headerRowHeight = 20f
+        canvas.drawRect(tableLeft, headerRowTop, tableRight, headerRowTop + headerRowHeight, headerFillPaint)
+        val headerBaselineY = headerRowTop + headerRowHeight - 6f
+        canvas.drawText(l.tableLp, colLp + 4f, headerBaselineY, tableHeaderPaint)
+        canvas.drawText(l.tableName, colName + 4f, headerBaselineY, tableHeaderPaint)
+        canvas.drawText(l.tableUnit, colUnit + 4f, headerBaselineY, tableHeaderPaint)
+        canvas.drawText(l.tableQty, colQty + 4f, headerBaselineY, tableHeaderPaint)
+        canvas.drawText(l.tablePrice, colPrice + 4f, headerBaselineY, tableHeaderPaint)
+        canvas.drawText(l.tableTotal, colTotal + 4f, headerBaselineY, tableHeaderPaint)
 
-        fun drawHeaderRow() {
-            canvas.drawRect(tableLeft, segmentTop, tableRight, segmentTop + headerRowHeight, headerFillPaint)
-            val headerBaselineY = segmentTop + headerRowHeight - 6f
-            canvas.drawText(l.tableLp, colLp + 4f, headerBaselineY, tableHeaderPaint)
-            canvas.drawText(l.tableName, colName + 4f, headerBaselineY, tableHeaderPaint)
-            canvas.drawText(l.tableUnit, colUnit + 4f, headerBaselineY, tableHeaderPaint)
-            canvas.drawText(l.tableQty, colQty + 4f, headerBaselineY, tableHeaderPaint)
-            canvas.drawText(l.tablePrice, colPrice + 4f, headerBaselineY, tableHeaderPaint)
-            canvas.drawText(l.tableTotal, colTotal + 4f, headerBaselineY, tableHeaderPaint)
-            y = segmentTop + headerRowHeight
-            canvas.drawLine(tableLeft, y, tableRight, y, linePaint)
-        }
+        val dataRowTop = headerRowTop + headerRowHeight
+        val dataRowHeight = 22f
+        val dataBaselineY = dataRowTop + dataRowHeight - 7f
+        canvas.drawText("1", colLp + 4f, dataBaselineY, tableCellPaint)
+        canvas.drawText(serviceName.take(38), colName + 4f, dataBaselineY, tableCellPaint)
+        canvas.drawText(l.unitPiece, colUnit + 4f, dataBaselineY, tableCellPaint)
+        canvas.drawText("1", colQty + 4f, dataBaselineY, tableCellPaint)
+        canvas.drawText(money(amount), colPrice + 4f, dataBaselineY, tableCellPaint)
+        canvas.drawText(money(amount), colTotal + 4f, dataBaselineY, tableCellPaint)
 
-        fun closeSegment(colLinesBottom: Float) {
-            canvas.drawRect(tableLeft, segmentTop, tableRight, y, linePaint.apply { style = Paint.Style.STROKE })
-            for (i in 1 until colStops.size - 1) {
-                canvas.drawLine(colStops[i], segmentTop, colStops[i], colLinesBottom, linePaint)
-            }
-        }
-
-        drawHeaderRow()
-        for ((idx, row) in rows.withIndex()) {
-            // Оставляем место под итоговую строку на этой же странице — если не
-            // помещается, закрываем таблицу на текущей странице и продолжаем с
-            // новым заголовком на следующей (для счетов с большим числом позиций).
-            if (y + dataRowHeight + totalRowHeight > PAGE_HEIGHT - MARGIN) {
-                closeSegment(y)
-                document.finishPage(page)
-                pageNumber++
-                page = document.startPage(PdfDocument.PageInfo.Builder(PAGE_WIDTH, PAGE_HEIGHT, pageNumber).create())
-                canvas = page.canvas
-                y = MARGIN
-                segmentTop = y - 10f
-                drawHeaderRow()
-            }
-            val baselineY = y + dataRowHeight - 7f
-            canvas.drawText((idx + 1).toString(), colLp + 4f, baselineY, tableCellPaint)
-            canvas.drawText(row.name.take(38), colName + 4f, baselineY, tableCellPaint)
-            canvas.drawText(l.unitPiece, colUnit + 4f, baselineY, tableCellPaint)
-            canvas.drawText(qtyStr(row.qty), colQty + 4f, baselineY, tableCellPaint)
-            canvas.drawText(money(row.unitPrice), colPrice + 4f, baselineY, tableCellPaint)
-            canvas.drawText(money(row.qty * row.unitPrice), colTotal + 4f, baselineY, tableCellPaint)
-            y += dataRowHeight
-            canvas.drawLine(tableLeft, y, tableRight, y, linePaint)
-        }
-
-        val gridBottom = y
-        val totalRowTop = y
+        val totalRowTop = dataRowTop + dataRowHeight
+        val totalRowHeight = 22f
         val totalBaselineY = totalRowTop + totalRowHeight - 7f
         canvas.drawText(l.sumLabel + ":", colPrice - 60f, totalBaselineY, sectionPaint)
-        canvas.drawText(money(totalAmount), colTotal + 4f, totalBaselineY, sectionPaint)
-        y = totalRowTop + totalRowHeight
-        closeSegment(gridBottom)
+        canvas.drawText(money(amount), colTotal + 4f, totalBaselineY, sectionPaint)
 
-        y += 26f
+        val tableBottom = totalRowTop + totalRowHeight
+        // Obramowanie tabeli i linii kolumn/wierszy.
+        canvas.drawRect(tableLeft, headerRowTop, tableRight, tableBottom, linePaint.apply { style = Paint.Style.STROKE })
+        canvas.drawLine(tableLeft, dataRowTop, tableRight, dataRowTop, linePaint)
+        canvas.drawLine(tableLeft, totalRowTop, tableRight, totalRowTop, linePaint)
+        for (i in 1 until colStops.size - 1) {
+            canvas.drawLine(colStops[i], headerRowTop, colStops[i], totalRowTop, linePaint)
+        }
+
+        y = tableBottom + 26f
 
         // --- Status płatności / pieczątka ---
         // Dokument musi wiernie odzwierciedlać rzeczywisty status faktury:
@@ -313,4 +275,3 @@ object InvoicePdfGenerator {
         document.close()
     }
 }
-

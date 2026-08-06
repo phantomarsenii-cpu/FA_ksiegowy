@@ -118,81 +118,6 @@ object InvoiceFileStorage {
     val displayFolderPath: String get() = "Documents/$RELATIVE_FOLDER"
 
     /**
-     * На части urządzeń/wersji Androida (np. niektóre One UI) system rzuca
-     * SecurityException przy próbie START_ACTIVITY z FLAG_GRANT_READ_URI_PERMISSION
-     * dla URI z generic MediaStore.Files collection ("content://media/.../file/...") —
-     * mimo że aplikacja jest właścicielem wpisu. Awaryjnie kopiujemy plik do
-     * wewnętrznego cache aplikacji i oddajemy URI przez FileProvider, dla którego
-     * grant zawsze się udaje (nasz własny provider, nasza aplikacja).
-     */
-    fun resolveViewableUri(context: Context, original: Uri): Uri {
-        return try {
-            val cacheDir = File(context.cacheDir, "invoice_view_cache")
-            if (!cacheDir.exists()) cacheDir.mkdirs()
-            val tmp = File(cacheDir, "invoice_${System.currentTimeMillis()}.pdf")
-            val input = context.contentResolver.openInputStream(original)
-                ?: return original
-            input.use { inp -> tmp.outputStream().use { out -> inp.copyTo(out) } }
-            FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", tmp)
-        } catch (e: Exception) {
-            original
-        }
-    }
-
-    /**
-     * Otwiera Intent ACTION_VIEW dla PDF, z automatycznym fallbackiem na
-     * [resolveViewableUri], jeśli pierwsza próba startActivity rzuci wyjątkiem
-     * (SecurityException z powodu MediaStore, ActivityNotFoundException itd.).
-     * Zwraca true, jeśli udało się otworzyć (którymkolwiek sposobem).
-     */
-    fun openPdfSafely(context: Context, uriString: String): Boolean {
-        val original = try {
-            Uri.parse(uriString)
-        } catch (e: Exception) {
-            return false
-        }
-        try {
-            context.startActivity(viewIntent(original))
-            return true
-        } catch (e: Exception) {
-            // ActivityNotFoundException, SecurityException (znany problem MediaStore
-            // na niektórych urządzeniach) — próbujemy raz jeszcze przez lokalną kopię.
-        }
-        return try {
-            val fallback = resolveViewableUri(context, original)
-            context.startActivity(viewIntent(fallback))
-            true
-        } catch (e: Exception) {
-            false
-        }
-    }
-
-    /**
-     * Nadpisuje już zapisany plik PDF nową zawartością (np. po zmianie statusu
-     * faktury na opłaconą) — próbuje kolejnych trybów otwarcia strumienia, bo
-     * różne dostawcy URI (MediaStore vs FileProvider) różnie obsługują "wt".
-     * Zwraca true, jeśli zapis się powiódł.
-     */
-    fun overwritePdf(context: Context, uriString: String, writer: (OutputStream) -> Unit): Boolean {
-        val uri = try {
-            Uri.parse(uriString)
-        } catch (e: Exception) {
-            return false
-        }
-        val modes = listOf("wt", "rwt", "w")
-        for (mode in modes) {
-            try {
-                val out = context.contentResolver.openOutputStream(uri, mode) ?: continue
-                out.use { writer(it) }
-                return true
-            } catch (e: Exception) {
-                // próbujemy kolejnego trybu
-            }
-        }
-        return false
-    }
-
-    /**
      * Usuwa zapisany plik PDF (dziala zarowno dla URI z MediaStore, jak i z
      * FileProvider na starszych Androidach) — uzywane przy kasowaniu bledngo
      * wpisu z historii faktur.
@@ -206,4 +131,3 @@ object InvoiceFileStorage {
         }
     }
 }
-

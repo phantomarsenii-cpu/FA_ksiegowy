@@ -86,22 +86,6 @@ class AddInvoiceActivity : BaseActivity() {
 
         loadSellerData()
         refreshCashLimit()
-        applyBusinessKindUi()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // Настройка "Тип продаж" в Ustawieniach могла измениться, пока пользователь
-        // был на другом экране — перепроверяем при каждом возврате.
-        applyBusinessKindUi()
-    }
-
-    /** Кнопка "Dodaj towary z magazynu" видна только для Sprzedaż/Mieszana — для чистых
-     *  Usługi склада нет, кнопка была бы просто непонятной и бесполезной. */
-    private fun applyBusinessKindUi() {
-        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
-        findViewById<Button>(R.id.btn_add_warehouse_items).visibility =
-            if (BusinessKindHelper.get(prefs).showsMagazin) View.VISIBLE else View.GONE
     }
 
     /** Позиции со склада выбраны: подставляем сводное название и сумму в форму. Списание
@@ -297,9 +281,6 @@ class AddInvoiceActivity : BaseActivity() {
                         paymentMethod = paymentMethod,
                         invoiceStatus = invoiceStatus,
                         dueDateMillis = if (invoiceStatus == InvoiceStatus.PENDING) dueDateMillis else null,
-                        items = itemsForThisInvoice.map {
-                            InvoiceItem(invoiceId = 0, productId = it.productId, name = it.name, quantity = it.quantity, unitPrice = it.unitPrice)
-                        },
                         out = out
                     )
                 }
@@ -366,27 +347,16 @@ class AddInvoiceActivity : BaseActivity() {
 
     private fun openLastPdf() {
         val uri = lastSavedUri ?: return
-        // openPdfSafely сам ловит SecurityException (известная проблема MediaStore
-        // на части устройств) и ActivityNotFoundException, с фолбэком через
-        // локальную копию файла.
-        val opened = InvoiceFileStorage.openPdfSafely(this, uri.toString())
-        if (!opened) {
+        try {
+            startActivity(InvoiceFileStorage.viewIntent(uri))
+        } catch (e: ActivityNotFoundException) {
             Toast.makeText(this, getString(R.string.open_folder_error, InvoiceFileStorage.displayFolderPath), Toast.LENGTH_LONG).show()
         }
     }
 
     private fun shareLastPdf() {
         val uri = lastSavedUri ?: return
-        try {
-            startActivity(Intent.createChooser(InvoiceFileStorage.shareIntent(uri), getString(R.string.share_invoice_button)))
-        } catch (e: Exception) {
-            val fallback = InvoiceFileStorage.resolveViewableUri(this, uri)
-            try {
-                startActivity(Intent.createChooser(InvoiceFileStorage.shareIntent(fallback), getString(R.string.share_invoice_button)))
-            } catch (e2: Exception) {
-                Toast.makeText(this, getString(R.string.open_folder_error, InvoiceFileStorage.displayFolderPath), Toast.LENGTH_LONG).show()
-            }
-        }
+        startActivity(Intent.createChooser(InvoiceFileStorage.shareIntent(uri), getString(R.string.share_invoice_button)))
     }
 
     private fun openInvoicesFolder() {
@@ -406,4 +376,3 @@ class AddInvoiceActivity : BaseActivity() {
      *  и появлялась ложная ошибка "заполните данные фактуры". */
     private fun parseAmount(raw: String): Double? = raw.trim().replace(",", ".").toDoubleOrNull()
 }
-

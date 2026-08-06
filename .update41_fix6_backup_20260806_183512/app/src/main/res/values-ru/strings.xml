@@ -349,8 +349,8 @@
     <string name="invoice_pdf_pending_stamp">ОЖИДАЕТ ОПЛАТЫ</string>
 
     <!-- Update 41: тип деятельности, склад, штрихкоды, OCR чеков -->
-    <string name="settings_menu_business">Тип продаж (товары/услуги)</string>
-    <string name="business_kind_title">Тип продаж (товары/услуги)</string>
+    <string name="settings_menu_business">Тип деятельности</string>
+    <string name="business_kind_title">Тип деятельности</string>
     <string name="business_kind_description">Выберите, что больше подходит вашему бизнесу. При выборе \"Продажи\" или \"Смешанная\" на главном экране появится кнопка \"Склад\" для учёта товаров.</string>
     <string name="business_kind_sales">Продажи</string>
     <string name="business_kind_services">Услуги</string>
@@ -381,11 +381,4 @@
     <string name="receipt_scan_processing">Распознаю чек…</string>
     <string name="receipt_scan_done">Чек распознан, проверьте поля</string>
     <string name="receipt_scan_no_text">Не удалось распознать чек, заполните вручную</string>
-
-    <!-- Update 41 fix 6 -->
-    <string name="invoice_mark_paid_confirm_title">Отметить как оплаченную?</string>
-    <string name="invoice_mark_paid_confirm_message">Статус фактуры изменится на «оплачена» сегодняшним числом, а сохранённый PDF-файл будет обновлён с новым статусом.</string>
-    <string name="invoice_marked_paid_toast">Фактура отмечена как оплаченная</string>
-    <string name="invoice_marked_paid_pdf_warning">Статус обновлён, но не удалось перезаписать PDF-файл</string>
 </resources>
-
