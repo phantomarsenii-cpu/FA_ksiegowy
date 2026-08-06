@@ -52,9 +52,6 @@ class MagazinActivity : BaseActivity() {
                     .setOrientationLocked(true)
             )
         }
-        findViewById<Button>(R.id.btn_inventory).setOnClickListener {
-            startActivity(Intent(this, InventoryActivity::class.java))
-        }
     }
 
     override fun onResume() {

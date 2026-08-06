@@ -61,17 +61,6 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_inventory"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/btn_pill_outline"
-        android:text="@string/start_inventory"
-        android:textAllCaps="false"
-        android:textColor="@color/text_primary"
-        android:textSize="13sp"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_products"
         android:layout_width="match_parent"

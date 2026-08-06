@@ -387,14 +387,5 @@
     <string name="invoice_mark_paid_confirm_message">Status faktury zmieni się na „opłacona” z dzisiejszą datą, a zapisany plik PDF zostanie zaktualizowany, by odzwierciedlić nowy status.</string>
     <string name="invoice_marked_paid_toast">Faktura oznaczona jako opłacona</string>
     <string name="invoice_marked_paid_pdf_warning">Status zaktualizowany, ale nie udało się odświeżyć pliku PDF</string>
-
-    <!-- Update 42: inwentaryzacja magazynu + lepsze skanowanie paragonów -->
-    <string name="start_inventory">Zrób inwentaryzację</string>
-    <string name="inventory_title">Inwentaryzacja magazynu</string>
-    <string name="inventory_hint">Sprawdź faktyczną ilość każdego produktu. Zaktualizowane zostaną tylko zmienione pozycje.</string>
-    <string name="inventory_current_stock">W systemie: %1$s %2$s</string>
-    <string name="inventory_save">Zapisz inwentaryzację</string>
-    <string name="inventory_no_changes">Nie znaleziono różnic, nic się nie zmieniło</string>
-    <string name="inventory_saved_title">Inwentaryzacja zapisana</string>
-    <string name="inventory_diff_line">%1$s: %2$s → %3$s (%4$s)</string>
 </resources>
+

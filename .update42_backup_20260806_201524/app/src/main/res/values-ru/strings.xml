@@ -387,14 +387,5 @@
     <string name="invoice_mark_paid_confirm_message">Статус фактуры изменится на «оплачена» сегодняшним числом, а сохранённый PDF-файл будет обновлён с новым статусом.</string>
     <string name="invoice_marked_paid_toast">Фактура отмечена как оплаченная</string>
     <string name="invoice_marked_paid_pdf_warning">Статус обновлён, но не удалось перезаписать PDF-файл</string>
-
-    <!-- Update 42: инвентаризация склада + улучшенное сканирование чеков -->
-    <string name="start_inventory">Провести инвентаризацию</string>
-    <string name="inventory_title">Инвентаризация склада</string>
-    <string name="inventory_hint">Проверьте фактическое количество каждого товара. Обновятся только изменённые позиции.</string>
-    <string name="inventory_current_stock">По учёту: %1$s %2$s</string>
-    <string name="inventory_save">Сохранить инвентаризацию</string>
-    <string name="inventory_no_changes">Расхождений не найдено, ничего не изменилось</string>
-    <string name="inventory_saved_title">Инвентаризация сохранена</string>
-    <string name="inventory_diff_line">%1$s: %2$s → %3$s (%4$s)</string>
 </resources>
+

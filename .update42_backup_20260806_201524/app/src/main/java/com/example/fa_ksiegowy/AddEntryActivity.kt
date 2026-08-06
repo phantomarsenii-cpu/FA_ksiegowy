@@ -236,14 +236,10 @@ class AddEntryActivity : BaseActivity() {
                     selectedDateMillis = result.dateMillis
                     updateDateButtonText()
                 }
-                // Комментарий заполняем позициями покупки с чека (название + цена
-                // каждого товара/услуги), а не просто именем продавца — это то, ради
-                // чего вообще нужно сканирование, чтобы не вводить список вручную.
-                // Не трогаем поле, если пользователь уже что-то в него вписал.
-                if (result.items.isNotEmpty() || !result.sellerName.isNullOrBlank()) {
-                    val commentField = findViewById<EditText>(R.id.et_comment)
-                    if (commentField.text.toString().isBlank()) {
-                        commentField.setText(buildReceiptComment(result))
+                if (!result.sellerName.isNullOrBlank()) {
+                    val existingComment = findViewById<EditText>(R.id.et_comment).text.toString()
+                    if (existingComment.isBlank()) {
+                        findViewById<EditText>(R.id.et_comment).setText(result.sellerName)
                     }
                 }
                 selectedImagePath = file.absolutePath
@@ -321,30 +317,6 @@ class AddEntryActivity : BaseActivity() {
     private fun formatAmount(v: Double): String =
         if (v == v.toLong().toDouble()) v.toLong().toString() else v.toString()
 
-    /**
-     * Собирает текст комментария из результата распознавания чека: название
-     * продавца (если распозналось) и построчный список купленных позиций с
-     * ценами — вместо того, чтобы заставлять пользователя переписывать чек
-     * руками. Если позиции распознать не удалось, остаётся хотя бы продавец.
-     */
-    private fun buildReceiptComment(result: ReceiptOcrResult): String {
-        val builder = StringBuilder()
-        if (!result.sellerName.isNullOrBlank()) {
-            builder.append(result.sellerName.trim())
-        }
-        if (result.items.isNotEmpty()) {
-            if (builder.isNotEmpty()) builder.append("\n")
-            for (item in result.items) {
-                builder.append("• ").append(item.name)
-                if (item.price != null) {
-                    builder.append(" — ").append(formatAmount(item.price)).append(" zł")
-                }
-                builder.append("\n")
-            }
-        }
-        return builder.toString().trim()
-    }
-
     /** Открывает системный DatePickerDialog, предзаполненный текущей выбранной датой. */
     private fun showDatePicker() {
         val cal = Calendar.getInstance().apply { timeInMillis = selectedDateMillis }
@@ -396,3 +368,4 @@ class AddEntryActivity : BaseActivity() {
             getString(R.string.entry_date_label) + ": " + formatted
     }
 }
+

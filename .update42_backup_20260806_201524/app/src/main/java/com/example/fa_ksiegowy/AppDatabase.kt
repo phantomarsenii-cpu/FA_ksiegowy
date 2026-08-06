@@ -9,8 +9,8 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
-    entities = [Entry::class, Invoice::class, RecurringEntry::class, Product::class, InvoiceItem::class, InventoryRecord::class],
-    version = 5,
+    entities = [Entry::class, Invoice::class, RecurringEntry::class, Product::class, InvoiceItem::class],
+    version = 4,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -24,8 +24,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
 
     abstract fun invoiceItemDao(): InvoiceItemDao
-
-    abstract fun inventoryRecordDao(): InventoryRecordDao
 
     companion object {
         /** v3 -> v4: добавлены таблицы склада и позиций фактур. Обычная миграция
@@ -41,17 +39,6 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        /** v4 -> v5: добавлена таблица истории инвентаризации склада. Обычная
-         *  миграция (не destructive), чтобы у существующих пользователей не
-         *  пропали товары и остальные данные. */
-        private val MIGRATION_4_5 = object : Migration(4, 5) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL(
-                    "CREATE TABLE IF NOT EXISTS `inventory_records` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `productId` INTEGER NOT NULL, `productName` TEXT NOT NULL, `unit` TEXT NOT NULL, `quantityBefore` REAL NOT NULL, `quantityCounted` REAL NOT NULL, `dateMillis` INTEGER NOT NULL)"
-                )
-            }
-        }
-
         @Volatile private var INSTANCE: AppDatabase? = null
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
@@ -59,7 +46,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "fa_ksiegowy.db"
-                ).addMigrations(MIGRATION_3_4, MIGRATION_4_5).fallbackToDestructiveMigration().build().also { INSTANCE = it }
+                ).addMigrations(MIGRATION_3_4).fallbackToDestructiveMigration().build().also { INSTANCE = it }
             }
         }
     }
