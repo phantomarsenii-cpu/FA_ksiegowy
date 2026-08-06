@@ -1,3 +1,42 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -e
+
+echo "=== Update 41 fix 1: убираю несуществующую зависимость com.google.mlkit:text-recognition-cyrillic ==="
+echo "У Google ML Kit нет on-device распознавателя для кириллицы (только Latin/Chinese/Japanese/Korean/Devanagari)."
+echo "Оставляю только латинский распознаватель — цифры (сумма, дата) он читает нормально на любом чеке."
+echo ""
+
+if [ ! -f "settings.gradle" ] || [ ! -f "app/src/main/java/com/example/fa_ksiegowy/ReceiptOcrHelper.kt" ]; then
+    echo "!!! Запусти скрипт из корня проекта FA_ksiegowy (там, где settings.gradle)"
+    exit 1
+fi
+
+BACKUP_DIR=".update41_fix1_backup_$(date +%Y%m%d_%H%M%S)"
+mkdir -p "$BACKUP_DIR/app/src/main/java/com/example/fa_ksiegowy"
+cp app/build.gradle "$BACKUP_DIR/app/build.gradle"
+cp app/src/main/java/com/example/fa_ksiegowy/ReceiptOcrHelper.kt "$BACKUP_DIR/app/src/main/java/com/example/fa_ksiegowy/ReceiptOcrHelper.kt"
+echo "--- Бэкап сохранён в $BACKUP_DIR ---"
+
+python3 - << 'PYEOF_U41FIX1_GRADLE'
+path = "app/build.gradle"
+text = open(path, encoding="utf-8").read()
+old = '''    // Update 41: OCR чеков (ML Kit, работает на устройстве, без интернета)
+    implementation "com.google.mlkit:text-recognition:16.0.0"
+    implementation "com.google.mlkit:text-recognition-cyrillic:16.0.0"
+'''
+new = '''    // Update 41: OCR чеков (ML Kit, работает на устройстве, без интернета).
+    // Примечание: у Google ML Kit нет on-device модели для кириллицы, поэтому
+    // используется только латинский распознаватель (он же нормально читает цифры).
+    implementation "com.google.mlkit:text-recognition:16.0.0"
+'''
+if old not in text:
+    raise SystemExit("ANCHOR NOT FOUND in app/build.gradle — возможно, уже пофикшено")
+text = text.replace(old, new, 1)
+open(path, "w", encoding="utf-8").write(text)
+PYEOF_U41FIX1_GRADLE
+echo "OK: app/build.gradle"
+
+cat > app/src/main/java/com/example/fa_ksiegowy/ReceiptOcrHelper.kt << 'EOF_U41FIX1_RECEIPTOCRHELPER_KT'
 package com.example.fa_ksiegowy
 
 import android.graphics.Bitmap
@@ -96,3 +135,9 @@ object ReceiptOcrHelper {
     private fun extractSeller(text: String): String? =
         text.lines().map { it.trim() }.firstOrNull { it.isNotBlank() && it.length in 3..40 }
 }
+EOF_U41FIX1_RECEIPTOCRHELPER_KT
+echo "OK: app/src/main/java/com/example/fa_ksiegowy/ReceiptOcrHelper.kt"
+
+echo ""
+echo "=== Готово. Дальше: ==="
+echo "git add -A && git commit -m 'fix: remove non-existent ML Kit cyrillic dependency' && git push"

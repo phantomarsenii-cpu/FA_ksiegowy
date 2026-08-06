@@ -20,11 +20,8 @@ data class ReceiptOcrResult(
 
 /**
  * Распознавание чека по фото: сумма, дата, название продавца (первая строка чека).
- * Используется латинский распознаватель ML Kit (Google не выпускает on-device
- * модель для кириллицы) — но цифры (сумма/дата) он читает одинаково хорошо
- * независимо от языка чека, так что автозаполнение суммы и даты работает и на
- * русскоязычных чеках. Название продавца, написанное кириллицей, может
- * распознаваться менее точно — в этом случае пользователь просто впишет его сам.
+ * Сначала пробуем латинский распознаватель (быстрее, покрывает польские чеки и цифры),
+ * и если текста почти нет — пробуем кириллический (для русскоязычных чеков).
  * Всё выполняется на устройстве, интернет не нужен.
  */
 object ReceiptOcrHelper {
@@ -41,7 +38,15 @@ object ReceiptOcrHelper {
 
     private suspend fun recognizeText(bitmap: Bitmap): String {
         val image = InputImage.fromBitmap(bitmap, 0)
-        return runRecognizer(TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS), image)
+        val latinText = runRecognizer(TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS), image)
+        if (latinText.length >= 15) return latinText
+        return try {
+            val cyrillicOptions = com.google.mlkit.vision.text.cyrillic.TextRecognizerOptions.Builder().build()
+            val cyrillicText = runRecognizer(TextRecognition.getClient(cyrillicOptions), image)
+            if (cyrillicText.length > latinText.length) cyrillicText else latinText
+        } catch (e: Exception) {
+            latinText
+        }
     }
 
     private suspend fun runRecognizer(recognizer: TextRecognizer, image: InputImage): String =
