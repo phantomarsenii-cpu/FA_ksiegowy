@@ -36,21 +36,13 @@
     </LinearLayout>
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:weightSum="2" android:baselineAligned="false">
-        <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp" android:text="@string/product_quantity" android:textColor="@color/text_secondary" android:textSize="12sp"/>
-        <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-            android:layout_marginStart="8dp" android:text="@string/product_unit" android:textColor="@color/text_secondary" android:textSize="12sp"/>
-    </LinearLayout>
-
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:layout_marginTop="4dp" android:layout_marginBottom="14dp" android:weightSum="2" android:baselineAligned="false">
+        android:orientation="horizontal" android:layout_marginBottom="14dp" android:weightSum="2" android:baselineAligned="false">
         <EditText android:id="@+id/et_quantity" android:layout_width="0dp" android:layout_weight="1" android:layout_height="56dp"
             android:layout_marginEnd="8dp" android:background="@drawable/input_field_bg" android:paddingStart="18dp" android:paddingEnd="18dp"
             android:hint="@string/product_quantity" android:textColorHint="@color/text_hint" android:textColor="@color/text_primary" android:inputType="numberDecimal"/>
         <EditText android:id="@+id/et_unit" android:layout_width="0dp" android:layout_weight="1" android:layout_height="56dp"
             android:layout_marginStart="8dp" android:background="@drawable/input_field_bg" android:paddingStart="18dp" android:paddingEnd="18dp"
-            android:hint="@string/product_unit" android:text="szt." android:textColorHint="@color/text_hint" android:textColor="@color/text_primary" android:inputType="text"/>
+            android:hint="@string/product_unit" android:textColorHint="@color/text_hint" android:textColor="@color/text_primary" android:inputType="text"/>
     </LinearLayout>
 
     <EditText android:id="@+id/et_low_stock" android:layout_width="match_parent" android:layout_height="56dp"

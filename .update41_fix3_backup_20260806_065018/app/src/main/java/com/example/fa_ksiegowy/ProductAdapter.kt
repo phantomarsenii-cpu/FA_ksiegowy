@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import java.util.Locale
 
 class ProductAdapter(
     private val onClick: (Product) -> Unit,
@@ -32,7 +33,7 @@ class ProductAdapter(
     override fun onBindViewHolder(holder: VH, position: Int) {
         val p = items[position]
         holder.tvName.text = p.name
-        holder.tvQty.text = "${formatQty(p.quantity)} ${p.unit}"
+        holder.tvQty.text = String.format(Locale.getDefault(), "%.1f %s", p.quantity, p.unit)
         holder.tvQty.setTextColor(
             ContextCompat.getColor(holder.itemView.context, if (p.isLowStock) R.color.expense_red else R.color.text_primary)
         )
@@ -42,7 +43,4 @@ class ProductAdapter(
     }
 
     override fun getItemCount(): Int = items.size
-
-    /** Без лишних ".0" для целых количеств (5 szt., а не 5,0 szt.). */
-    private fun formatQty(v: Double): String = if (v == v.toLong().toDouble()) v.toLong().toString() else v.toString()
 }

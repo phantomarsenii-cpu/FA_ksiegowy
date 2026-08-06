@@ -243,7 +243,7 @@ class AddInvoiceActivity : BaseActivity() {
         val buyerCity = findViewById<EditText>(R.id.et_buyer_city).text.toString().trim()
 
         val serviceName = findViewById<EditText>(R.id.et_service_name).text.toString().trim()
-        val amount = parseAmount(findViewById<EditText>(R.id.et_amount).text.toString())
+        val amount = findViewById<EditText>(R.id.et_amount).text.toString().toDoubleOrNull()
 
         if (buyerName.isBlank() || serviceName.isBlank() || amount == null || amount <= 0.0) {
             Toast.makeText(this, getString(R.string.invoice_fill_required_fields), Toast.LENGTH_SHORT).show()
@@ -368,11 +368,4 @@ class AddInvoiceActivity : BaseActivity() {
     }
 
     private fun formatMoney(v: Double): String = String.format(Locale.getDefault(), "%.2f", v)
-
-    /** Читает сумму из поля независимо от того, каким разделителем введены копейки —
-     *  запятой (как показывает formatMoney на pl/ru локали) или точкой (как ожидает
-     *  стандартный toDoubleOrNull). Раньше здесь было прямое .toDoubleOrNull(), из-за
-     *  чего сумма, автоподставленная из товаров склада (с запятой), не распознавалась
-     *  и появлялась ложная ошибка "заполните данные фактуры". */
-    private fun parseAmount(raw: String): Double? = raw.trim().replace(",", ".").toDoubleOrNull()
 }
