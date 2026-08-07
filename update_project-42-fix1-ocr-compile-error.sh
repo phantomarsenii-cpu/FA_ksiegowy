@@ -1,3 +1,37 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -e
+
+echo "=== Update 42, fix 1: ошибка компиляции в ReceiptOcrHelper.kt ==="
+echo "Причина сбоя сборки #74: name.replace(LEADING_QTY, \"\") — LEADING_QTY это"
+echo "java.util.regex.Pattern, а Kotlin String.replace(...) ждёт kotlin.text.Regex."
+echo "Исправлено на LEADING_QTY.matcher(name).replaceFirst(\"\") — метод самого Pattern/Matcher."
+echo ""
+
+if [ ! -f "settings.gradle" ] || [ ! -d "app/src/main/java/com/example/fa_ksiegowy" ]; then
+    echo "!!! Запусти скрипт из корня проекта (там, где settings.gradle)"
+    exit 1
+fi
+
+if [ ! -f "app/src/main/java/com/example/fa_ksiegowy/ReceiptOcrHelper.kt" ]; then
+    echo "!!! Не найден ReceiptOcrHelper.kt — запусти скрипт из корня проекта"
+    exit 1
+fi
+
+BACKUP_DIR=".update42_fix1_backup_$(date +%Y%m%d_%H%M%S)"
+mkdir -p "$BACKUP_DIR"
+for f in \
+    "app/src/main/java/com/example/fa_ksiegowy/ReceiptOcrHelper.kt"
+do
+    if [ -f "$f" ]; then
+        mkdir -p "$BACKUP_DIR/$(dirname "$f")"
+        cp "$f" "$BACKUP_DIR/$f"
+    fi
+done
+echo "--- Бэкап сохранён в $BACKUP_DIR ---"
+
+echo ""
+mkdir -p "$(dirname "app/src/main/java/com/example/fa_ksiegowy/ReceiptOcrHelper.kt")"
+cat > app/src/main/java/com/example/fa_ksiegowy/ReceiptOcrHelper.kt << 'EOF_APP_SRC_MAIN_JAVA_COM_EXAMPLE_FA_KSIEGOWY_RECEIPTOCRHELPER_KT'
 package com.example.fa_ksiegowy
 
 import android.graphics.Bitmap
@@ -200,3 +234,9 @@ object ReceiptOcrHelper {
         return items
     }
 }
+EOF_APP_SRC_MAIN_JAVA_COM_EXAMPLE_FA_KSIEGOWY_RECEIPTOCRHELPER_KT
+echo "OK: app/src/main/java/com/example/fa_ksiegowy/ReceiptOcrHelper.kt"
+
+echo ""
+echo "=== Готово ==="
+echo "git add -A && git commit -m \"fix: OCR item regex compile error\" && git push"

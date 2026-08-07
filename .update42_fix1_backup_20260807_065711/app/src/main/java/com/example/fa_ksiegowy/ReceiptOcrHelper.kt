@@ -186,7 +186,7 @@ object ReceiptOcrHelper {
             if (!m.matches()) continue
             val price = normalizeNumber(m.group(2)) ?: continue
             var name = m.group(1).trim().trimEnd('*', '-', ':', '.', ' ')
-            name = LEADING_QTY.matcher(name).replaceFirst("").trim()
+            name = name.replace(LEADING_QTY, "").trim()
             if (name.isBlank()) name = m.group(1).trim()
             if (name.length < 2) continue
             val letters = name.count { it.isLetter() }
