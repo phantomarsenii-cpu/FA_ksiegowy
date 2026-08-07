@@ -368,11 +368,7 @@
     <string name="product_quantity">Quantity in stock</string>
     <string name="product_unit">Unit (e.g. pcs, kg)</string>
     <string name="product_low_stock">Low stock threshold</string>
-    <string name="product_price">Purchase price</string>
-    <string name="product_price_sell">Sale price</string>
-    <string name="product_margin">Margin %</string>
-    <string name="product_margin_hint">Enter sale price directly, or enter a margin % to calculate it automatically from the purchase price (e.g. 60 = purchase price +60%).</string>
-    <string name="gallery_scan_receipt_button">Scan receipt from gallery</string>
+    <string name="product_price">Unit price</string>
     <string name="product_saved">Product saved</string>
     <string name="low_stock_banner">%1$d product(s) running low</string>
     <string name="notif_low_stock_title">Stock running low</string>
@@ -411,7 +407,6 @@
     <string name="inventory_history_empty">No inventory counts yet</string>
     <string name="inventory_session_number">Inventory #%1$s</string>
     <string name="inventory_session_meta">%1$s items · changed: %2$s</string>
-    <string name="inventory_session_meta_sell">Missed/extra revenue: %1$s</string>
     <string name="inventory_pdf_title">Inventory report #%1$s</string>
     <string name="inventory_pdf_date">Date</string>
     <string name="inventory_pdf_col_product">Product</string>
@@ -419,10 +414,8 @@
     <string name="inventory_pdf_col_before">Before</string>
     <string name="inventory_pdf_col_after">After</string>
     <string name="inventory_pdf_col_diff">Diff</string>
-    <string name="inventory_pdf_col_diff_value">Cost diff</string>
-    <string name="inventory_pdf_col_diff_value_sell">Missed revenue</string>
+    <string name="inventory_pdf_col_diff_value">Diff value</string>
     <string name="inventory_pdf_total_products">Total items checked</string>
     <string name="inventory_pdf_total_changed">Items changed</string>
-    <string name="inventory_pdf_total_diff_value">Total cost value difference</string>
-    <string name="inventory_pdf_total_diff_value_sell">Total missed/extra revenue (sale price)</string>
+    <string name="inventory_pdf_total_diff_value">Total value difference</string>
 </resources>

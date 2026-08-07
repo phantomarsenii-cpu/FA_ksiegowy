@@ -368,11 +368,7 @@
     <string name="product_quantity">Количество на складе</string>
     <string name="product_unit">Единица (шт., кг и т.п.)</string>
     <string name="product_low_stock">Порог \"заканчивается\"</string>
-    <string name="product_price">Цена закупки</string>
-    <string name="product_price_sell">Цена продажи</string>
-    <string name="product_margin">Наценка %</string>
-    <string name="product_margin_hint">Введите цену продажи напрямую, либо укажите % наценки — цена продажи посчитается автоматически от цены закупки (например, 60 = закупка +60%).</string>
-    <string name="gallery_scan_receipt_button">Сканировать чек из галереи</string>
+    <string name="product_price">Цена за единицу</string>
     <string name="product_saved">Товар сохранён</string>
     <string name="low_stock_banner">Заканчивается: %1$d товар(ов)</string>
     <string name="notif_low_stock_title">Товар заканчивается</string>
@@ -411,7 +407,6 @@
     <string name="inventory_history_empty">Пока нет проведённых инвентаризаций</string>
     <string name="inventory_session_number">Инвентаризация №%1$s</string>
     <string name="inventory_session_meta">позиций: %1$s · изменено: %2$s</string>
-    <string name="inventory_session_meta_sell">Упущено/лишнее по продаже: %1$s</string>
     <string name="inventory_pdf_title">Инвентаризация №%1$s</string>
     <string name="inventory_pdf_date">Дата</string>
     <string name="inventory_pdf_col_product">Товар</string>
@@ -419,10 +414,8 @@
     <string name="inventory_pdf_col_before">Было</string>
     <string name="inventory_pdf_col_after">Стало</string>
     <string name="inventory_pdf_col_diff">Разница</string>
-    <string name="inventory_pdf_col_diff_value">Разница по закупке</string>
-    <string name="inventory_pdf_col_diff_value_sell">Упущ. выручка</string>
+    <string name="inventory_pdf_col_diff_value">Разница в деньгах</string>
     <string name="inventory_pdf_total_products">Всего проверено позиций</string>
     <string name="inventory_pdf_total_changed">Изменено позиций</string>
-    <string name="inventory_pdf_total_diff_value">Итоговая разница по себестоимости</string>
-    <string name="inventory_pdf_total_diff_value_sell">Итоговая упущенная/лишняя выручка (по цене продажи)</string>
+    <string name="inventory_pdf_total_diff_value">Итоговая разница по стоимости</string>
 </resources>

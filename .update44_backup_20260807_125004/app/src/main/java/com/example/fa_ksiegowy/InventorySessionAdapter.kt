@@ -51,14 +51,7 @@ class InventorySessionAdapter(
         val context = holder.itemView.context
         holder.tvDate.text = dateFmt.format(Date(s.dateMillis))
         holder.tvNumber.text = context.getString(R.string.inventory_session_number, s.number.toString())
-        val baseMeta = context.getString(R.string.inventory_session_meta, s.totalProducts.toString(), s.changedProducts.toString())
-        holder.tvMeta.text = if (s.diffValueSell != 0.0) {
-            val sellSign = if (s.diffValueSell > 0) "+" else ""
-            val sellStr = String.format(Locale.getDefault(), "%s%.2f zł", sellSign, s.diffValueSell)
-            baseMeta + " · " + context.getString(R.string.inventory_session_meta_sell, sellStr)
-        } else {
-            baseMeta
-        }
+        holder.tvMeta.text = context.getString(R.string.inventory_session_meta, s.totalProducts.toString(), s.changedProducts.toString())
         val sign = if (s.diffValueNet > 0) "+" else ""
         holder.tvDiffValue.text = String.format(Locale.getDefault(), "%s%.2f zł", sign, s.diffValueNet)
         val color = when {

@@ -58,7 +58,7 @@ class SelectProductsActivity : BaseActivity() {
             val tvName = row.findViewById<TextView>(R.id.tv_select_name)
             val etQty = row.findViewById<EditText>(R.id.et_select_qty)
 
-            tvName.text = "${p.name} (${formatNum(p.quantity)} ${p.unit} ${getString(R.string.in_stock_suffix)}, ${formatNum(p.priceSell)} zł)"
+            tvName.text = "${p.name} (${formatNum(p.quantity)} ${p.unit} ${getString(R.string.in_stock_suffix)})"
             etQty.setText("1")
             etQty.isEnabled = false
 
@@ -105,10 +105,8 @@ class SelectProductsActivity : BaseActivity() {
     }
 
     private fun confirmSelection() {
-        // В фактуру подставляется ЦЕНА ПРОДАЖИ товара (priceSell), а не цена закупки —
-        // именно её пользователь заранее указал вручную или через наценку %.
         val picked = products.filter { checkedQty.containsKey(it.id) }
-            .map { PickedProduct(it.id, it.name, checkedQty[it.id] ?: 1.0, it.priceSell) }
+            .map { PickedProduct(it.id, it.name, checkedQty[it.id] ?: 1.0, it.priceNet) }
         if (picked.isEmpty()) {
             Toast.makeText(this, getString(R.string.select_at_least_one_product), Toast.LENGTH_SHORT).show()
             return
@@ -122,3 +120,4 @@ class SelectProductsActivity : BaseActivity() {
 
     private fun formatNum(v: Double): String = if (v == v.toLong().toDouble()) v.toLong().toString() else v.toString()
 }
+

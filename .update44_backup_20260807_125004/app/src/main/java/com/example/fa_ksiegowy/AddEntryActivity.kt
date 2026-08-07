@@ -50,27 +50,6 @@ class AddEntryActivity : BaseActivity() {
         if (success) runOcr()
     }
 
-    // Сканирование чека по фото ИЗ ГАЛЕРЕИ (в отличие от btn_attach, который просто
-    // прикладывает файл без распознавания) — копируем выбранную картинку во временный
-    // файл и прогоняем через тот же runOcr(), что и снимок с камеры.
-    private val pickOcrImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        if (uri == null) return@registerForActivityResult
-        try {
-            val input = contentResolver.openInputStream(uri)
-            if (input == null) {
-                Toast.makeText(this, getString(R.string.receipt_scan_no_text), Toast.LENGTH_SHORT).show()
-                return@registerForActivityResult
-            }
-            val file = File(getExternalFilesDir(null), "ocr_tmp_${System.currentTimeMillis()}.jpg")
-            FileOutputStream(file).use { fos -> input.copyTo(fos) }
-            input.close()
-            ocrPhotoFile = file
-            runOcr()
-        } catch (e: Exception) {
-            Toast.makeText(this, "Ошибка при загрузке чека: ${e.message}", Toast.LENGTH_LONG).show()
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_entry)
@@ -103,7 +82,6 @@ class AddEntryActivity : BaseActivity() {
         setupTypeToggle()
         findViewById<Button>(R.id.btn_attach).setOnClickListener { pickImage.launch("image/*") }
         findViewById<Button>(R.id.btn_scan_receipt).setOnClickListener { launchReceiptScan() }
-        findViewById<Button>(R.id.btn_scan_receipt_gallery).setOnClickListener { pickOcrImage.launch("image/*") }
         findViewById<Button>(R.id.btn_delete).setOnClickListener { confirmDelete() }
         findViewById<Button>(R.id.btn_date).setOnClickListener { showDatePicker() }
         findViewById<android.widget.Switch>(R.id.sw_recurring).setOnCheckedChangeListener { _, checked ->
@@ -308,7 +286,6 @@ class AddEntryActivity : BaseActivity() {
         // для приходов эти кнопки только путают.
         findViewById<Button>(R.id.btn_attach).visibility = if (currentIsIncome) View.GONE else View.VISIBLE
         findViewById<Button>(R.id.btn_scan_receipt).visibility = if (currentIsIncome) View.GONE else View.VISIBLE
-        findViewById<Button>(R.id.btn_scan_receipt_gallery).visibility = if (currentIsIncome) View.GONE else View.VISIBLE
     }
 
     private fun updateTitle() {

@@ -26,14 +26,10 @@ object InventoryPdfGenerator {
         val unit: String,
         val before: Double,
         val after: Double,
-        val priceNet: Double,
-        val priceSell: Double = 0.0
+        val priceNet: Double
     ) {
         val diff: Double get() = after - before
-        /** Разница в деньгах по себестоимости (закупке). */
         val diffValue: Double get() = diff * priceNet
-        /** Упущенная (при недостаче) или лишняя (при излишке) выручка по цене продажи. */
-        val diffValueSell: Double get() = diff * priceSell
     }
 
     fun generate(
@@ -86,13 +82,12 @@ object InventoryPdfGenerator {
         val tableLeft = MARGIN
         val tableRight = PAGE_WIDTH - MARGIN
         val colName = tableLeft
-        val colUnit = colName + 148f
-        val colBefore = colUnit + 42f
-        val colAfter = colBefore + 42f
-        val colDiff = colAfter + 42f
-        val colDiffValue = colDiff + 42f
-        val colDiffValueSell = colDiffValue + 82f
-        val colStops = floatArrayOf(colName, colUnit, colBefore, colAfter, colDiff, colDiffValue, colDiffValueSell, tableRight)
+        val colUnit = colName + 210f
+        val colBefore = colUnit + 60f
+        val colAfter = colBefore + 60f
+        val colDiff = colAfter + 60f
+        val colDiffValue = colDiff + 60f
+        val colStops = floatArrayOf(colName, colUnit, colBefore, colAfter, colDiff, colDiffValue, tableRight)
 
         val headerRowHeight = 20f
         val dataRowHeight = 18f
@@ -109,7 +104,6 @@ object InventoryPdfGenerator {
             canvas.drawText(context.getString(R.string.inventory_pdf_col_after), colAfter + 4f, baselineY, tableHeaderPaint)
             canvas.drawText(context.getString(R.string.inventory_pdf_col_diff), colDiff + 4f, baselineY, tableHeaderPaint)
             canvas.drawText(context.getString(R.string.inventory_pdf_col_diff_value), colDiffValue + 4f, baselineY, tableHeaderPaint)
-            canvas.drawText(context.getString(R.string.inventory_pdf_col_diff_value_sell), colDiffValueSell + 4f, baselineY, tableHeaderPaint)
             y = segmentTop + headerRowHeight
             canvas.drawLine(tableLeft, y, tableRight, y, linePaint)
         }
@@ -139,14 +133,13 @@ object InventoryPdfGenerator {
                 row.diff < 0 -> diffDownPaint
                 else -> tableCellPaint
             }
-            canvas.drawText(row.name.take(23), colName + 4f, baselineY, tableCellPaint)
+            canvas.drawText(row.name.take(34), colName + 4f, baselineY, tableCellPaint)
             canvas.drawText(row.unit, colUnit + 4f, baselineY, tableCellPaint)
             canvas.drawText(qtyStr(row.before), colBefore + 4f, baselineY, tableCellPaint)
             canvas.drawText(qtyStr(row.after), colAfter + 4f, baselineY, tableCellPaint)
             val diffSign = if (row.diff > 0) "+" else ""
             canvas.drawText("$diffSign${qtyStr(row.diff)}", colDiff + 4f, baselineY, diffPaint)
             canvas.drawText(money(row.diffValue), colDiffValue + 4f, baselineY, diffPaint)
-            canvas.drawText(money(row.diffValueSell), colDiffValueSell + 4f, baselineY, diffPaint)
             y += dataRowHeight
             canvas.drawLine(tableLeft, y, tableRight, y, linePaint)
         }
@@ -156,14 +149,11 @@ object InventoryPdfGenerator {
 
         val changed = rows.filter { it.diff != 0.0 }
         val totalDiffValue = rows.sumOf { it.diffValue }
-        val totalDiffValueSell = rows.sumOf { it.diffValueSell }
-        newPageIfNeeded(72f)
+        newPageIfNeeded(56f)
         line("${context.getString(R.string.inventory_pdf_total_products)}: ${rows.size}", sectionPaint, 16f)
         line("${context.getString(R.string.inventory_pdf_total_changed)}: ${changed.size}", sectionPaint, 16f)
         val totalPaint = if (totalDiffValue < 0) diffDownPaint else if (totalDiffValue > 0) diffUpPaint else sectionPaint
         line("${context.getString(R.string.inventory_pdf_total_diff_value)}: ${money(totalDiffValue)}", totalPaint, 16f)
-        val totalSellPaint = if (totalDiffValueSell < 0) diffDownPaint else if (totalDiffValueSell > 0) diffUpPaint else sectionPaint
-        line("${context.getString(R.string.inventory_pdf_total_diff_value_sell)}: ${money(totalDiffValueSell)}", totalSellPaint, 16f)
 
         document.finishPage(page)
         document.writeTo(out)

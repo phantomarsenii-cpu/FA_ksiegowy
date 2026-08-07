@@ -155,7 +155,6 @@ class InventoryActivity : BaseActivity() {
                         quantityBefore = product.quantity,
                         quantityCounted = newQty,
                         priceNetAtInventory = product.priceNet,
-                        priceSellAtInventory = product.priceSell,
                         dateMillis = now
                     )
                 )
@@ -167,12 +166,10 @@ class InventoryActivity : BaseActivity() {
                     unit = product.unit,
                     before = product.quantity,
                     after = newQty,
-                    priceNet = product.priceNet,
-                    priceSell = product.priceSell
+                    priceNet = product.priceNet
                 )
             }
             val diffValueNet = pdfRows.sumOf { it.diffValue }
-            val diffValueSell = pdfRows.sumOf { it.diffValueSell }
             val number = db.inventorySessionDao().count() + 1
             val fileFmt = SimpleDateFormat("yyyy-MM-dd_HHmm", Locale.US)
             val fileName = "Inwentaryzacja_${String.format(Locale.US, "%03d", number)}_${fileFmt.format(Date(now))}.pdf"
@@ -186,8 +183,7 @@ class InventoryActivity : BaseActivity() {
                 pdfFilePath = saved.uri.toString(),
                 totalProducts = snapshot.size,
                 changedProducts = changedRecords.size,
-                diffValueNet = diffValueNet,
-                diffValueSell = diffValueSell
+                diffValueNet = diffValueNet
             )
             val sessionId = db.inventorySessionDao().insert(session)
             for (record in changedRecords) {

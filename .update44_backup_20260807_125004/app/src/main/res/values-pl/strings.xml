@@ -368,11 +368,7 @@
     <string name="product_quantity">Ilość w magazynie</string>
     <string name="product_unit">Jednostka (szt., kg itp.)</string>
     <string name="product_low_stock">Próg \"kończy się\"</string>
-    <string name="product_price">Cena zakupu</string>
-    <string name="product_price_sell">Cena sprzedaży</string>
-    <string name="product_margin">Marża %</string>
-    <string name="product_margin_hint">Wpisz cenę sprzedaży bezpośrednio albo podaj % marży — cena sprzedaży zostanie wyliczona automatycznie od ceny zakupu (np. 60 = zakup +60%).</string>
-    <string name="gallery_scan_receipt_button">Skanuj paragon z galerii</string>
+    <string name="product_price">Cena jednostkowa</string>
     <string name="product_saved">Produkt zapisany</string>
     <string name="low_stock_banner">Kończy się: %1$d produkt(ów)</string>
     <string name="notif_low_stock_title">Produkt się kończy</string>
@@ -411,7 +407,6 @@
     <string name="inventory_history_empty">Brak przeprowadzonych inwentaryzacji</string>
     <string name="inventory_session_number">Inwentaryzacja nr %1$s</string>
     <string name="inventory_session_meta">pozycji: %1$s · zmienionych: %2$s</string>
-    <string name="inventory_session_meta_sell">Utracona/dodatkowa sprzedaż: %1$s</string>
     <string name="inventory_pdf_title">Inwentaryzacja nr %1$s</string>
     <string name="inventory_pdf_date">Data</string>
     <string name="inventory_pdf_col_product">Produkt</string>
@@ -419,10 +414,8 @@
     <string name="inventory_pdf_col_before">Było</string>
     <string name="inventory_pdf_col_after">Jest</string>
     <string name="inventory_pdf_col_diff">Różnica</string>
-    <string name="inventory_pdf_col_diff_value">Różnica zakup</string>
-    <string name="inventory_pdf_col_diff_value_sell">Utracona sprzedaż</string>
+    <string name="inventory_pdf_col_diff_value">Wartość różnicy</string>
     <string name="inventory_pdf_total_products">Sprawdzonych pozycji</string>
     <string name="inventory_pdf_total_changed">Zmienionych pozycji</string>
-    <string name="inventory_pdf_total_diff_value">Łączna różnica wg kosztu zakupu</string>
-    <string name="inventory_pdf_total_diff_value_sell">Łączna utracona/dodatkowa sprzedaż (cena sprzedaży)</string>
+    <string name="inventory_pdf_total_diff_value">Łączna wartość różnic</string>
 </resources>

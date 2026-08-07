@@ -10,7 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [Entry::class, Invoice::class, RecurringEntry::class, Product::class, InvoiceItem::class, InventoryRecord::class, InventorySession::class],
-    version = 7,
+    version = 6,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -70,25 +70,6 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        /** v6 -> v7: у товара появляются цена продажи (priceSell) и наценка в % (marginPercent),
-         *  цена продажи может задаваться либо вручную, либо через процент наценки от цены
-         *  закупки — оба поля синхронизируются на экране редактирования товара. Для уже
-         *  существующих товаров priceSell по умолчанию берётся равной текущей priceNet
-         *  (закупка = продажа, наценка 0%), чтобы позиции фактур со склада не остались с
-         *  нулевой ценой сразу после обновления. У записей инвентаризации (inventory_records)
-         *  и сессий (inventory_sessions) появляется снимок цены продажи на момент проверки,
-         *  чтобы в таблице расхождений показывать не только разницу по себестоимости, но и
-         *  упущенную/лишнюю выручку по цене продажи. */
-        private val MIGRATION_6_7 = object : Migration(6, 7) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE products ADD COLUMN priceSell REAL NOT NULL DEFAULT 0.0")
-                database.execSQL("ALTER TABLE products ADD COLUMN marginPercent REAL NOT NULL DEFAULT 0.0")
-                database.execSQL("UPDATE products SET priceSell = priceNet")
-                database.execSQL("ALTER TABLE inventory_records ADD COLUMN priceSellAtInventory REAL NOT NULL DEFAULT 0.0")
-                database.execSQL("ALTER TABLE inventory_sessions ADD COLUMN diffValueSell REAL NOT NULL DEFAULT 0.0")
-            }
-        }
-
         @Volatile private var INSTANCE: AppDatabase? = null
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
@@ -96,7 +77,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "fa_ksiegowy.db"
-                ).addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7).fallbackToDestructiveMigration().build().also { INSTANCE = it }
+                ).addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6).fallbackToDestructiveMigration().build().also { INSTANCE = it }
             }
         }
     }

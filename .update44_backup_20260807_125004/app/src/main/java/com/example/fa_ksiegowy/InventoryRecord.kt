@@ -8,11 +8,9 @@ import androidx.room.PrimaryKey
  * инвентаризации ([InventorySession], sessionId) — сколько было по учёту и
  * сколько насчитал пользователь при физической проверке склада. Хранится
  * только для товаров с расхождением (см. InventoryActivity.saveInventory).
- * priceNetAtInventory — себестоимость товара (цена закупки) НА МОМЕНТ инвентаризации
- * (снимок Product.priceNet), priceSellAtInventory — цена продажи товара на тот же момент
- * (снимок Product.priceSell), чтобы денежная разница (и по себестоимости, и упущенная/лишняя
- * выручка по цене продажи) в истории и PDF не "плыла" задним числом при последующем изменении
- * цены товара.
+ * priceNetAtInventory — себестоимость товара НА МОМЕНТ инвентаризации
+ * (снимок Product.priceNet), чтобы денежная разница в истории и PDF не
+ * "плыла" задним числом при последующем изменении цены товара.
  */
 @Entity(tableName = "inventory_records")
 data class InventoryRecord(
@@ -24,10 +22,8 @@ data class InventoryRecord(
     val quantityBefore: Double,
     val quantityCounted: Double,
     val priceNetAtInventory: Double = 0.0,
-    val priceSellAtInventory: Double = 0.0,
     val dateMillis: Long = System.currentTimeMillis()
 ) {
     val diff: Double get() = quantityCounted - quantityBefore
     val diffValue: Double get() = diff * priceNetAtInventory
-    val diffValueSell: Double get() = diff * priceSellAtInventory
 }

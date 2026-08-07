@@ -17,6 +17,5 @@ data class InventorySession(
     val pdfFilePath: String,
     val totalProducts: Int,
     val changedProducts: Int,
-    val diffValueNet: Double,
-    val diffValueSell: Double = 0.0
+    val diffValueNet: Double
 )
