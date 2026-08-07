@@ -397,25 +397,4 @@
     <string name="inventory_no_changes">Nie znaleziono różnic, nic się nie zmieniło</string>
     <string name="inventory_saved_title">Inwentaryzacja zapisana</string>
     <string name="inventory_diff_line">%1$s: %2$s → %3$s (%4$s)</string>
-
-    <!-- Update 43: raport PDF inwentaryzacji + historia + skanowanie kodów, naprawa parsowania pozycji paragonu -->
-    <string name="inventory_scan_button">Skanuj towar</string>
-    <string name="inventory_history_button">Historia inwentaryzacji</string>
-    <string name="inventory_scan_not_found">Nie znaleziono produktu o kodzie %1$s</string>
-    <string name="inventory_scan_found">%1$s: %2$s</string>
-    <string name="inventory_history_title">Historia inwentaryzacji</string>
-    <string name="inventory_history_empty">Brak przeprowadzonych inwentaryzacji</string>
-    <string name="inventory_session_number">Inwentaryzacja nr %1$s</string>
-    <string name="inventory_session_meta">pozycji: %1$s · zmienionych: %2$s</string>
-    <string name="inventory_pdf_title">Inwentaryzacja nr %1$s</string>
-    <string name="inventory_pdf_date">Data</string>
-    <string name="inventory_pdf_col_product">Produkt</string>
-    <string name="inventory_pdf_col_unit">Jedn.</string>
-    <string name="inventory_pdf_col_before">Było</string>
-    <string name="inventory_pdf_col_after">Jest</string>
-    <string name="inventory_pdf_col_diff">Różnica</string>
-    <string name="inventory_pdf_col_diff_value">Wartość różnicy</string>
-    <string name="inventory_pdf_total_products">Sprawdzonych pozycji</string>
-    <string name="inventory_pdf_total_changed">Zmienionych pozycji</string>
-    <string name="inventory_pdf_total_diff_value">Łączna wartość różnic</string>
 </resources>

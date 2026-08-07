@@ -39,7 +39,6 @@
         <activity android:name=".SettingsBusinessActivity" android:exported="false" />
         <activity android:name=".MagazinActivity" android:exported="false" />
         <activity android:name=".InventoryActivity" android:exported="false" />
-        <activity android:name=".InventoryHistoryActivity" android:exported="false" />
         <activity android:name=".AddEditProductActivity" android:exported="false" />
         <activity android:name=".SelectProductsActivity" android:exported="false" />
         <activity android:name=".MineActivity" android:exported="true">

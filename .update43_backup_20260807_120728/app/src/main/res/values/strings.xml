@@ -397,25 +397,4 @@
     <string name="inventory_no_changes">No differences found, nothing changed</string>
     <string name="inventory_saved_title">Inventory saved</string>
     <string name="inventory_diff_line">%1$s: %2$s → %3$s (%4$s)</string>
-
-    <!-- Update 43: inventory PDF report + history + barcode scan, receipt item parsing fix -->
-    <string name="inventory_scan_button">Scan product</string>
-    <string name="inventory_history_button">Inventory history</string>
-    <string name="inventory_scan_not_found">No product found for code %1$s</string>
-    <string name="inventory_scan_found">%1$s: %2$s</string>
-    <string name="inventory_history_title">Inventory history</string>
-    <string name="inventory_history_empty">No inventory counts yet</string>
-    <string name="inventory_session_number">Inventory #%1$s</string>
-    <string name="inventory_session_meta">%1$s items · changed: %2$s</string>
-    <string name="inventory_pdf_title">Inventory report #%1$s</string>
-    <string name="inventory_pdf_date">Date</string>
-    <string name="inventory_pdf_col_product">Product</string>
-    <string name="inventory_pdf_col_unit">Unit</string>
-    <string name="inventory_pdf_col_before">Before</string>
-    <string name="inventory_pdf_col_after">After</string>
-    <string name="inventory_pdf_col_diff">Diff</string>
-    <string name="inventory_pdf_col_diff_value">Diff value</string>
-    <string name="inventory_pdf_total_products">Total items checked</string>
-    <string name="inventory_pdf_total_changed">Items changed</string>
-    <string name="inventory_pdf_total_diff_value">Total value difference</string>
 </resources>

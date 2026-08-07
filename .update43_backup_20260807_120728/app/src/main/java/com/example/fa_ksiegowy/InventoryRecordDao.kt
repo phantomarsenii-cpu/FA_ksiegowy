@@ -14,10 +14,4 @@ interface InventoryRecordDao {
 
     @Query("SELECT * FROM inventory_records WHERE productId = :productId ORDER BY dateMillis DESC")
     suspend fun getForProduct(productId: Long): List<InventoryRecord>
-
-    @Query("SELECT * FROM inventory_records WHERE sessionId = :sessionId ORDER BY productName ASC")
-    suspend fun getForSession(sessionId: Long): List<InventoryRecord>
-
-    @Query("DELETE FROM inventory_records WHERE sessionId = :sessionId")
-    suspend fun deleteForSession(sessionId: Long)
 }

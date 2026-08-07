@@ -125,15 +125,14 @@ object ReceiptOcrHelper {
     // номер документа/paragonu, NIP, телефон, касса/кассир, дата, способ оплаты и т.п.
     private val SELLER_SKIP_KEYWORDS = listOf(
         "PARAGON", "NR.", "NR:", " NR ", "NIP", "TEL", "TEL.", "TEL:", "KASA", "KASJER",
-        "FISKALNY", "FISKALNA", "NUMER", "ID:", "REGON", "ADRES", "SIEDZIB", "UL.",
+        "FISKALNY", "FISKALNA", "NUMER", "ID:", "REGON",
         "ЧЕК", "КАССА", "КАССИР", "НОМЕР", "ИНН", "ТЕЛ"
     )
     private val DATE_LIKE: Pattern = Pattern.compile("\\d{1,4}[./-]\\d{1,2}[./-]\\d{1,4}")
-    private val POSTAL_CODE_LIKE: Pattern = Pattern.compile("\\d{2}-\\d{3}")
     private val MOSTLY_DIGITS: Pattern = Pattern.compile("^[\\s0-9:\\-./#]+$")
 
     /** Ищет наиболее похожую на название продавца строку чека: пропускает номера
-     *  документа/NIP/телефона/адреса/даты и строки, где цифр больше, чем букв. */
+     *  документа/NIP/телефона/даты и строки, где цифр больше, чем букв. */
     private fun extractSeller(text: String): String? {
         for (rawLine in text.lines()) {
             val line = rawLine.trim()
@@ -143,7 +142,6 @@ object ReceiptOcrHelper {
             if (STRONG_TOTAL_KEYWORDS.any { upper.contains(it) } || WEAK_TOTAL_KEYWORDS.any { upper.contains(it) }) continue
             if (MOSTLY_DIGITS.matcher(line).matches()) continue
             if (DATE_LIKE.matcher(line).find()) continue
-            if (POSTAL_CODE_LIKE.matcher(line).find()) continue
             val letters = line.count { it.isLetter() }
             if (letters < line.length / 2) continue
             return line
@@ -157,40 +155,22 @@ object ReceiptOcrHelper {
     private val ITEM_SKIP_KEYWORDS = SELLER_SKIP_KEYWORDS + STRONG_TOTAL_KEYWORDS + WEAK_TOTAL_KEYWORDS + listOf(
         "PTU", "VAT", "PODATEK", "GOTOWKA", "GOTÓWKA", "KARTA", "RESZTA", "SPRZEDAWCA",
         "SPRZEDAJACY", "SPRZEDAJĄCY", "DZIEKUJEMY", "DZIĘKUJEMY", "ZAPRASZAMY", "WYDANO",
-        "PODPIS", "MIASTO", "%",
-        "НАЛИЧНЫМИ", "БЕЗНАЛИЧНЫМИ", "КАРТОЙ", "СДАЧА", "ПРОДАВЕЦ", "СПАСИБО", "НАЛОГ",
-        // Добавлено после разбора реального чека Lidl: строки разбивки продаж по
-        // ставке НДС ("SPRZEDAŻ OPODATKOWANA A"), скидка отдельной строкой ("OPUST"),
-        // блок программы лояльности ("zaoszczędzono ...") — раньше эти строки
-        // ошибочно попадали в список товаров.
-        "OPODATKOWAN", "OPUST", "ZAOSZCZ", "ROZLICZENIE", "PLATNOSCI", "PŁATNOŚCI",
-        "NIEFISKALNY", "WAZNA DO", "WAŻNA DO", "CONTACTLESS", "MASTERCARD", "VISA", "DEBIT"
+        "PODPIS", "ADRES", "UL.", "MIASTO", "%",
+        "НАЛИЧНЫМИ", "БЕЗНАЛИЧНЫМИ", "КАРТОЙ", "СДАЧА", "ПРОДАВЕЦ", "СПАСИБО", "НАЛОГ"
     )
 
     // Строка вида "название товара ... цена" — цена (формат 0,00) в конце строки,
     // опционально с валютой (zł/PLN) и/или буквой ставки НДС сразу после. Так
-    // распознаются позиции чеков без явного количества, например
-    // "Chleb pszenny            4,50 B".
+    // распознаются позиции типичного польского фискального чека, например
+    // "Chleb pszenny            4,50 B" или "Mleko 2% 1L x2       6,98".
     private val itemLinePattern: Pattern =
         Pattern.compile("^(.{2,45}?)\\s+(\\d{1,4}[.,]\\d{2})\\s*(?:zl|zł|PLN|pln)?\\s*[A-Za-z]?\\*?$", Pattern.CASE_INSENSITIVE)
-
-    // Строка вида "название [код_НДС] количество xцена_за_шт  сумма[код_НДС]" —
-    // самый частый формат польских фискальных чеков (Lidl, Biedronka, Żabka и
-    // т.п.), например "Arbuz luz    F    4,524 x3,99  18,05C" или
-    // "Chleb Baltonowski  F  1 x2,29    2,29C". Проверяется ПЕРВЫМ, так как
-    // раньше именно такие строки не распознавались вовсе (не было паттерна под
-    // "количество x цена"), и в комментарий попадала не позиция чека, а мусор.
-    private val itemQtyLinePattern: Pattern = Pattern.compile(
-        "^(.{2,40}?)\\s+[A-Za-z]?\\s*\\d+[.,]?\\d*\\s*[xX×]\\s*\\d{1,4}[.,]\\d{2}\\s+(\\d{1,4}[.,]\\d{2})\\s*(?:zl|zł|PLN|pln)?\\s*[A-Za-z]?\\*?$",
-        Pattern.CASE_INSENSITIVE
-    )
     private val LEADING_QTY: Pattern = Pattern.compile("^\\d+[.,]?\\d*\\s*(x|X|szt\\.?|×)\\s*")
 
     /**
      * Построчно вытаскивает позиции покупки (название + цена) — то, что раньше
-     * приходилось переписывать в комментарий вручную. Сначала пробуем формат
-     * "количество x цена" (самый частый на реальных чеках), затем — формат
-     * без количества (просто цена в конце строки). Строки-итоги/налоги/реквизиты
+     * приходилось переписывать в комментарий вручную. Работает по эвристике
+     * "текст, затем число вида 0,00 в конце строки"; строки-итоги/налоги/реквизиты
      * отфильтровываются по ключевым словам, поэтому итоговая сумма чека не
      * попадает в список как отдельный "товар".
      */
@@ -202,11 +182,8 @@ object ReceiptOcrHelper {
             if (line.length !in 5..60) continue
             val upper = line.uppercase(Locale.ROOT)
             if (ITEM_SKIP_KEYWORDS.any { upper.contains(it) }) continue
-
-            val qtyMatch = itemQtyLinePattern.matcher(line)
-            val m = if (qtyMatch.matches()) qtyMatch else itemLinePattern.matcher(line).takeIf { it.matches() }
-            if (m == null) continue
-
+            val m = itemLinePattern.matcher(line)
+            if (!m.matches()) continue
             val price = normalizeNumber(m.group(2)) ?: continue
             var name = m.group(1).trim().trimEnd('*', '-', ':', '.', ' ')
             name = LEADING_QTY.matcher(name).replaceFirst("").trim()

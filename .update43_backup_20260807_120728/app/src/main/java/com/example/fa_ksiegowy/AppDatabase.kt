@@ -9,8 +9,8 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
-    entities = [Entry::class, Invoice::class, RecurringEntry::class, Product::class, InvoiceItem::class, InventoryRecord::class, InventorySession::class],
-    version = 6,
+    entities = [Entry::class, Invoice::class, RecurringEntry::class, Product::class, InvoiceItem::class, InventoryRecord::class],
+    version = 5,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -26,8 +26,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun invoiceItemDao(): InvoiceItemDao
 
     abstract fun inventoryRecordDao(): InventoryRecordDao
-
-    abstract fun inventorySessionDao(): InventorySessionDao
 
     companion object {
         /** v3 -> v4: добавлены таблицы склада и позиций фактур. Обычная миграция
@@ -54,22 +52,6 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        /** v5 -> v6: инвентаризация теперь группируется в "сессии" (inventory_sessions,
-         *  одна на каждый проведённый пересчёт склада) с сформированным PDF-отчётом;
-         *  у записей расхождений (inventory_records) появляется привязка к сессии
-         *  (sessionId) и снимок себестоимости товара на момент инвентаризации
-         *  (priceNetAtInventory) — для расчёта денежной разницы. Обычная миграция,
-         *  без потери уже накопленных данных склада/истории. */
-        private val MIGRATION_5_6 = object : Migration(5, 6) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL(
-                    "CREATE TABLE IF NOT EXISTS `inventory_sessions` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `number` INTEGER NOT NULL, `dateMillis` INTEGER NOT NULL, `pdfFilePath` TEXT NOT NULL, `totalProducts` INTEGER NOT NULL, `changedProducts` INTEGER NOT NULL, `diffValueNet` REAL NOT NULL)"
-                )
-                database.execSQL("ALTER TABLE inventory_records ADD COLUMN sessionId INTEGER NOT NULL DEFAULT 0")
-                database.execSQL("ALTER TABLE inventory_records ADD COLUMN priceNetAtInventory REAL NOT NULL DEFAULT 0.0")
-            }
-        }
-
         @Volatile private var INSTANCE: AppDatabase? = null
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
@@ -77,7 +59,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "fa_ksiegowy.db"
-                ).addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6).fallbackToDestructiveMigration().build().also { INSTANCE = it }
+                ).addMigrations(MIGRATION_3_4, MIGRATION_4_5).fallbackToDestructiveMigration().build().also { INSTANCE = it }
             }
         }
     }

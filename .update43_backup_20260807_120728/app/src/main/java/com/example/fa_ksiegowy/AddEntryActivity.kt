@@ -322,16 +322,18 @@ class AddEntryActivity : BaseActivity() {
         if (v == v.toLong().toDouble()) v.toLong().toString() else v.toString()
 
     /**
-     * Собирает текст комментария из результата распознавания чека. Если удалось
-     * распознать позиции покупки — комментарий состоит ТОЛЬКО из них (название +
-     * цена каждого товара/услуги); имя продавца сюда не подмешиваем, так как на
-     * сложных чеках его распознавание менее надёжно и раньше именно оно попадало
-     * в комментарий нечитаемым мусором. Продавец используется только как запасной
-     * вариант, если ни одной позиции распознать не удалось.
+     * Собирает текст комментария из результата распознавания чека: название
+     * продавца (если распозналось) и построчный список купленных позиций с
+     * ценами — вместо того, чтобы заставлять пользователя переписывать чек
+     * руками. Если позиции распознать не удалось, остаётся хотя бы продавец.
      */
     private fun buildReceiptComment(result: ReceiptOcrResult): String {
+        val builder = StringBuilder()
+        if (!result.sellerName.isNullOrBlank()) {
+            builder.append(result.sellerName.trim())
+        }
         if (result.items.isNotEmpty()) {
-            val builder = StringBuilder()
+            if (builder.isNotEmpty()) builder.append("\n")
             for (item in result.items) {
                 builder.append("• ").append(item.name)
                 if (item.price != null) {
@@ -339,9 +341,8 @@ class AddEntryActivity : BaseActivity() {
                 }
                 builder.append("\n")
             }
-            return builder.toString().trim()
         }
-        return result.sellerName?.trim().orEmpty()
+        return builder.toString().trim()
     }
 
     /** Открывает системный DatePickerDialog, предзаполненный текущей выбранной датой. */
