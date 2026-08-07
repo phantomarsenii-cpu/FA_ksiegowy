@@ -1,3 +1,46 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -e
+
+echo "=== Обновление 45: диалог ввода количества при сканировании в инвентаризации ==="
+echo "Что меняется:"
+echo " - Inwentaryzacja -> Skanuj towar: раньше скан штрихкода молча прибавлял 1 к"
+echo "   посчитанному количеству найденного товара. Теперь после успешного скана"
+echo "   появляется небольшое диалоговое окно с полем ввода — можно сразу вписать"
+echo "   фактическое количество именно этого товара (а не только +1 за скан)."
+echo " - Поле в диалоге предзаполняется следующим значением (+1 к уже введённому),"
+echo "   так что штучный товар по-прежнему можно просто подтверждать сканами подряд"
+echo "   (тап 'OK' на клавиатуре/кнопке) — но при необходимости цифру легко стереть"
+echo "   и вписать точное число, например после взвешивания или пересчёта пачки."
+echo " - В диалоге также показано текущее количество по учёту, чтобы не листать список."
+echo ""
+
+if [ ! -f "settings.gradle" ] || [ ! -d "app/src/main/java/com/example/fa_ksiegowy" ]; then
+    echo "!!! Запусти скрипт из корня проекта (там, где settings.gradle)"
+    exit 1
+fi
+
+if [ ! -f "app/src/main/java/com/example/fa_ksiegowy/InventoryActivity.kt" ]; then
+    echo "!!! Не найден InventoryActivity.kt — сначала должны быть применены более ранние обновления инвентаризации (update_project-42/43)"
+    exit 1
+fi
+
+BACKUP_DIR=".update45_backup_$(date +%Y%m%d_%H%M%S)"
+mkdir -p "$BACKUP_DIR"
+for f in \
+    "app/src/main/java/com/example/fa_ksiegowy/InventoryActivity.kt"
+do
+    if [ -f "$f" ]; then
+        mkdir -p "$BACKUP_DIR/$(dirname "$f")"
+        cp "$f" "$BACKUP_DIR/$f"
+    fi
+done
+echo "--- Бэкап изменяемых файлов сохранён в $BACKUP_DIR ---"
+
+echo ""
+echo "--- Записываю обновлённый файл ---"
+
+mkdir -p "$(dirname "app/src/main/java/com/example/fa_ksiegowy/InventoryActivity.kt")"
+cat > app/src/main/java/com/example/fa_ksiegowy/InventoryActivity.kt << 'EOF_APP_SRC_MAIN_JAVA_COM_EXAMPLE_FA_KSIEGOWY_INVENTORYACTIVITY_KT'
 package com.example.fa_ksiegowy
 
 import android.app.AlertDialog
@@ -276,3 +319,11 @@ class InventoryActivity : BaseActivity() {
     /** Без лишних ".0" для целых количеств (5 szt., а не 5,0 szt.). */
     private fun formatQty(v: Double): String = if (v == v.toLong().toDouble()) v.toLong().toString() else v.toString()
 }
+EOF_APP_SRC_MAIN_JAVA_COM_EXAMPLE_FA_KSIEGOWY_INVENTORYACTIVITY_KT
+echo "OK: app/src/main/java/com/example/fa_ksiegowy/InventoryActivity.kt"
+
+echo ""
+echo "=== Обновление 45 применено успешно ==="
+echo "Ничего в UI/строках/манифесте менять не нужно — использованы уже существующие"
+echo "строковые ресурсы (inventory_current_stock, inventory_scan_found, inventory_scan_not_found)."
+echo "Дальше как обычно: собери APK через GitHub Actions."

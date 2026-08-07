@@ -1,13 +1,10 @@
 package com.example.fa_ksiegowy
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputType
 import android.text.TextWatcher
 import android.view.LayoutInflater
-import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -26,11 +23,9 @@ import java.util.Locale
 /**
  * Инвентаризация склада: пользователь может в любой момент открыть этот экран,
  * пройтись по товарам и вписать фактически посчитанное количество — вручную
- * или сканируя штрихкод каждого товара. При сканировании открывается небольшой
- * диалог, в котором сразу можно вписать фактическое количество найденного по
- * штрихкоду товара (поле предзаполнено следующим значением, чтобы штучный
- * товар можно было просто подтверждать сканами подряд, а при необходимости —
- * стереть и вписать точное число). При сохранении:
+ * или сканируя штрихкод каждого товара (каждое сканирование прибавляет 1 к
+ * посчитанному количеству найденного по штрихкоду товара, чтобы не листать
+ * список и не набирать цифры при большом ассортименте). При сохранении:
  *  - остаток на складе обновляется до введённого значения;
  *  - по каждой позиции с расхождением создаётся запись в истории
  *    (InventoryRecord), привязанная к сессии инвентаризации (InventorySession);
@@ -116,8 +111,9 @@ class InventoryActivity : BaseActivity() {
     }
 
     /** Штрихкод отсканирован во время инвентаризации: если товар с таким кодом
-     *  есть на складе — открываем диалог ввода фактического количества именно
-     *  этого товара; если товар не найден — сообщаем об этом, ничего не меняя. */
+     *  есть на складе — прибавляем 1 к его посчитанному количеству (самый частый
+     *  случай — штучный товар, сканируем каждую единицу по одной); если товар
+     *  не найден — сообщаем об этом, ничего не меняя. */
     private fun handleScannedBarcode(barcode: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val product = AppDatabase.getInstance(applicationContext).productDao().getByBarcode(barcode)
@@ -131,55 +127,11 @@ class InventoryActivity : BaseActivity() {
                     Toast.makeText(this@InventoryActivity, getString(R.string.inventory_scan_not_found, barcode), Toast.LENGTH_LONG).show()
                     return@withContext
                 }
-                showScanQuantityDialog(product, et)
+                val newQty = (counted[product.id] ?: product.quantity) + 1.0
+                et.setText(formatQty(newQty))
+                Toast.makeText(this@InventoryActivity, getString(R.string.inventory_scan_found, product.name, formatQty(newQty)), Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    /** Небольшое диалоговое окно, которое появляется сразу после успешного скана
-     *  штрихкода: позволяет вписать фактическое количество найденного товара, не
-     *  листая список вручную. Поле предзаполнено следующим по счёту значением
-     *  (+1 к уже введённому) — при сканировании штучного товара по одной единице
-     *  достаточно просто подтвердить кнопкой "OK"; если нужно вписать точное
-     *  число (например, после взвешивания или пересчёта упаковки), цифру легко
-     *  стереть и ввести заново. */
-    private fun showScanQuantityDialog(product: Product, et: EditText) {
-        val current = counted[product.id] ?: product.quantity
-        val suggested = current + 1.0
-
-        val density = resources.displayMetrics.density
-        val paddingH = (24 * density).toInt()
-        val paddingTop = (8 * density).toInt()
-
-        val input = EditText(this)
-        input.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-        input.setText(formatQty(suggested))
-
-        val wrapper = LinearLayout(this)
-        wrapper.orientation = LinearLayout.VERTICAL
-        wrapper.setPadding(paddingH, paddingTop, paddingH, 0)
-        wrapper.addView(input)
-
-        val dialog = AlertDialog.Builder(this)
-            .setTitle(product.name)
-            .setMessage(getString(R.string.inventory_current_stock, formatQty(product.quantity), product.unit))
-            .setView(wrapper)
-            .setPositiveButton(android.R.string.ok) { _, _ ->
-                val value = input.text.toString().replace(',', '.').toDoubleOrNull() ?: suggested
-                counted[product.id] = value
-                et.setText(formatQty(value))
-                Toast.makeText(this, getString(R.string.inventory_scan_found, product.name, formatQty(value)), Toast.LENGTH_SHORT).show()
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .create()
-
-        dialog.setOnShowListener {
-            input.requestFocus()
-            input.setSelection(input.text.length)
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(input, InputMethodManager.SHOW_IMPLICIT)
-        }
-        dialog.show()
     }
 
     /** Применяет посчитанные количества: обновляет остатки, пишет историю
