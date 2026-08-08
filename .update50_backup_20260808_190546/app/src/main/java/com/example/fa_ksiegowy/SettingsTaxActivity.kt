@@ -108,10 +108,6 @@ class SettingsTaxActivity : BaseActivity() {
             }
             ActivityTypeHelper.set(prefs, type)
             updateNierejestrowanaFieldsVisibility(type)
-            // Rejestracja JDG (skala/liniowy/ryczałt) od razu odblokowuje możliwość
-            // potwierdzenia posiadania kasy fiskalnej — nie trzeba czekać na
-            // przekroczenie limitu 20 000 zł, patrz setupKasaCompliance().
-            setupKasaCompliance()
         }
     }
 
@@ -202,23 +198,11 @@ class SettingsTaxActivity : BaseActivity() {
     }
 
     /**
-     * Блок подtwierdzenia posiadania kasy fiskalnej, analogicznie do
-     * [setupVatCompliance]. Widoczność zależy od formy działalności:
-     *
-     *  - Zarejestrowana JDG (skala/liniowy/ryczałt) — блок показывается СРАЗУ,
-     *    как только wybrano ten typ w ustawieniach, niezależnie od limitu
-     *    gotówki. Zarejestrowany od początku przedsiębiorca mógł już mieć
-     *    kasę fiskalną, więc powinien mieć możliwość to potwierdzić od razu —
-     *    a po potwierdzeniu w AddInvoiceActivity pojawia się przełącznik
-     *    "wydana do paragonu" (zob. VatComplianceHelper.allowsReceiptFlag).
-     *  - Niezarejestrowana (działalność nierejestrowana) — блок pojawia się
-     *    dopiero PO przekroczeniu rocznego limitu 20 000 zł sprzedaży
-     *    gotówkowej dla osób fizycznych (zob. CashLimitHelper), tak jak
-     *    dotychczas.
+     * Блок подтверждения наличия kasy fiskalnej — аналогично [setupVatCompliance],
+     * появляется после превышения лимита 20 000 zł gotówki dla osób fizycznych.
      */
     private fun setupKasaCompliance() {
         val layout = findViewById<View>(R.id.layout_kasa_compliance)
-        val hint = findViewById<TextView>(R.id.tv_kasa_compliance_hint)
         val cb = findViewById<CheckBox>(R.id.cb_kasa_fiskalna)
         val alreadyConfirmed = VatComplianceHelper.isKasaFiskalnaConfirmed(prefs)
         if (alreadyConfirmed) {
@@ -229,53 +213,29 @@ class SettingsTaxActivity : BaseActivity() {
             cb.text = getString(R.string.cb_kasa_confirmed_label)
             return
         }
-
-        val activityType = ActivityTypeHelper.get(prefs)
-        if (activityType.isRegisteredJdg) {
-            // Zarejestrowana JDG — nie czekamy na przekroczenie limitu gotówki,
-            // pokazujemy potwierdzenie od razu.
-            hint.text = getString(R.string.kasa_compliance_hint_registered)
-            layout.visibility = View.VISIBLE
-            bindKasaCheckbox(cb)
-            return
-        }
-
-        // Niezarejestrowana — jak dotychczas, dopiero po przekroczeniu 20 000 zł.
-        hint.text = getString(R.string.kasa_compliance_hint)
         CoroutineScope(Dispatchers.IO).launch {
             val cash = CashLimitHelper.computeCurrentYear(applicationContext)
             withContext(Dispatchers.Main) {
-                // Typ działalności mógł się zmienić, zanim ta korutyna się zakończyła
-                // (np. użytkownik szybko przełączył RadioGroup) — sprawdzamy jeszcze raz,
-                // żeby nie nadpisać stanu ustawionego już dla zarejestrowanej JDG.
-                if (ActivityTypeHelper.get(prefs).isRegisteredJdg) return@withContext
                 layout.visibility = if (cash.exceeded) View.VISIBLE else View.GONE
-                bindKasaCheckbox(cb)
-            }
-        }
-    }
-
-    /** Wspólna konfiguracja checkboxa potwierdzenia kasy fiskalnej (stan odznaczony,
-     *  aktywny, z dialogiem potwierdzającym) — używana zarówno dla zarejestrowanej
-     *  JDG, jak i dla niezarejestrowanej po przekroczeniu limitu. */
-    private fun bindKasaCheckbox(cb: CheckBox) {
-        cb.isChecked = false
-        cb.isEnabled = true
-        cb.text = getString(R.string.cb_kasa_label)
-        cb.setOnCheckedChangeListener { _, checked ->
-            if (checked) {
-                AppDialog.show(
-                    context = this@SettingsTaxActivity,
-                    title = getString(R.string.kasa_confirm_dialog_title),
-                    message = getString(R.string.kasa_confirm_dialog_message),
-                    positiveText = getString(R.string.confirm_yes),
-                    onPositive = {
-                        VatComplianceHelper.confirmKasaFiskalna(prefs)
-                        setupKasaCompliance()
-                    },
-                    negativeText = getString(R.string.confirm_cancel),
-                    onNegative = { cb.isChecked = false }
-                )
+                cb.isChecked = false
+                cb.isEnabled = true
+                cb.text = getString(R.string.cb_kasa_label)
+                cb.setOnCheckedChangeListener { _, checked ->
+                    if (checked) {
+                        AppDialog.show(
+                            context = this@SettingsTaxActivity,
+                            title = getString(R.string.kasa_confirm_dialog_title),
+                            message = getString(R.string.kasa_confirm_dialog_message),
+                            positiveText = getString(R.string.confirm_yes),
+                            onPositive = {
+                                VatComplianceHelper.confirmKasaFiskalna(prefs)
+                                setupKasaCompliance()
+                            },
+                            negativeText = getString(R.string.confirm_cancel),
+                            onNegative = { cb.isChecked = false }
+                        )
+                    }
+                }
             }
         }
     }

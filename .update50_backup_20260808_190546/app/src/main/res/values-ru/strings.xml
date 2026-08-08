@@ -470,7 +470,6 @@
     <string name="cb_vat_registered_confirmed_label">Подтверждено: зарегистрированный плательщик VAT</string>
     <string name="kasa_compliance_title">Кассовый аппарат</string>
     <string name="kasa_compliance_hint">Превышен годовой лимит 20 000 zł наличной продажи физическим лицам. Может понадобиться кассовый аппарат. Подтвердите ниже, когда он у вас появится — до этого выставление фактур остаётся заблокированным.</string>
-    <string name="kasa_compliance_hint_registered">Ваша деятельность зарегистрирована (JDG), поэтому кассовый аппарат у вас мог быть уже с самого начала. Если это так, подтвердите это ниже — это откроет опцию «выдана к чеку» при заполнении фактур.</string>
     <string name="cb_kasa_label">Подтверждаю, что у меня есть кассовый аппарат</string>
     <string name="cb_kasa_confirmed_label">Подтверждено: кассовый аппарат используется</string>
     <string name="vat_confirm_dialog_title">Подтвердить регистрацию VAT</string>

@@ -470,7 +470,6 @@
     <string name="cb_vat_registered_confirmed_label">Confirmed: registered as a VAT payer</string>
     <string name="kasa_compliance_title">Fiscal cash register (kasa fiskalna)</string>
     <string name="kasa_compliance_hint">You have exceeded the 20,000 zł annual limit of cash sales to private individuals. A fiscal cash register may now be required. Confirm below once you have one — invoicing stays blocked until you do.</string>
-    <string name="kasa_compliance_hint_registered">Your business is registered (JDG), so you may already have a fiscal cash register from the start. If you do, confirm it below — this unlocks the \"issued for a receipt\" option when filling out invoices.</string>
     <string name="cb_kasa_label">I confirm I have a fiscal cash register (kasa fiskalna)</string>
     <string name="cb_kasa_confirmed_label">Confirmed: fiscal cash register in use</string>
     <string name="vat_confirm_dialog_title">Confirm VAT registration</string>

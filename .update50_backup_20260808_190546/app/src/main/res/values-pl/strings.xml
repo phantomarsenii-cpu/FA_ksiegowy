@@ -470,7 +470,6 @@
     <string name="cb_vat_registered_confirmed_label">Potwierdzono: zarejestrowany podatnik VAT</string>
     <string name="kasa_compliance_title">Kasa fiskalna</string>
     <string name="kasa_compliance_hint">Przekroczono roczny limit 20 000 zł sprzedaży gotówkowej dla osób fizycznych. Może być wymagana kasa fiskalna. Potwierdź poniżej, gdy ją posiadasz — wystawianie faktur pozostaje zablokowane do tego czasu.</string>
-    <string name="kasa_compliance_hint_registered">Twoja działalność jest zarejestrowana (JDG), więc mogłeś/aś posiadać kasę fiskalną już od początku. Jeśli tak, potwierdź to poniżej — odblokuje to opcję „wydana do paragonu\" przy wystawianiu faktur.</string>
     <string name="cb_kasa_label">Potwierdzam, że posiadam kasę fiskalną</string>
     <string name="cb_kasa_confirmed_label">Potwierdzono: kasa fiskalna w użyciu</string>
     <string name="vat_confirm_dialog_title">Potwierdź rejestrację VAT</string>
