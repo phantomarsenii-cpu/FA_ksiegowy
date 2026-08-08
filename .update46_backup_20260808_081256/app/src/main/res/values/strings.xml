@@ -63,7 +63,7 @@
     <string name="report_share_title">Share report</string>
     <string name="report_error">Failed to generate report: %1$s</string>
     <string name="about_app">About the app</string>
-    <string name="about_description">FinArs is a comprehensive app for managing the finances of unregistered business activity and sole proprietorships (JDG). Track income and expenses, monitor limits, automatically calculate taxes, issue invoices, and generate ready-made reports and tax returns — all in one place, with the full history of operations always at hand.\n\n\uD83D\uDCCA Finances and taxes\n\uD83D\uDCB0 Income and expense tracking with attached receipts\n\uD83D\uDCC8 Automatic profit and tax calculation (12%/32% scale, 19% flat, lump-sum)\n\uD83D\uDD01 Recurring transactions (rent, subscriptions) created automatically every month\n\uD83D\uDEA6 Limit tracking: unregistered activity, 120,000 zł tax bracket, VAT exemption (240,000 zł)\n\uD83D\uDD14 Notifications when limits are approaching or exceeded\n\n\uD83E\uDDFE Invoices and receipts (Pro)\n\uD83D\uDCDD Issue invoices/receipts to individuals and companies with PDF generation\n\u2705 Statuses: Paid / Pending / Overdue, plus due-date reminders\n\uD83D\uDCB5 Tracking of the annual 20,000 zł cash-sales limit for private individuals\n\uD83D\uDD0D Invoice history with search and filters\n\n\uD83D\uDCC4 Reports and tax returns\n\uD83D\uDCCA Income/expense chart for the last 6 months\n\uD83D\uDCE5 Export monthly report (free), yearly and custom-period reports (Pro) to Excel with receipts\n\uD83E\uDDEE Generate PIT-36 / PIT-36L / PIT-28 tax returns — helper PDF and official form filling (Pro)\n\n\uD83D\uDD12 Security and convenience\n\uD83D\uDD10 App lock with PIN code and fingerprint / face unlock\n\uD83D\uDCBE Backup and restore your data (Pro)\n\uD83C\uDF19 Modern dark interface\n\uD83C\uDF0D Available in Polish, Russian and English\n\uD83D\uDD12 All data is stored locally on your device\n\nContact: p.arsenii@interia.pl</string>
+    <string name="about_description">FinArs is a comprehensive app for managing the finances of unregistered business activity and sole proprietorships (JDG). Track income and expenses, monitor limits, automatically calculate taxes, issue invoices, and generate ready-made reports and tax returns — all in one place, with the full history of operations always at hand.\n\n\uD83D\uDCCA Finances and taxes\n\uD83D\uDCB0 Income and expense tracking with attached receipts\n\uD83D\uDCC8 Automatic profit and tax calculation (12%/32% scale, 19% flat, lump-sum)\n\uD83D\uDD01 Recurring transactions (rent, subscriptions) created automatically every month\n\uD83D\uDEA6 Limit tracking: unregistered activity, 120,000 zł tax bracket, VAT exemption (200,000 zł)\n\uD83D\uDD14 Notifications when limits are approaching or exceeded\n\n\uD83E\uDDFE Invoices and receipts (Pro)\n\uD83D\uDCDD Issue invoices/receipts to individuals and companies with PDF generation\n\u2705 Statuses: Paid / Pending / Overdue, plus due-date reminders\n\uD83D\uDCB5 Tracking of the annual 20,000 zł cash-sales limit for private individuals\n\uD83D\uDD0D Invoice history with search and filters\n\n\uD83D\uDCC4 Reports and tax returns\n\uD83D\uDCCA Income/expense chart for the last 6 months\n\uD83D\uDCE5 Export monthly report (free), yearly and custom-period reports (Pro) to Excel with receipts\n\uD83E\uDDEE Generate PIT-36 / PIT-36L / PIT-28 tax returns — helper PDF and official form filling (Pro)\n\n\uD83D\uDD12 Security and convenience\n\uD83D\uDD10 App lock with PIN code and fingerprint / face unlock\n\uD83D\uDCBE Backup and restore your data (Pro)\n\uD83C\uDF19 Modern dark interface\n\uD83C\uDF0D Available in Polish, Russian and English\n\uD83D\uDD12 All data is stored locally on your device\n\nContact: p.arsenii@interia.pl</string>
     <string name="about_email">p.arsenii@interia.pl</string>
     <string name="dialog_close">Close</string>
     <string name="dialog_write">Write</string>
@@ -206,8 +206,8 @@
     <string name="activity_type_jdg_skala" formatted="false">Registered JDG — tax scale 12% / 32% (PIT-36)</string>
     <string name="activity_type_jdg_liniowy" formatted="false">Registered JDG — flat tax 19% (PIT-36L)</string>
     <string name="activity_type_jdg_ryczalt">Registered JDG — lump-sum tax (PIT-28)</string>
-    <string name="ryczalt_rate_moved_title">Ryczałt rate is now chosen per transaction</string>
-    <string name="ryczalt_rate_moved_hint">You no longer set one flat rate here. When adding income or an invoice item, pick the matching category (goods, production, services, IT, medical, freelance) — the correct rate is applied automatically per item.</string>
+    <string name="ryczalt_rate_label" formatted="false">Lump-sum tax rate for your activity (%, depends on PKD)</string>
+    <string name="ryczalt_rate_hint">e.g. 3, 5.5, 8.5, 12, 17</string>
     <string name="min_wage_label">Minimum monthly wage (zł) — used to calculate the unregistered-activity limit</string>
     <string name="monthly_limit_preview" formatted="false">Monthly limit (75%): %1$,.2f zł</string>
 
@@ -215,7 +215,7 @@
     <string name="limits_title">Limits</string>
     <string name="limit_monthly_label">Unregistered activity, this month: %1$s / %2$s zł</string>
     <string name="limit_bracket_label">First tax bracket (120,000 zł/year): %1$s / %2$s zł</string>
-    <string name="limit_vat_label">VAT exemption (240,000 zł/year): %1$s / %2$s zł</string>
+    <string name="limit_vat_label">VAT exemption (200,000 zł/year): %1$s / %2$s zł</string>
     <string name="limit_exceeded_warning">You have exceeded the unregistered-activity limit! You must register a JDG within 7 days.</string>
 
     <!-- Dynamic tax label -->
@@ -247,7 +247,7 @@
     <string name="notif_bracket_title">Approaching the 120,000 zł threshold</string>
     <string name="notif_bracket_text" formatted="false">Your yearly profit is close to 120,000 zł — income above this is taxed at 32% instead of 12%.</string>
     <string name="notif_vat_title">Approaching the VAT exemption limit</string>
-    <string name="notif_vat_text">Your yearly revenue is close to 240,000 zł — the VAT exemption threshold.</string>
+    <string name="notif_vat_text">Your yearly revenue is close to 200,000 zł — the VAT exemption threshold.</string>
     <string name="notif_advance_title">Advance tax payment reminder</string>
     <string name="notif_advance_text">Advance tax payments are due by the 20th of the month.</string>
     <string name="notif_pit_deadline_title">Annual tax return reminder</string>
@@ -425,26 +425,4 @@
     <string name="inventory_pdf_total_changed">Items changed</string>
     <string name="inventory_pdf_total_diff_value">Total cost value difference</string>
     <string name="inventory_pdf_total_diff_value_sell">Total missed/extra revenue (sale price)</string>
-
-    <!-- Ryczałt categories: rate applied per transaction instead of one flat setting -->
-    <string name="ryczalt_cat_3">3% — goods (towar)</string>
-    <string name="ryczalt_cat_5_5">5.5% — production / manufactured products</string>
-    <string name="ryczalt_cat_8_5">8.5% — services</string>
-    <string name="ryczalt_cat_12">12% — IT services</string>
-    <string name="ryczalt_cat_14">14% — medical services</string>
-    <string name="ryczalt_cat_17">17% — freelance profession</string>
-    <string name="ryczalt_category_picker_title">Ryczałt category</string>
-    <string name="ryczalt_category_choose">Choose ryczałt category ▾</string>
-    <string name="ryczalt_category_selected">Category: %1$s</string>
-    <string name="ryczalt_category_required_error">Choose a ryczałt category for every item</string>
-    <string name="income_ryczalt_category_required_error">Choose a ryczałt category for this income</string>
-    <string name="income_ryczalt_category_label">Ryczałt category for this income</string>
-
-    <!-- Multi-item invoices -->
-    <string name="invoice_item_number_label">Item %1$d</string>
-    <string name="add_invoice_item_row">+ Add item</string>
-    <string name="invoice_items_limit_reached">You can add up to %1$d items per invoice</string>
-    <string name="invoice_item_min_required">An invoice needs at least one item</string>
-    <string name="invoice_total_label">Total: %1$s zł</string>
-    <string name="item_qty_hint">Qty</string>
 </resources>

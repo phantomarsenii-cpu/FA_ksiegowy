@@ -14,21 +14,15 @@ import android.widget.Toast
  *  1) Тип деятельности (niezarejestrowana / JDG: skala, liniowy, ryczałt) —
  *     от него зависит применяемый лимит и то, какая декларация актуальна
  *     (PIT-36 / PIT-36L / PIT-28), см. ActivityTypeHelper.
- *  2) Минимальное вознаграждение (minimalne wynagrodzenie) и месячный лимит 75% —
- *     ЭТО АКТУАЛЬНО ТОЛЬКО ДЛЯ NIEZAREJESTROWANA (лимит přychodu, при превышении
- *     которого возникает обязанность зарегистрировать JDG). Для любого из трёх
- *     вариантов Zarejestrowana JDG (skala/liniowy/ryczałt) этот блок скрыт — у
- *     зарегистрированной деятельности такого месячного лимита просто нет.
- *  3) Ставки ryczałtu больше НЕ настраиваются здесь одной общей цифрой — теперь
- *     категория (и, соответственно, ставка 3%/5,5%/8,5%/12%/14%/17%) выбирается
- *     для каждой операции дохода отдельно — см. AddEntryActivity (доход) и
- *     AddInvoiceActivity (позиция фактуры). Это важно, так как один человек может
- *     одновременно продавать товары и оказывать услуги с разными ставками.
+ *  2) Минимальное вознаграждение (minimalne wynagrodzenie) — базa для
+ *     расчёта месячного лимита niezarejestrowanej działalności (75% от неё).
+ *  3) Ставка ryczałtu (только если выбран ryczałt) — зависит от PKD,
+ *     вводится пользователем вручную.
  *  4) "Прочие доходы" — как и раньше, влияют на то, какая часть прибыли
  *     из приложения облагается по 12%, а какая — по 32% (только для skali).
  *
  * Налог всегда считается автоматически по официальной формуле для выбранной
- * формы (см. TaxHelper) — ручного ввода единого процента ryczałtu больше нет.
+ * формы (см. TaxHelper) — ручного ввода процента нет.
  */
 class SettingsTaxActivity : BaseActivity() {
     private lateinit var prefs: SharedPreferences
@@ -57,16 +51,17 @@ class SettingsTaxActivity : BaseActivity() {
             val v = etOtherIncome.text.toString().toDoubleOrNull() ?: 0.0
             TaxHelper.setOtherIncome(prefs, year, v)
 
-            // Minimalne wynagrodzenie учитывается только для niezarejestrowana —
-            // для JDG блок скрыт (см. updateNierejestrowanaFieldsVisibility), поле
-            // может быть невидимым, тогда его значение не сохраняем.
-            val minWageField = findViewById<EditText>(R.id.et_min_wage)
-            if (minWageField.visibility == View.VISIBLE) {
-                val minWage = minWageField.text.toString().toDoubleOrNull()
-                if (minWage != null && minWage > 0.0) {
-                    ActivityTypeHelper.setMinWage(prefs, minWage)
-                    updateMonthlyLimitPreview()
+            val ryczaltRateField = findViewById<EditText>(R.id.et_ryczalt_rate)
+            if (ryczaltRateField.visibility == View.VISIBLE) {
+                val rate = ryczaltRateField.text.toString().toDoubleOrNull() ?: 0.0
+                if (rate > 0.0) {
+                    ActivityTypeHelper.setRyczaltRate(prefs, rate)
                 }
+            }
+            val minWage = findViewById<EditText>(R.id.et_min_wage).text.toString().toDoubleOrNull()
+            if (minWage != null && minWage > 0.0) {
+                ActivityTypeHelper.setMinWage(prefs, minWage)
+                updateMonthlyLimitPreview()
             }
 
             // Отметить, что тип деятельности выбран
@@ -88,7 +83,10 @@ class SettingsTaxActivity : BaseActivity() {
             ActivityType.JDG_RYCZALT to R.id.rb_jdg_ryczalt
         )
         rg.check(idFor[current] ?: R.id.rb_niezarejestrowana)
-        updateNierejestrowanaFieldsVisibility(current)
+        updateRyczaltFieldVisibility(current)
+        val etRate = findViewById<EditText>(R.id.et_ryczalt_rate)
+        val savedRate = ActivityTypeHelper.getRyczaltRate(prefs)
+        if (savedRate > 0.0) etRate.setText(savedRate.toString())
 
         rg.setOnCheckedChangeListener { _, checkedId ->
             val type = when (checkedId) {
@@ -99,18 +97,12 @@ class SettingsTaxActivity : BaseActivity() {
                 else -> ActivityType.NIEZAREJESTROWANA
             }
             ActivityTypeHelper.set(prefs, type)
-            updateNierejestrowanaFieldsVisibility(type)
+            updateRyczaltFieldVisibility(type)
         }
     }
 
-    /** Блок "Minimalne wynagrodzenie / Monthly limit (75%)" нужен только для
-     *  niezarejestrowana — для любого из трёх Zarejestrowana JDG (skala/liniowy/
-     *  ryczałt) такого лимита не существует, поэтому блок полностью скрывается.
-     *  Подсказка про перенос ставки ryczałtu показывается, только если выбран ryczałt. */
-    private fun updateNierejestrowanaFieldsVisibility(type: ActivityType) {
-        val visible = type == ActivityType.NIEZAREJESTROWANA
-        findViewById<View>(R.id.layout_min_wage).visibility = if (visible) View.VISIBLE else View.GONE
-        findViewById<View>(R.id.layout_ryczalt_rate_hint).visibility =
+    private fun updateRyczaltFieldVisibility(type: ActivityType) {
+        findViewById<View>(R.id.layout_ryczalt_rate).visibility =
             if (type == ActivityType.JDG_RYCZALT) View.VISIBLE else View.GONE
     }
 

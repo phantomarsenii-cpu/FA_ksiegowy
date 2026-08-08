@@ -184,7 +184,7 @@ class MineActivity : BaseActivity() {
             val taxResult = when (activityType) {
                 ActivityType.NIEZAREJESTROWANA, ActivityType.JDG_SKALA -> TaxHelper.calc(profit, otherIncome)
                 ActivityType.JDG_LINIOWY -> TaxHelper.calcLiniowy(profit)
-                ActivityType.JDG_RYCZALT -> TaxHelper.calcRyczaltByCategory(yearEntries.filter { it.isIncome }, ryczaltRate)
+                ActivityType.JDG_RYCZALT -> TaxHelper.calcRyczalt(income, ryczaltRate)
             }
             val taxLabelRes = when (activityType) {
                 ActivityType.JDG_LINIOWY -> R.string.tax_label_liniowy

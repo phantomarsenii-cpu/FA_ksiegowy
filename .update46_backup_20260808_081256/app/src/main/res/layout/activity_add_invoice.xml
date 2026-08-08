@@ -132,35 +132,8 @@
             android:letterSpacing="0.08"
             android:layout_marginBottom="12dp"/>
 
-        <!-- Позиции фактуры (до 20 шт., товар или услуга) — заполняются динамически,
-             см. AddInvoiceActivity.addItemRow/item_invoice_line.xml. Кнопка "Dodaj
-             towary z magazynu" добавляет позиции сюда же, а не отдельным полем. -->
-        <LinearLayout
-            android:id="@+id/ll_invoice_items"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"/>
-
-        <Button
-            android:id="@+id/btn_add_item_row"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/btn_pill_outline"
-            android:text="@string/add_invoice_item_row"
-            android:textAllCaps="false"
-            android:textColor="@color/text_primary"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/tv_invoice_total"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/accent_cyan"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:gravity="end"
-            android:layout_marginBottom="10dp"/>
+        <EditText android:id="@+id/et_service_name" style="@style/InvoiceInput" android:hint="@string/service_name" android:inputType="text"/>
+        <EditText android:id="@+id/et_amount" style="@style/InvoiceInput" android:hint="@string/service_amount" android:inputType="numberDecimal"/>
 
         <Button
             android:id="@+id/btn_add_warehouse_items"

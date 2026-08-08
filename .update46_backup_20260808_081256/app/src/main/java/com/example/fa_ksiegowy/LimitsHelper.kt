@@ -13,7 +13,7 @@ import java.util.Calendar
  *  2) bracket   — накопленный годовой dochód (przychód − koszty + otherIncome)
  *                 vs 120 000 zł (порог перехода с 12% на 32% по skali).
  *  3) vat       — накопленный годовой przychód (без вычета kosztów) vs
- *                 240 000 zł (лимит zwolnienia podmiotowego z VAT).
+ *                 200 000 zł (лимит zwolnienia podmiotowego z VAT).
  */
 object LimitsHelper {
 
@@ -69,5 +69,5 @@ object LimitsHelper {
     }
 
     /** Roczny limit zwolnienia podmiotowego z VAT (art. 113 ustawy o VAT), proporcjonalny w pierwszym roku. */
-    const val VAT_EXEMPT_LIMIT = 240000.0
+    const val VAT_EXEMPT_LIMIT = 200000.0
 }

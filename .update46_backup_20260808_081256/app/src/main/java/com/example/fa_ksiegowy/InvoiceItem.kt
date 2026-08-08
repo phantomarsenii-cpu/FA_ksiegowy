@@ -14,10 +14,5 @@ data class InvoiceItem(
     val productId: Long?,
     val name: String,
     val quantity: Double,
-    val unitPrice: Double,
-    // Категория ryczałtu (см. RyczaltCategory) для этой конкретной позиции —
-    // заполняется, только когда в настройках выбран ActivityType.JDG_RYCZALT
-    // (см. AddInvoiceActivity), так как одна фактура может содержать и товар,
-    // и услугу с разными ставками ryczałtu одновременно.
-    val ryczaltCategory: String? = null
+    val unitPrice: Double
 )

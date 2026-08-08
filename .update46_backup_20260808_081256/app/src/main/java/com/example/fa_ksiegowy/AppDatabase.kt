@@ -10,7 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [Entry::class, Invoice::class, RecurringEntry::class, Product::class, InvoiceItem::class, InventoryRecord::class, InventorySession::class],
-    version = 8,
+    version = 7,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -89,20 +89,6 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        /** v7 -> v8: ryczałt теперь считается не одной глобальной ставкой из настроек,
-         *  а по КАЖДОЙ операции отдельно (см. RyczaltCategory) — один человек может
-         *  одновременно продавать товары (3%/5,5%) и оказывать услуги (8,5%/12%/14%/17%).
-         *  У доходов (entries) и позиций фактур (invoice_items) появляется необязательная
-         *  привязка к категории; уже существующие записи остаются с NULL и по-прежнему
-         *  считаются по старой единой ставке из настроек (см. TaxHelper.calcRyczaltByCategory) —
-         *  обычная миграция, без потери накопленной истории. */
-        private val MIGRATION_7_8 = object : Migration(7, 8) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE entries ADD COLUMN ryczaltCategory TEXT")
-                database.execSQL("ALTER TABLE invoice_items ADD COLUMN ryczaltCategory TEXT")
-            }
-        }
-
         @Volatile private var INSTANCE: AppDatabase? = null
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
@@ -110,7 +96,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "fa_ksiegowy.db"
-                ).addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8).fallbackToDestructiveMigration().build().also { INSTANCE = it }
+                ).addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7).fallbackToDestructiveMigration().build().also { INSTANCE = it }
             }
         }
     }

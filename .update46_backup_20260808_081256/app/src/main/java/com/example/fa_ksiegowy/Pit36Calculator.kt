@@ -39,7 +39,7 @@ object Pit36Calculator {
         val tax = when (activityType) {
             ActivityType.NIEZAREJESTROWANA, ActivityType.JDG_SKALA -> TaxHelper.calc(dochod, otherIncome)
             ActivityType.JDG_LINIOWY -> TaxHelper.calcLiniowy(dochod)
-            ActivityType.JDG_RYCZALT -> TaxHelper.calcRyczaltByCategory(entries.filter { it.isIncome }, ryczaltRatePercent)
+            ActivityType.JDG_RYCZALT -> TaxHelper.calcRyczalt(przychod, ryczaltRatePercent)
         }
         return Result(year, przychod, koszty, dochod, otherIncome, tax, activityType)
     }

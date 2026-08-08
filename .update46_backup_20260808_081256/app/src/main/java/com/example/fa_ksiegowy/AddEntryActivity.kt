@@ -2,6 +2,7 @@ package com.example.fa_ksiegowy
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,16 +27,6 @@ import java.util.Locale
  * Если в intent передан "entryId" (id существующей записи) — режим редактирования:
  * поля предзаполняются, появляется кнопка удаления, а сохранение обновляет запись
  * вместо создания новой. Без "entryId" работает как раньше — создание новой записи.
- *
- * Сканирование чека (распознавание суммы/даты по фото, ML Kit OCR — "Skanuj paragon"
- * и "Skanuj paragon z galerii") убрано полностью — осталось только обычное
- * прикрепление фото чека без автозаполнения (btn_attach).
- *
- * Для приходов, когда в настройках выбрана форма ActivityType.JDG_RYCZALT,
- * появляется обязательный выбор категории ryczałtu (см. RyczaltCategory) — ставка
- * (3%/5,5%/8,5%/12%/14%/17%) теперь привязана к конкретной операции, а не к одной
- * общей настройке, так как один человек может одновременно продавать товары и
- * оказывать разные услуги.
  */
 class AddEntryActivity : BaseActivity() {
     private var selectedImagePath: String? = null
@@ -50,11 +42,33 @@ class AddEntryActivity : BaseActivity() {
     // на основе шаблона транзакциями.
     private var wantsRecurring: Boolean = false
 
-    // Категория ryczałtu для этого дохода — актуальна только когда currentIsIncome==true
-    // и в настройках выбран ActivityType.JDG_RYCZALT (см. updateTypeToggleUi/RyczaltCategory).
-    private var selectedRyczaltCategory: String? = null
-    private val activityType: ActivityType by lazy {
-        ActivityTypeHelper.get(getSharedPreferences("settings", MODE_PRIVATE))
+    // Фото для распознавания чека (ML Kit OCR) — пишется в полном разрешении через
+    // системную камеру (FileProvider), затем прогоняется через ReceiptOcrHelper.
+    private var ocrPhotoFile: File? = null
+
+    private val takeOcrPhoto = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+        if (success) runOcr()
+    }
+
+    // Сканирование чека по фото ИЗ ГАЛЕРЕИ (в отличие от btn_attach, который просто
+    // прикладывает файл без распознавания) — копируем выбранную картинку во временный
+    // файл и прогоняем через тот же runOcr(), что и снимок с камеры.
+    private val pickOcrImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        if (uri == null) return@registerForActivityResult
+        try {
+            val input = contentResolver.openInputStream(uri)
+            if (input == null) {
+                Toast.makeText(this, getString(R.string.receipt_scan_no_text), Toast.LENGTH_SHORT).show()
+                return@registerForActivityResult
+            }
+            val file = File(getExternalFilesDir(null), "ocr_tmp_${System.currentTimeMillis()}.jpg")
+            FileOutputStream(file).use { fos -> input.copyTo(fos) }
+            input.close()
+            ocrPhotoFile = file
+            runOcr()
+        } catch (e: Exception) {
+            Toast.makeText(this, "Ошибка при загрузке чека: ${e.message}", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,9 +102,10 @@ class AddEntryActivity : BaseActivity() {
 
         setupTypeToggle()
         findViewById<Button>(R.id.btn_attach).setOnClickListener { pickImage.launch("image/*") }
+        findViewById<Button>(R.id.btn_scan_receipt).setOnClickListener { launchReceiptScan() }
+        findViewById<Button>(R.id.btn_scan_receipt_gallery).setOnClickListener { pickOcrImage.launch("image/*") }
         findViewById<Button>(R.id.btn_delete).setOnClickListener { confirmDelete() }
         findViewById<Button>(R.id.btn_date).setOnClickListener { showDatePicker() }
-        findViewById<Button>(R.id.btn_ryczalt_category).setOnClickListener { showRyczaltCategoryPicker() }
         findViewById<android.widget.Switch>(R.id.sw_recurring).setOnCheckedChangeListener { _, checked ->
             wantsRecurring = checked
         }
@@ -98,7 +113,6 @@ class AddEntryActivity : BaseActivity() {
         updateTypeToggleUi()
         updateTitle()
         updateDateButtonText()
-        updateRyczaltCategoryButtonText()
 
         if (entryId != -1L) {
             findViewById<Button>(R.id.btn_delete).visibility = View.VISIBLE
@@ -117,14 +131,12 @@ class AddEntryActivity : BaseActivity() {
                     findViewById<EditText>(R.id.et_comment).setText(entry.comment ?: "")
                     selectedImagePath = entry.receiptPath
                     selectedDateMillis = entry.dateMillis
-                    selectedRyczaltCategory = entry.ryczaltCategory
                     if (entry.receiptPath != null) {
                         findViewById<Button>(R.id.btn_attach).text = getString(R.string.attach_receipt) + " ✓"
                     }
                     updateTypeToggleUi()
                     updateTitle()
                     updateDateButtonText()
-                    updateRyczaltCategoryButtonText()
                 }
             }
         }
@@ -135,16 +147,8 @@ class AddEntryActivity : BaseActivity() {
                 Toast.makeText(this, "Введите корректную сумму", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            if (currentIsIncome && activityType == ActivityType.JDG_RYCZALT && selectedRyczaltCategory == null) {
-                Toast.makeText(this, getString(R.string.income_ryczalt_category_required_error), Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
             val comment = findViewById<EditText>(R.id.et_comment).text.toString()
             findViewById<Button>(R.id.btn_save).isEnabled = false
-
-            // Категория ryczałtu имеет смысл только для приходов при форме ryczałt —
-            // для расходов и других форм налогообложения запись сохраняем с null.
-            val categoryToSave = if (currentIsIncome && activityType == ActivityType.JDG_RYCZALT) selectedRyczaltCategory else null
 
             val existing = editingEntry
             CoroutineScope(Dispatchers.IO).launch {
@@ -159,8 +163,7 @@ class AddEntryActivity : BaseActivity() {
                             isIncome = currentIsIncome,
                             comment = comment,
                             dateMillis = selectedDateMillis,
-                            receiptPath = finalReceiptPath,
-                            ryczaltCategory = categoryToSave
+                            receiptPath = finalReceiptPath
                         )
                     )
                 } else {
@@ -170,8 +173,7 @@ class AddEntryActivity : BaseActivity() {
                             isIncome = currentIsIncome,
                             comment = comment,
                             dateMillis = selectedDateMillis,
-                            receiptPath = finalReceiptPath,
-                            ryczaltCategory = categoryToSave
+                            receiptPath = finalReceiptPath
                         )
                     )
                     // Имя файла чека включает id записи — при создании id известен только
@@ -183,8 +185,7 @@ class AddEntryActivity : BaseActivity() {
                         dao.update(
                             Entry(
                                 id = newId, amount = amt, isIncome = currentIsIncome,
-                                comment = comment, dateMillis = selectedDateMillis, receiptPath = renamedAgain,
-                                ryczaltCategory = categoryToSave
+                                comment = comment, dateMillis = selectedDateMillis, receiptPath = renamedAgain
                             )
                         )
                     }
@@ -216,6 +217,68 @@ class AddEntryActivity : BaseActivity() {
         }
     }
 
+    /** Запускает системную камеру для фото чека и сохраняет полноразмерный файл через FileProvider. */
+    private fun launchReceiptScan() {
+        val file = File(getExternalFilesDir(null), "ocr_tmp_${System.currentTimeMillis()}.jpg")
+        ocrPhotoFile = file
+        val uri = FileProvider.getUriForFile(this, "$packageName.fileprovider", file)
+        takeOcrPhoto.launch(uri)
+    }
+
+    /** Прогоняет сделанное фото через ML Kit и подставляет распознанные сумму/дату/продавца. */
+    private fun runOcr() {
+        val file = ocrPhotoFile ?: return
+        Toast.makeText(this, getString(R.string.receipt_scan_processing), Toast.LENGTH_SHORT).show()
+        CoroutineScope(Dispatchers.IO).launch {
+            val bmp = try {
+                BitmapFactory.decodeFile(file.absolutePath)
+            } catch (e: Exception) {
+                null
+            }
+            if (bmp == null) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@AddEntryActivity, getString(R.string.receipt_scan_no_text), Toast.LENGTH_SHORT).show()
+                }
+                return@launch
+            }
+            val result = try {
+                ReceiptOcrHelper.recognize(bmp)
+            } catch (e: Exception) {
+                null
+            }
+            withContext(Dispatchers.Main) {
+                if (result == null) {
+                    Toast.makeText(this@AddEntryActivity, getString(R.string.receipt_scan_no_text), Toast.LENGTH_LONG).show()
+                    return@withContext
+                }
+                if (result.amount != null) {
+                    findViewById<EditText>(R.id.et_amount).setText(formatAmount(result.amount))
+                }
+                if (result.dateMillis != null) {
+                    selectedDateMillis = result.dateMillis
+                    updateDateButtonText()
+                }
+                // Комментарий заполняем позициями покупки с чека (название + цена
+                // каждого товара/услуги), а не просто именем продавца — это то, ради
+                // чего вообще нужно сканирование, чтобы не вводить список вручную.
+                // Не трогаем поле, если пользователь уже что-то в него вписал.
+                if (result.items.isNotEmpty() || !result.sellerName.isNullOrBlank()) {
+                    val commentField = findViewById<EditText>(R.id.et_comment)
+                    if (commentField.text.toString().isBlank()) {
+                        commentField.setText(buildReceiptComment(result))
+                    }
+                }
+                selectedImagePath = file.absolutePath
+                findViewById<Button>(R.id.btn_attach).text = getString(R.string.attach_receipt) + " ✓"
+                if (result.amount == null && result.dateMillis == null) {
+                    Toast.makeText(this@AddEntryActivity, getString(R.string.receipt_scan_no_text), Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this@AddEntryActivity, getString(R.string.receipt_scan_done), Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     private fun setupTypeToggle() {
         findViewById<Button>(R.id.btn_type_income).setOnClickListener {
             currentIsIncome = true
@@ -241,13 +304,11 @@ class AddEntryActivity : BaseActivity() {
         expense.setTextColor(resources.getColor(if (!currentIsIncome) R.color.text_primary else R.color.text_secondary, theme))
         income.alpha = if (currentIsIncome) 1.0f else 0.75f
         expense.alpha = if (!currentIsIncome) 1.0f else 0.75f
-        // Прикладывать чек имеет смысл только для расходов (чек подтверждает трату) —
-        // для приходов эта кнопка только путает.
+        // Прикладывать/сканировать чек имеет смысл только для расходов (чек подтверждает трату) —
+        // для приходов эти кнопки только путают.
         findViewById<Button>(R.id.btn_attach).visibility = if (currentIsIncome) View.GONE else View.VISIBLE
-        // Категория ryczałtu, наоборот, актуальна только для ПРИХОДОВ и только при
-        // форме налогообложения ryczałt — во всех остальных случаях скрыта.
-        findViewById<Button>(R.id.btn_ryczalt_category).visibility =
-            if (currentIsIncome && activityType == ActivityType.JDG_RYCZALT) View.VISIBLE else View.GONE
+        findViewById<Button>(R.id.btn_scan_receipt).visibility = if (currentIsIncome) View.GONE else View.VISIBLE
+        findViewById<Button>(R.id.btn_scan_receipt_gallery).visibility = if (currentIsIncome) View.GONE else View.VISIBLE
     }
 
     private fun updateTitle() {
@@ -259,26 +320,6 @@ class AddEntryActivity : BaseActivity() {
             else -> R.string.add_expense
         }
         findViewById<TextView>(R.id.tv_add_title).text = getString(titleRes)
-    }
-
-    /** Небольшое стилизованное вертикальное меню (см. AppDialog) для выбора категории
-     *  ryczałtu этого прихода — от неё зависит применяемая ставка налога. */
-    private fun showRyczaltCategoryPicker() {
-        AppDialog.showOptionPicker(
-            context = this,
-            title = getString(R.string.ryczalt_category_picker_title),
-            options = RyczaltCategory.entries.map { it.name to getString(it.labelRes) }
-        ) { selected ->
-            selectedRyczaltCategory = selected
-            updateRyczaltCategoryButtonText()
-        }
-    }
-
-    private fun updateRyczaltCategoryButtonText() {
-        val btn = findViewById<Button>(R.id.btn_ryczalt_category)
-        val cat = RyczaltCategory.fromStorageKeyOrNull(selectedRyczaltCategory)
-        btn.text = if (cat != null) getString(R.string.ryczalt_category_selected, getString(cat.labelRes))
-        else getString(R.string.ryczalt_category_choose)
     }
 
     private fun confirmDelete() {
@@ -302,6 +343,29 @@ class AddEntryActivity : BaseActivity() {
     /** Без лишних нулей для целых сумм (100, а не 100.0), но с сохранением копеек, если они есть. */
     private fun formatAmount(v: Double): String =
         if (v == v.toLong().toDouble()) v.toLong().toString() else v.toString()
+
+    /**
+     * Собирает текст комментария из результата распознавания чека. Если удалось
+     * распознать позиции покупки — комментарий состоит ТОЛЬКО из них (название +
+     * цена каждого товара/услуги); имя продавца сюда не подмешиваем, так как на
+     * сложных чеках его распознавание менее надёжно и раньше именно оно попадало
+     * в комментарий нечитаемым мусором. Продавец используется только как запасной
+     * вариант, если ни одной позиции распознать не удалось.
+     */
+    private fun buildReceiptComment(result: ReceiptOcrResult): String {
+        if (result.items.isNotEmpty()) {
+            val builder = StringBuilder()
+            for (item in result.items) {
+                builder.append("• ").append(item.name)
+                if (item.price != null) {
+                    builder.append(" — ").append(formatAmount(item.price)).append(" zł")
+                }
+                builder.append("\n")
+            }
+            return builder.toString().trim()
+        }
+        return result.sellerName?.trim().orEmpty()
+    }
 
     /** Открывает системный DatePickerDialog, предзаполненный текущей выбранной датой. */
     private fun showDatePicker() {

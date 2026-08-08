@@ -63,7 +63,7 @@
     <string name="report_share_title">Udostępnij raport</string>
     <string name="report_error">Błąd generowania raportu: %1$s</string>
     <string name="about_app">O aplikacji</string>
-    <string name="about_description">FinArs to kompleksowa aplikacja do zarządzania finansami działalności nierejestrowanej i jednoosobowej działalności gospodarczej (JDG). Śledź przychody i wydatki, kontroluj limity, automatycznie licz podatki, wystawiaj faktury i generuj gotowe raporty oraz deklaracje PIT — wszystko w jednym miejscu, z pełną historią operacji zawsze pod ręką.\n\n\uD83D\uDCCA Finanse i podatki\n\uD83D\uDCB0 Ewidencja przychodów i wydatków z załącznikami paragonów\n\uD83D\uDCC8 Automatyczne obliczanie zysku i podatku (skala 12%/32%, liniowy 19%, ryczałt)\n\uD83D\uDD01 Transakcje cykliczne (czynsz, abonamenty) tworzone automatycznie co miesiąc\n\uD83D\uDEA6 Kontrola limitów: działalność nierejestrowana, próg 120 000 zł, zwolnienie z VAT (240 000 zł)\n\uD83D\uDD14 Powiadomienia o zbliżających się i przekroczonych limitach\n\n\uD83E\uDDFE Faktury i rachunki (Pro)\n\uD83D\uDCDD Wystawianie faktur/rachunków dla osób fizycznych i firm z generowaniem PDF\n\u2705 Statusy: Zapłacona / Oczekuje na zapłatę / Zaległa, plus przypomnienia o terminie płatności\n\uD83D\uDCB5 Kontrola rocznego limitu gotówki (20 000 zł) dla sprzedaży osobom fizycznym\n\uD83D\uDD0D Historia faktur z wyszukiwaniem i filtrami\n\n\uD83D\uDCC4 Raporty i deklaracje\n\uD83D\uDCCA Wykres przychodów i wydatków za ostatnie 6 miesięcy\n\uD83D\uDCE5 Eksport raportu miesięcznego (bezpłatnie), rocznego i za dowolny okres (Pro) do Excela wraz z paragonami\n\uD83E\uDDEE Generowanie deklaracji PIT-36 / PIT-36L / PIT-28 — pomocniczy PDF oraz wypełnienie oficjalnego formularza (Pro)\n\n\uD83D\uDD12 Bezpieczeństwo i wygoda\n\uD83D\uDD10 Blokada aplikacji kodem PIN oraz odciskiem palca / twarzą\n\uD83D\uDCBE Kopia zapasowa i przywracanie danych (Pro)\n\uD83C\uDF19 Nowoczesny ciemny interfejs\n\uD83C\uDF0D Dostępne w języku polskim, rosyjskim i angielskim\n\uD83D\uDD12 Wszystkie dane są przechowywane lokalnie na urządzeniu\n\nKontakt: p.arsenii@interia.pl</string>
+    <string name="about_description">FinArs to kompleksowa aplikacja do zarządzania finansami działalności nierejestrowanej i jednoosobowej działalności gospodarczej (JDG). Śledź przychody i wydatki, kontroluj limity, automatycznie licz podatki, wystawiaj faktury i generuj gotowe raporty oraz deklaracje PIT — wszystko w jednym miejscu, z pełną historią operacji zawsze pod ręką.\n\n\uD83D\uDCCA Finanse i podatki\n\uD83D\uDCB0 Ewidencja przychodów i wydatków z załącznikami paragonów\n\uD83D\uDCC8 Automatyczne obliczanie zysku i podatku (skala 12%/32%, liniowy 19%, ryczałt)\n\uD83D\uDD01 Transakcje cykliczne (czynsz, abonamenty) tworzone automatycznie co miesiąc\n\uD83D\uDEA6 Kontrola limitów: działalność nierejestrowana, próg 120 000 zł, zwolnienie z VAT (200 000 zł)\n\uD83D\uDD14 Powiadomienia o zbliżających się i przekroczonych limitach\n\n\uD83E\uDDFE Faktury i rachunki (Pro)\n\uD83D\uDCDD Wystawianie faktur/rachunków dla osób fizycznych i firm z generowaniem PDF\n\u2705 Statusy: Zapłacona / Oczekuje na zapłatę / Zaległa, plus przypomnienia o terminie płatności\n\uD83D\uDCB5 Kontrola rocznego limitu gotówki (20 000 zł) dla sprzedaży osobom fizycznym\n\uD83D\uDD0D Historia faktur z wyszukiwaniem i filtrami\n\n\uD83D\uDCC4 Raporty i deklaracje\n\uD83D\uDCCA Wykres przychodów i wydatków za ostatnie 6 miesięcy\n\uD83D\uDCE5 Eksport raportu miesięcznego (bezpłatnie), rocznego i za dowolny okres (Pro) do Excela wraz z paragonami\n\uD83E\uDDEE Generowanie deklaracji PIT-36 / PIT-36L / PIT-28 — pomocniczy PDF oraz wypełnienie oficjalnego formularza (Pro)\n\n\uD83D\uDD12 Bezpieczeństwo i wygoda\n\uD83D\uDD10 Blokada aplikacji kodem PIN oraz odciskiem palca / twarzą\n\uD83D\uDCBE Kopia zapasowa i przywracanie danych (Pro)\n\uD83C\uDF19 Nowoczesny ciemny interfejs\n\uD83C\uDF0D Dostępne w języku polskim, rosyjskim i angielskim\n\uD83D\uDD12 Wszystkie dane są przechowywane lokalnie na urządzeniu\n\nKontakt: p.arsenii@interia.pl</string>
     <string name="about_email">p.arsenii@interia.pl</string>
     <string name="dialog_close">Zamknij</string>
     <string name="dialog_write">Napisz</string>
@@ -206,8 +206,8 @@
     <string name="activity_type_jdg_skala" formatted="false">Zarejestrowana JDG — skala 12% / 32% (PIT-36)</string>
     <string name="activity_type_jdg_liniowy" formatted="false">Zarejestrowana JDG — podatek liniowy 19% (PIT-36L)</string>
     <string name="activity_type_jdg_ryczalt">Zarejestrowana JDG — ryczałt (PIT-28)</string>
-    <string name="ryczalt_rate_moved_title">Stawka ryczałtu wybierana jest teraz dla każdej operacji osobno</string>
-    <string name="ryczalt_rate_moved_hint">Nie ustawiasz już tutaj jednej stałej stawki. Dodając przychód lub pozycję faktury, wybierz odpowiednią kategorię (towar, produkcja, usługi, usługi IT, usługi medyczne, wolny zawód) — właściwa stawka zostanie zastosowana automatycznie dla każdej pozycji.</string>
+    <string name="ryczalt_rate_label" formatted="false">Stawka ryczałtu dla Twojej działalności (%, zależy od PKD)</string>
+    <string name="ryczalt_rate_hint">np. 3, 5.5, 8.5, 12, 17</string>
     <string name="min_wage_label">Minimalne wynagrodzenie miesięczne (zł) — do obliczenia limitu działalności nierejestrowanej</string>
     <string name="monthly_limit_preview" formatted="false">Limit miesięczny (75%): %1$,.2f zł</string>
 
@@ -215,7 +215,7 @@
     <string name="limits_title">Limity</string>
     <string name="limit_monthly_label">Działalność nierejestrowana, ten miesiąc: %1$s / %2$s zł</string>
     <string name="limit_bracket_label">Pierwszy próg podatkowy (120 000 zł/rok): %1$s / %2$s zł</string>
-    <string name="limit_vat_label">Zwolnienie z VAT (240 000 zł/rok): %1$s / %2$s zł</string>
+    <string name="limit_vat_label">Zwolnienie z VAT (200 000 zł/rok): %1$s / %2$s zł</string>
     <string name="limit_exceeded_warning">Przekroczono limit działalności nierejestrowanej! Musisz zarejestrować JDG w ciągu 7 dni.</string>
 
     <!-- Dynamiczna etykieta podatku -->
@@ -247,7 +247,7 @@
     <string name="notif_bracket_title">Zbliżasz się do progu 120 000 zł</string>
     <string name="notif_bracket_text" formatted="false">Roczny dochód zbliża się do 120 000 zł — nadwyżka będzie opodatkowana stawką 32% zamiast 12%.</string>
     <string name="notif_vat_title">Zbliżasz się do limitu zwolnienia z VAT</string>
-    <string name="notif_vat_text">Roczny przychód zbliża się do 240 000 zł — progu zwolnienia z VAT.</string>
+    <string name="notif_vat_text">Roczny przychód zbliża się do 200 000 zł — progu zwolnienia z VAT.</string>
     <string name="notif_advance_title">Przypomnienie o zaliczce na podatek</string>
     <string name="notif_advance_text">Zaliczki na podatek należy wpłacać do 20 dnia każdego miesiąca.</string>
     <string name="notif_pit_deadline_title">Przypomnienie o rocznym zeznaniu podatkowym</string>
@@ -425,26 +425,4 @@
     <string name="inventory_pdf_total_changed">Zmienionych pozycji</string>
     <string name="inventory_pdf_total_diff_value">Łączna różnica wg kosztu zakupu</string>
     <string name="inventory_pdf_total_diff_value_sell">Łączna utracona/dodatkowa sprzedaż (cena sprzedaży)</string>
-
-    <!-- Kategorie ryczałtu: stawka dobierana dla każdej operacji zamiast jednego ustawienia -->
-    <string name="ryczalt_cat_3">3% — towar</string>
-    <string name="ryczalt_cat_5_5">5,5% — produkt/produkcja</string>
-    <string name="ryczalt_cat_8_5">8,5% — usługi</string>
-    <string name="ryczalt_cat_12">12% — usługi IT</string>
-    <string name="ryczalt_cat_14">14% — usługi medyczne</string>
-    <string name="ryczalt_cat_17">17% — wolny zawód</string>
-    <string name="ryczalt_category_picker_title">Kategoria ryczałtu</string>
-    <string name="ryczalt_category_choose">Wybierz kategorię ryczałtu ▾</string>
-    <string name="ryczalt_category_selected">Kategoria: %1$s</string>
-    <string name="ryczalt_category_required_error">Wybierz kategorię ryczałtu dla każdej pozycji</string>
-    <string name="income_ryczalt_category_required_error">Wybierz kategorię ryczałtu dla tego przychodu</string>
-    <string name="income_ryczalt_category_label">Kategoria ryczałtu dla tego przychodu</string>
-
-    <!-- Wiele pozycji na fakturze -->
-    <string name="invoice_item_number_label">Pozycja %1$d</string>
-    <string name="add_invoice_item_row">+ Dodaj pozycję</string>
-    <string name="invoice_items_limit_reached">Możesz dodać maksymalnie %1$d pozycji na fakturę</string>
-    <string name="invoice_item_min_required">Faktura musi mieć przynajmniej jedną pozycję</string>
-    <string name="invoice_total_label">Razem: %1$s zł</string>
-    <string name="item_qty_hint">Ilość</string>
 </resources>

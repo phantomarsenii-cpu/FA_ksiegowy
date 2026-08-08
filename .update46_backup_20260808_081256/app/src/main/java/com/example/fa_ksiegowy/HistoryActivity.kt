@@ -165,7 +165,7 @@ class HistoryActivity : BaseActivity() {
             val tax = when (activityType) {
                 ActivityType.NIEZAREJESTROWANA, ActivityType.JDG_SKALA -> TaxHelper.calc(profit, otherIncome)
                 ActivityType.JDG_LINIOWY -> TaxHelper.calcLiniowy(profit)
-                ActivityType.JDG_RYCZALT -> TaxHelper.calcRyczaltByCategory(allEntries.filter { it.isIncome }, ryczaltRate)
+                ActivityType.JDG_RYCZALT -> TaxHelper.calcRyczalt(income, ryczaltRate)
             }.tax
             val netProfit = profit - tax
 

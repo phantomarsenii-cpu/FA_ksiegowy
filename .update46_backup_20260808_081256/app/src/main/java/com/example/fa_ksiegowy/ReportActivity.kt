@@ -324,7 +324,7 @@ class ReportActivity : BaseActivity() {
                     ActivityType.NIEZAREJESTROWANA, ActivityType.JDG_SKALA ->
                         TaxHelper.calc(totalProfitForTax, otherIncomeForTax).tax
                     ActivityType.JDG_LINIOWY -> TaxHelper.calcLiniowy(totalProfitForTax).tax
-                    ActivityType.JDG_RYCZALT -> TaxHelper.calcRyczaltByCategory(entries.filter { it.isIncome }, ryczaltRate).tax
+                    ActivityType.JDG_RYCZALT -> TaxHelper.calcRyczalt(totalIncome, ryczaltRate).tax
                 }
 
                 val taxRow = sheet.createRow(rowN++)
