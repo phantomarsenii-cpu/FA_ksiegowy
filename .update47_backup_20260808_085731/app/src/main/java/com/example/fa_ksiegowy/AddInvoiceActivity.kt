@@ -500,46 +500,6 @@ class AddInvoiceActivity : BaseActivity() {
                     }
                 }
 
-                // Zarejestrowana JDG (skala/liniowy/ryczałt): доход из фактуры теперь
-                // ЗАПИСЫВАЕТСЯ АВТОМАТИЧЕСКИ как приход (Entry) — чтобы налог на главном
-                // экране и в Historii считался сразу после каждой фактуры, без ручного
-                // дублирования пользователем. Для niezarejestrowanej ничего не меняется —
-                // доходы по-прежнему добавляются вручную, как и раньше.
-                if (activityType != ActivityType.NIEZAREJESTROWANA) {
-                    val entryDao = AppDatabase.getInstance(applicationContext).entryDao()
-                    if (activityType == ActivityType.JDG_RYCZALT) {
-                        // Разные категории ryczałtu облагаются разными ставками — если в
-                        // одной фактуре смешаны товар и услуга, создаём отдельный приход
-                        // на каждую категорию, чтобы налог считался корректно по каждой ставке.
-                        val byCategory = lines.groupBy { it.category }
-                        for ((category, group) in byCategory) {
-                            val sum = group.sumOf { it.qty * it.price }
-                            val itemNames = group.joinToString(", ") { it.name }
-                            entryDao.insert(
-                                Entry(
-                                    amount = sum,
-                                    isIncome = true,
-                                    comment = getString(R.string.invoice_income_comment, invoiceNumber, itemNames),
-                                    dateMillis = issueDateMillis,
-                                    receiptPath = null,
-                                    ryczaltCategory = category
-                                )
-                            )
-                        }
-                    } else {
-                        entryDao.insert(
-                            Entry(
-                                amount = amount,
-                                isIncome = true,
-                                comment = getString(R.string.invoice_income_comment, invoiceNumber, serviceName),
-                                dateMillis = issueDateMillis,
-                                receiptPath = null,
-                                ryczaltCategory = null
-                            )
-                        )
-                    }
-                }
-
                 withContext(Dispatchers.Main) {
                     lastSavedUri = saved.uri
                     // Возвращаем форму позиций к одной пустой строке для следующей фактуры.

@@ -206,8 +206,8 @@
     <string name="activity_type_jdg_skala" formatted="false">Зарегистрированное ИП (JDG) — шкала 12% / 32% (PIT-36)</string>
     <string name="activity_type_jdg_liniowy" formatted="false">Зарегистрированное ИП (JDG) — плоский налог 19% (PIT-36L)</string>
     <string name="activity_type_jdg_ryczalt">Зарегистрированное ИП (JDG) — ryczałt (PIT-28)</string>
-    <string name="ryczalt_rate_moved_title">Ставка ryczałtu по категориям</string>
-    <string name="ryczalt_rate_moved_hint">У каждого дохода и каждой позиции фактуры есть своя категория — товар, продукция, услуги, IT-услуги, медицинские услуги, свободная профессия. Ставка налога подбирается автоматически на основе выбранной категории.</string>
+    <string name="ryczalt_rate_moved_title">Ставка ryczałtu теперь выбирается для каждой операции отдельно</string>
+    <string name="ryczalt_rate_moved_hint">Здесь больше не нужно задавать единую ставку. При добавлении дохода или позиции фактуры выбирайте подходящую категорию (товар, продукция, услуги, IT-услуги, медицинские услуги, свободная профессия) — верная ставка применится автоматически для каждой позиции.</string>
     <string name="min_wage_label">Минимальная месячная зарплата (zł) — для расчёта лимита незарегистрированной деятельности</string>
     <string name="monthly_limit_preview" formatted="false">Месячный лимит (75%): %1$.2f zł</string>
 
@@ -272,7 +272,7 @@
     <string name="seller_address_city">Город</string>
     <string name="invoice_buyer_section">Покупатель</string>
     <string name="buyer_physical_person_switch">Физическое лицо (без NIP)</string>
-    <string name="buyer_name">Имя и фамилия / название фирмы</string>
+    <string name="buyer_name">Имя и фамилия</string>
     <string name="buyer_nip">NIP покупателя</string>
     <string name="buyer_address_street">Улица и номер</string>
     <string name="buyer_address_postal">Почтовый индекс</string>
@@ -447,5 +447,4 @@
     <string name="invoice_item_min_required">В счёте должна остаться хотя бы одна позиция</string>
     <string name="invoice_total_label">Итого: %1$s zł</string>
     <string name="item_qty_hint">Кол-во</string>
-    <string name="invoice_income_comment">Счёт №%1$d — %2$s</string>
 </resources>

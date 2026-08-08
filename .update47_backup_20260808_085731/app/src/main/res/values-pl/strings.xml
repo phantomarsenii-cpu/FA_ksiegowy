@@ -206,8 +206,8 @@
     <string name="activity_type_jdg_skala" formatted="false">Zarejestrowana JDG — skala 12% / 32% (PIT-36)</string>
     <string name="activity_type_jdg_liniowy" formatted="false">Zarejestrowana JDG — podatek liniowy 19% (PIT-36L)</string>
     <string name="activity_type_jdg_ryczalt">Zarejestrowana JDG — ryczałt (PIT-28)</string>
-    <string name="ryczalt_rate_moved_title">Stawka ryczałtu według kategorii</string>
-    <string name="ryczalt_rate_moved_hint">Każdy przychód i każda pozycja faktury ma swoją kategorię — towar, produkcja, usługi, usługi IT, usługi medyczne, wolny zawód. Stawka podatku dobierana jest automatycznie na podstawie wybranej kategorii.</string>
+    <string name="ryczalt_rate_moved_title">Stawka ryczałtu wybierana jest teraz dla każdej operacji osobno</string>
+    <string name="ryczalt_rate_moved_hint">Nie ustawiasz już tutaj jednej stałej stawki. Dodając przychód lub pozycję faktury, wybierz odpowiednią kategorię (towar, produkcja, usługi, usługi IT, usługi medyczne, wolny zawód) — właściwa stawka zostanie zastosowana automatycznie dla każdej pozycji.</string>
     <string name="min_wage_label">Minimalne wynagrodzenie miesięczne (zł) — do obliczenia limitu działalności nierejestrowanej</string>
     <string name="monthly_limit_preview" formatted="false">Limit miesięczny (75%): %1$,.2f zł</string>
 
@@ -272,7 +272,7 @@
     <string name="seller_address_city">Miasto</string>
     <string name="invoice_buyer_section">Nabywca</string>
     <string name="buyer_physical_person_switch">Osoba fizyczna (bez NIP)</string>
-    <string name="buyer_name">Imię i nazwisko / nazwa firmy</string>
+    <string name="buyer_name">Imię i nazwisko</string>
     <string name="buyer_nip">NIP nabywcy</string>
     <string name="buyer_address_street">Ulica i numer</string>
     <string name="buyer_address_postal">Kod pocztowy</string>
@@ -447,5 +447,4 @@
     <string name="invoice_item_min_required">Faktura musi mieć przynajmniej jedną pozycję</string>
     <string name="invoice_total_label">Razem: %1$s zł</string>
     <string name="item_qty_hint">Ilość</string>
-    <string name="invoice_income_comment">Faktura nr %1$d — %2$s</string>
 </resources>

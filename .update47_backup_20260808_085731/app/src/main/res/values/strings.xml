@@ -206,8 +206,8 @@
     <string name="activity_type_jdg_skala" formatted="false">Registered JDG — tax scale 12% / 32% (PIT-36)</string>
     <string name="activity_type_jdg_liniowy" formatted="false">Registered JDG — flat tax 19% (PIT-36L)</string>
     <string name="activity_type_jdg_ryczalt">Registered JDG — lump-sum tax (PIT-28)</string>
-    <string name="ryczalt_rate_moved_title">Ryczałt rate by category</string>
-    <string name="ryczalt_rate_moved_hint">Each income and each invoice item has its own category — goods, production, services, IT, medical, freelance. The tax rate is applied automatically based on the category chosen.</string>
+    <string name="ryczalt_rate_moved_title">Ryczałt rate is now chosen per transaction</string>
+    <string name="ryczalt_rate_moved_hint">You no longer set one flat rate here. When adding income or an invoice item, pick the matching category (goods, production, services, IT, medical, freelance) — the correct rate is applied automatically per item.</string>
     <string name="min_wage_label">Minimum monthly wage (zł) — used to calculate the unregistered-activity limit</string>
     <string name="monthly_limit_preview" formatted="false">Monthly limit (75%): %1$,.2f zł</string>
 
@@ -272,7 +272,7 @@
     <string name="seller_address_city">City</string>
     <string name="invoice_buyer_section">Buyer</string>
     <string name="buyer_physical_person_switch">Private individual (no NIP)</string>
-    <string name="buyer_name">First and last name / company name</string>
+    <string name="buyer_name">First and last name</string>
     <string name="buyer_nip">Buyer NIP</string>
     <string name="buyer_address_street">Street and number</string>
     <string name="buyer_address_postal">Postal code</string>
@@ -447,5 +447,4 @@
     <string name="invoice_item_min_required">An invoice needs at least one item</string>
     <string name="invoice_total_label">Total: %1$s zł</string>
     <string name="item_qty_hint">Qty</string>
-    <string name="invoice_income_comment">Invoice #%1$d — %2$s</string>
 </resources>

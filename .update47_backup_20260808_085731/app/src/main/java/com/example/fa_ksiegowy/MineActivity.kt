@@ -213,19 +213,6 @@ class MineActivity : BaseActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val limits = LimitsHelper.compute(this@MineActivity)
             withContext(Dispatchers.Main) {
-                // Лимит "Działalność nierejestrowana, ten miesiąc" актуален ТОЛЬКО для
-                // niezarejestrowanej — для любой Zarejestrowana JDG (skala/liniowy/ryczałt)
-                // его вообще не существует, поэтому он скрыт.
-                findViewById<View>(R.id.layout_limit_monthly).visibility =
-                    if (limits.activityType == ActivityType.NIEZAREJESTROWANA) View.VISIBLE else View.GONE
-                // Порог 120 000 zł/rok (12% -> 32%) актуален только для niezarejestrowanej
-                // и dla skali (JDG_SKALA) — dla liniowy i ryczałt taki próg nie istnieje
-                // (inna konstrukcja podatku), поэтому скрыт для них.
-                findViewById<View>(R.id.layout_limit_bracket).visibility =
-                    if (limits.activityType == ActivityType.NIEZAREJESTROWANA || limits.activityType == ActivityType.JDG_SKALA)
-                        View.VISIBLE else View.GONE
-                // Limit zwolnienia z VAT dotyczy wszystkich form działalności — widoczny zawsze.
-
                 findViewById<TextView>(R.id.tv_limit_monthly_label).text =
                     getString(
                         R.string.limit_monthly_label,

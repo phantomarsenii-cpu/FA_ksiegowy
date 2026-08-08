@@ -152,23 +152,17 @@
             android:letterSpacing="0.12"
             android:layout_marginBottom="12dp"/>
 
-        <LinearLayout android:id="@+id/layout_limit_monthly" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView android:id="@+id/tv_limit_monthly_label" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:textColor="@color/text_primary" android:textSize="13sp" android:layout_marginBottom="4dp"/>
-            <ProgressBar android:id="@+id/pb_limit_monthly" style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent" android:layout_height="8dp" android:max="100"
-                android:layout_marginBottom="14dp"/>
-        </LinearLayout>
+        <TextView android:id="@+id/tv_limit_monthly_label" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textColor="@color/text_primary" android:textSize="13sp" android:layout_marginBottom="4dp"/>
+        <ProgressBar android:id="@+id/pb_limit_monthly" style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent" android:layout_height="8dp" android:max="100"
+            android:layout_marginBottom="14dp"/>
 
-        <LinearLayout android:id="@+id/layout_limit_bracket" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView android:id="@+id/tv_limit_bracket_label" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:textColor="@color/text_primary" android:textSize="13sp" android:layout_marginBottom="4dp"/>
-            <ProgressBar android:id="@+id/pb_limit_bracket" style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent" android:layout_height="8dp" android:max="100"
-                android:layout_marginBottom="14dp"/>
-        </LinearLayout>
+        <TextView android:id="@+id/tv_limit_bracket_label" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textColor="@color/text_primary" android:textSize="13sp" android:layout_marginBottom="4dp"/>
+        <ProgressBar android:id="@+id/pb_limit_bracket" style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent" android:layout_height="8dp" android:max="100"
+            android:layout_marginBottom="14dp"/>
 
         <TextView android:id="@+id/tv_limit_vat_label" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:textColor="@color/text_primary" android:textSize="13sp" android:layout_marginBottom="4dp"/>
