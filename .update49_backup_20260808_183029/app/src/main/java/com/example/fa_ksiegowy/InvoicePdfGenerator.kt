@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
 import java.io.OutputStream
@@ -22,29 +22,12 @@ import java.util.Locale
  * języku aktualnie wybranym w aplikacji (kontekst przekazywany przez
  * wywołującego musi mieć już zastosowaną lokalizację, patrz
  * [BaseActivity]/[LocaleHelper] — nie używamy tu applicationContext).
- *
- * Update 49: wygląd dopasowany do kolorystyki aplikacji (accent_blue_dark /
- * accent_cyan z colors.xml), logo rysowane z pełnej rozdzielczości źródła
- * (bez ręcznego pomniejszania bitmapy — ostrzejszy druk), naprawiona tabela
- * VAT (kolumny nie nachodzą już na siebie, osobne etykiety "Cena netto" i
- * "Wartość netto"), numer dokumentu w formacie Numer/MM/RRRR, oraz poprawiony
- * opis przełącznika paragonu ("faktura do paragonu", nie "faktura jako paragon").
  */
 object InvoicePdfGenerator {
 
     private const val PAGE_WIDTH = 595
     private const val PAGE_HEIGHT = 842
     private const val MARGIN = 48f
-
-    // Paleta zgodna z app/src/main/res/values/colors.xml (accent_blue_dark,
-    // accent_cyan, card_bg) — dokument ma być wizualnie spójny z aplikacją.
-    private const val COLOR_TEXT = 0xFF12162E.toInt()
-    private const val COLOR_ACCENT = 0xFF1230A8.toInt()
-    private const val COLOR_ACCENT_LIGHT = 0xFF29B6F6.toInt()
-    private const val COLOR_HEADER_FILL = 0xFFE9F2FE.toInt()
-    private const val COLOR_ROW_ALT = 0xFFF6F9FE.toInt()
-    private const val COLOR_HINT = 0xFF6B7094.toInt()
-    private const val COLOR_GRID = 0xFFC7D3E8.toInt()
 
     private data class Labels(
         val docKind: String,
@@ -70,7 +53,6 @@ object InvoicePdfGenerator {
         val paymentMethodLabel: String,
         val paymentStatusLine: String,
         val tableNetto: String,
-        val tablePriceNetto: String,
         val tableVatRate: String,
         val tableVatAmount: String,
         val tableBrutto: String,
@@ -101,7 +83,6 @@ object InvoicePdfGenerator {
         paymentMethodLabel = context.getString(R.string.payment_method_label),
         paymentStatusLine = context.getString(paymentMethod.paidLabelResId),
         tableNetto = context.getString(R.string.invoice_pdf_table_netto),
-        tablePriceNetto = context.getString(R.string.invoice_pdf_table_price_netto),
         tableVatRate = context.getString(R.string.invoice_pdf_table_vat_rate),
         tableVatAmount = context.getString(R.string.invoice_pdf_table_vat_amount),
         tableBrutto = context.getString(R.string.invoice_pdf_table_brutto),
@@ -150,45 +131,30 @@ object InvoicePdfGenerator {
         var canvas = page.canvas
 
         // Logo aplikacji w prawym górnym rogu — na KAŻDEJ wystawionej fakturze,
-        // niezależnie od rodzaju działalności. Dekodujemy bez przeskalowania
-        // przez system (inScaled = false) i rysujemy bezpośrednio w docelowy
-        // prostokąt przez drawBitmap(src, dst) — bez ręcznego tworzenia małej
-        // kopii bitmapy (createScaledBitmap dawało rozmyty, "pikselowy" wydruk).
+        // niezależnie od rodzaju działalności (zob. treść zgłoszenia funkcji).
         val logoBitmap: Bitmap? = try {
-            val opts = BitmapFactory.Options().apply { inScaled = false }
-            BitmapFactory.decodeResource(context.resources, R.drawable.logo, opts)
+            BitmapFactory.decodeResource(context.resources, R.drawable.logo)
         } catch (e: Exception) {
             null
         }
-        val logoPaint = Paint().apply { isAntiAlias = true; isFilterBitmap = true }
-        val topBarPaint = Paint().apply { color = COLOR_ACCENT }
-        fun drawTopBar() {
-            canvas.drawRect(0f, 0f, PAGE_WIDTH.toFloat(), 5f, topBarPaint)
-        }
         fun drawLogo() {
-            drawTopBar()
             if (logoBitmap == null) return
-            val logoSize = 52f
-            val left = PAGE_WIDTH - MARGIN - logoSize
-            val top = MARGIN - 24f
-            val dst = RectF(left, top, left + logoSize, top + logoSize)
-            canvas.drawBitmap(logoBitmap, null, dst, logoPaint)
+            val logoSize = 46f
+            val scaled = Bitmap.createScaledBitmap(logoBitmap, logoSize.toInt(), logoSize.toInt(), true)
+            canvas.drawBitmap(scaled, PAGE_WIDTH - MARGIN - logoSize, MARGIN - 20f, null)
         }
         drawLogo()
 
-        val titlePaint = Paint().apply { color = COLOR_ACCENT; textSize = 20f; typeface = Typeface.DEFAULT_BOLD; isAntiAlias = true }
-        val sectionPaint = Paint().apply { color = COLOR_ACCENT; textSize = 11.5f; typeface = Typeface.DEFAULT_BOLD; isAntiAlias = true }
-        val textPaint = Paint().apply { color = COLOR_TEXT; textSize = 10.5f; isAntiAlias = true }
-        val hintPaint = Paint().apply { color = COLOR_HINT; textSize = 9f; isAntiAlias = true }
-        val tableHeaderPaint = Paint().apply { color = COLOR_ACCENT; textSize = 9.5f; typeface = Typeface.DEFAULT_BOLD; isAntiAlias = true }
-        val tableCellPaint = Paint().apply { color = COLOR_TEXT; textSize = 10f; isAntiAlias = true }
+        val titlePaint = Paint().apply { color = 0xFF12162E.toInt(); textSize = 20f; typeface = Typeface.DEFAULT_BOLD; isAntiAlias = true }
+        val sectionPaint = Paint().apply { color = 0xFF12162E.toInt(); textSize = 11.5f; typeface = Typeface.DEFAULT_BOLD; isAntiAlias = true }
+        val textPaint = Paint().apply { color = 0xFF12162E.toInt(); textSize = 10.5f; isAntiAlias = true }
+        val hintPaint = Paint().apply { color = 0xFF555555.toInt(); textSize = 9f; isAntiAlias = true }
+        val tableHeaderPaint = Paint().apply { color = 0xFF12162E.toInt(); textSize = 9.5f; typeface = Typeface.DEFAULT_BOLD; isAntiAlias = true }
+        val tableCellPaint = Paint().apply { color = 0xFF12162E.toInt(); textSize = 10f; isAntiAlias = true }
         val stampPaint = Paint().apply { color = 0xFF1B7F3C.toInt(); textSize = 13f; typeface = Typeface.DEFAULT_BOLD; isAntiAlias = true }
         val pendingStampPaint = Paint().apply { color = 0xFFCC6A00.toInt(); textSize = 13f; typeface = Typeface.DEFAULT_BOLD; isAntiAlias = true }
-        val linePaint = Paint().apply { color = COLOR_GRID; strokeWidth = 0.75f; isAntiAlias = true }
-        val headerFillPaint = Paint().apply { color = COLOR_HEADER_FILL }
-        val rowAltPaint = Paint().apply { color = COLOR_ROW_ALT }
-        val accentLinePaint = Paint().apply { color = COLOR_ACCENT_LIGHT; strokeWidth = 1.3f; isAntiAlias = true }
-        val receiptBadgePaint = Paint().apply { color = COLOR_ACCENT; textSize = 9.5f; typeface = Typeface.DEFAULT_BOLD; isAntiAlias = true }
+        val linePaint = Paint().apply { color = 0xFFB0B0B0.toInt(); strokeWidth = 0.75f; isAntiAlias = true }
+        val headerFillPaint = Paint().apply { color = 0xFFEDEEF5.toInt() }
 
         var y = MARGIN
 
@@ -235,17 +201,9 @@ object InvoicePdfGenerator {
             String.format(Locale.US, "%,.2f", it).replace(",", " ").replace(".", ",") + " zł"
         }
         val dateFmt = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-        val numberFmt = SimpleDateFormat("MM/yyyy", Locale.US)
 
-        // --- Nagłówek: "FAKTURA VAT 3/08/2026" / "RACHUNEK 3/08/2026" —
-        // numer dokumentu w formacie Numer/Miesiąc/Rok, tak jak w oficjalnych
-        // wzorach faktur (zob. treść zgłoszenia funkcji, przykładowe zdjęcie). ---
-        val formattedNumber = "$invoiceNumber/${numberFmt.format(Date(issueDateMillis))}"
-        val vatSuffix = if (isVatPayer) " VAT" else ""
-        val titleText = "${l.docKind}$vatSuffix $formattedNumber"
-        line(titleText, titlePaint, 24f)
-        val titleUnderlineY = y - 24f + 6f
-        canvas.drawLine(MARGIN, titleUnderlineY, MARGIN + titlePaint.measureText(titleText), titleUnderlineY, accentLinePaint)
+        // --- Nagłówek ---
+        line("${l.docKind} nr $invoiceNumber", titlePaint, 26f)
         line("${l.issueDate}: ${dateFmt.format(Date(issueDateMillis))}    ${l.saleDate}: ${dateFmt.format(Date(serviceDateMillis))}", hintPaint, 22f)
 
         // --- Sprzedawca / Nabywca obok siebie ---
@@ -286,6 +244,7 @@ object InvoicePdfGenerator {
         val tableLeft = MARGIN
         val tableRight = PAGE_WIDTH - MARGIN
         val qtyStr: (Double) -> String = { q -> if (q == q.toLong().toDouble()) q.toLong().toString() else q.toString() }
+        val vatLabel: String = vatRate?.let { context.getString(it.labelResId) } ?: ""
 
         // Список строк таблицы: если переданы позиции склада — по строке на каждую
         // (с реальным количеством), иначе — одна строка на всю сумму (как раньше,
@@ -295,29 +254,12 @@ object InvoicePdfGenerator {
             else listOf(Row(serviceName, 1.0, amount))
         val totalAmount = rows.sumOf { it.qty * it.unitPrice }
 
-        val headerRowHeight = if (vatRate != null) 24f else 20f
+        val headerRowHeight = 20f
         val dataRowHeight = 22f
         val totalRowHeight = 22f
 
         newPageIfNeeded(70f)
         var segmentTop = y - 10f
-
-        /** Rysuje treść nagłówka kolumny — jeśli tekst nie mieści się w szerokości
-         *  kolumny, a zawiera spację, dzieli go na dwie linie (np. "Stawka VAT"
-         *  -> "Stawka" / "VAT"). Zapobiega nachodzeniu nagłówków wąskich kolumn
-         *  na sąsiednie kolumny (błąd zgłoszony w update 49). */
-        fun drawHeaderCell(text: String, x: Float, colWidth: Float, paint: Paint, top: Float, rowHeight: Float) {
-            val available = colWidth - 6f
-            if (paint.measureText(text) <= available || !text.contains(" ")) {
-                canvas.drawText(text, x + 3f, top + rowHeight - 6f, paint)
-            } else {
-                val words = text.split(" ")
-                val line1 = words.first()
-                val line2 = words.drop(1).joinToString(" ")
-                canvas.drawText(line1, x + 3f, top + rowHeight / 2f - 1f, paint)
-                canvas.drawText(line2, x + 3f, top + rowHeight - 4f, paint)
-            }
-        }
 
         if (vatRate == null) {
             // --- Tabela bez VAT (zwolnienie podmiotowe / rachunek) — jak dotychczas. ---
@@ -343,8 +285,7 @@ object InvoicePdfGenerator {
             }
 
             fun closeSegment(colLinesBottom: Float) {
-                val borderPaint = Paint(linePaint).apply { style = Paint.Style.STROKE; color = COLOR_ACCENT; strokeWidth = 1f }
-                canvas.drawRect(tableLeft, segmentTop, tableRight, y, borderPaint)
+                canvas.drawRect(tableLeft, segmentTop, tableRight, y, linePaint.apply { style = Paint.Style.STROKE })
                 for (i in 1 until colStops.size - 1) {
                     canvas.drawLine(colStops[i], segmentTop, colStops[i], colLinesBottom, linePaint)
                 }
@@ -366,7 +307,6 @@ object InvoicePdfGenerator {
                     segmentTop = y - 10f
                     drawHeaderRow()
                 }
-                if (idx % 2 == 1) canvas.drawRect(tableLeft, y, tableRight, y + dataRowHeight, rowAltPaint)
                 val baselineY = y + dataRowHeight - 7f
                 canvas.drawText((idx + 1).toString(), colLp + 4f, baselineY, tableCellPaint)
                 canvas.drawText(row.name.take(38), colName + 4f, baselineY, tableCellPaint)
@@ -380,7 +320,6 @@ object InvoicePdfGenerator {
 
             val gridBottom = y
             val totalRowTop = y
-            canvas.drawRect(tableLeft, totalRowTop, tableRight, totalRowTop + totalRowHeight, headerFillPaint)
             val totalBaselineY = totalRowTop + totalRowHeight - 7f
             canvas.drawText(l.sumLabel + ":", colPrice - 60f, totalBaselineY, sectionPaint)
             canvas.drawText(money(totalAmount), colTotal + 4f, totalBaselineY, sectionPaint)
@@ -390,57 +329,45 @@ object InvoicePdfGenerator {
             // --- Tabela VAT (sprzedawca zarejestrowany jako podatnik VAT) —
             // Lp / Nazwa / Jm. / Ilość / Cena netto / Wartość netto / Stawka VAT /
             // Kwota VAT / Wartość brutto, zgodnie z oficjalnym wzorem faktury VAT.
-            // Szerokości kolumn dobrane proporcjonalnie do typowego wzoru (mm),
-            // żeby żaden nagłówek/wartość nie nachodził na sąsiednią kolumnę —
-            // wcześniej kolumna "Stawka VAT" miała zaledwie 34pt szerokości, co
-            // powodowało nakładanie się tekstu (błąd zgłoszony w update 49).
-            val vatCellPaint = Paint(tableCellPaint).apply { textSize = 8.3f }
-            val vatHeaderPaint = Paint(tableHeaderPaint).apply { textSize = 7.6f }
+            // Kolumny są węższe niż w wariancie bez VAT (mniejsza czcionka),
+            // żeby wszystkie dziewięć kolumn zmieściło się na szerokości strony A4.
+            val vatCellPaint = Paint(tableCellPaint).apply { textSize = 8.5f }
+            val vatHeaderPaint = Paint(tableHeaderPaint).apply { textSize = 8f }
             val vatMoney: (Double) -> String = { String.format(Locale.US, "%,.2f", it).replace(",", " ").replace(".", ",") }
 
             val colLp = tableLeft
-            val colName = colLp + 23f
-            val colUnit = colName + 142f
+            val colName = colLp + 22f
+            val colUnit = colName + 132f
             val colQty = colUnit + 28f
-            val colNetPrice = colQty + 34f
-            val colNetValue = colNetPrice + 57f
-            val colVatRateCol = colNetValue + 57f
-            val colVatAmount = colVatRateCol + 40f
-            val colBrutto = colVatAmount + 57f
+            val colNetPrice = colQty + 30f
+            val colNetValue = colNetPrice + 58f
+            val colVatRateCol = colNetValue + 58f
+            val colVatAmount = colVatRateCol + 34f
+            val colBrutto = colVatAmount + 58f
             val colStops = floatArrayOf(colLp, colName, colUnit, colQty, colNetPrice, colNetValue, colVatRateCol, colVatAmount, colBrutto, tableRight)
-            val colWidths = FloatArray(colStops.size - 1) { i -> colStops[i + 1] - colStops[i] }
 
             fun drawHeaderRow() {
                 canvas.drawRect(tableLeft, segmentTop, tableRight, segmentTop + headerRowHeight, headerFillPaint)
-                drawHeaderCell(l.tableLp, colLp, colWidths[0], vatHeaderPaint, segmentTop, headerRowHeight)
-                drawHeaderCell(l.tableName, colName, colWidths[1], vatHeaderPaint, segmentTop, headerRowHeight)
-                drawHeaderCell(l.tableUnit, colUnit, colWidths[2], vatHeaderPaint, segmentTop, headerRowHeight)
-                drawHeaderCell(l.tableQty, colQty, colWidths[3], vatHeaderPaint, segmentTop, headerRowHeight)
-                drawHeaderCell(l.tablePriceNetto, colNetPrice, colWidths[4], vatHeaderPaint, segmentTop, headerRowHeight)
-                drawHeaderCell(l.tableNetto, colNetValue, colWidths[5], vatHeaderPaint, segmentTop, headerRowHeight)
-                drawHeaderCell(l.tableVatRate, colVatRateCol, colWidths[6], vatHeaderPaint, segmentTop, headerRowHeight)
-                drawHeaderCell(l.tableVatAmount, colVatAmount, colWidths[7], vatHeaderPaint, segmentTop, headerRowHeight)
-                drawHeaderCell(l.tableBrutto, colBrutto, colWidths[8], vatHeaderPaint, segmentTop, headerRowHeight)
+                val headerBaselineY = segmentTop + headerRowHeight - 6f
+                canvas.drawText(l.tableLp, colLp + 3f, headerBaselineY, vatHeaderPaint)
+                canvas.drawText(l.tableName, colName + 3f, headerBaselineY, vatHeaderPaint)
+                canvas.drawText(l.tableUnit, colUnit + 3f, headerBaselineY, vatHeaderPaint)
+                canvas.drawText(l.tableQty, colQty + 3f, headerBaselineY, vatHeaderPaint)
+                canvas.drawText(l.tableNetto, colNetPrice + 3f, headerBaselineY, vatHeaderPaint)
+                canvas.drawText(l.tableNetto, colNetValue + 3f, headerBaselineY, vatHeaderPaint)
+                canvas.drawText(l.tableVatRate, colVatRateCol + 3f, headerBaselineY, vatHeaderPaint)
+                canvas.drawText(l.tableVatAmount, colVatAmount + 3f, headerBaselineY, vatHeaderPaint)
+                canvas.drawText(l.tableBrutto, colBrutto + 3f, headerBaselineY, vatHeaderPaint)
                 y = segmentTop + headerRowHeight
                 canvas.drawLine(tableLeft, y, tableRight, y, linePaint)
             }
 
             fun closeSegment(colLinesBottom: Float) {
-                val borderPaint = Paint(linePaint).apply { style = Paint.Style.STROKE; color = COLOR_ACCENT; strokeWidth = 1f }
-                canvas.drawRect(tableLeft, segmentTop, tableRight, y, borderPaint)
+                canvas.drawRect(tableLeft, segmentTop, tableRight, y, linePaint.apply { style = Paint.Style.STROKE })
                 for (i in 1 until colStops.size - 1) {
                     canvas.drawLine(colStops[i], segmentTop, colStops[i], colLinesBottom, linePaint)
                 }
             }
-
-            // Krótki zapis stawki w komórce danych — pełny opisowy label (np.
-            // "23% (podstawowa)") jest za długi na wąską kolumnę, w komórce
-            // pokazujemy tylko wartość liczbową ("23%"), a pełny opis jest już
-            // czytelny w wyborze stawki w aplikacji.
-            val vatRateShort: String = vatRate.percent?.let { p ->
-                val asInt = p.toInt()
-                if (asInt.toDouble() == p) "$asInt%" else "$p%"
-            } ?: vatRate.storageKey
 
             drawHeaderRow()
             var vatSum = 0.0
@@ -463,15 +390,14 @@ object InvoicePdfGenerator {
                 vatSum += vatAmount
                 bruttoSum += bruttoValue
 
-                if (idx % 2 == 1) canvas.drawRect(tableLeft, y, tableRight, y + dataRowHeight, rowAltPaint)
                 val baselineY = y + dataRowHeight - 7f
                 canvas.drawText((idx + 1).toString(), colLp + 3f, baselineY, vatCellPaint)
-                canvas.drawText(row.name.take(22), colName + 3f, baselineY, vatCellPaint)
+                canvas.drawText(row.name.take(20), colName + 3f, baselineY, vatCellPaint)
                 canvas.drawText(l.unitPiece, colUnit + 3f, baselineY, vatCellPaint)
                 canvas.drawText(qtyStr(row.qty), colQty + 3f, baselineY, vatCellPaint)
                 canvas.drawText(vatMoney(row.unitPrice), colNetPrice + 3f, baselineY, vatCellPaint)
                 canvas.drawText(vatMoney(netValue), colNetValue + 3f, baselineY, vatCellPaint)
-                canvas.drawText(vatRateShort, colVatRateCol + 3f, baselineY, vatCellPaint)
+                canvas.drawText(vatLabel + "%".takeIf { vatRate.percent != null }.orEmpty(), colVatRateCol + 3f, baselineY, vatCellPaint)
                 canvas.drawText(vatMoney(vatAmount), colVatAmount + 3f, baselineY, vatCellPaint)
                 canvas.drawText(vatMoney(bruttoValue), colBrutto + 3f, baselineY, vatCellPaint)
                 y += dataRowHeight
@@ -480,12 +406,11 @@ object InvoicePdfGenerator {
 
             val gridBottom = y
             val totalRowTop = y
-            canvas.drawRect(tableLeft, totalRowTop, tableRight, totalRowTop + totalRowHeight, headerFillPaint)
             val totalBaselineY = totalRowTop + totalRowHeight - 7f
-            canvas.drawText(l.sumLabel + ":", colNetPrice, totalBaselineY, Paint(sectionPaint).apply { textSize = 9f })
-            canvas.drawText(vatMoney(totalAmount), colNetValue + 3f, totalBaselineY, Paint(tableCellPaint).apply { textSize = 9f })
-            canvas.drawText(vatMoney(vatSum), colVatAmount + 3f, totalBaselineY, Paint(tableCellPaint).apply { textSize = 9f })
-            canvas.drawText(vatMoney(bruttoSum), colBrutto + 3f, totalBaselineY, Paint(tableCellPaint).apply { textSize = 9f })
+            canvas.drawText(l.sumLabel + ":", colNetPrice, totalBaselineY, sectionPaint)
+            canvas.drawText(vatMoney(totalAmount), colNetValue + 3f, totalBaselineY, tableCellPaint.apply { textSize = 9f })
+            canvas.drawText(vatMoney(vatSum), colVatAmount + 3f, totalBaselineY, tableCellPaint.apply { textSize = 9f })
+            canvas.drawText(vatMoney(bruttoSum), colBrutto + 3f, totalBaselineY, tableCellPaint.apply { textSize = 9f })
             y = totalRowTop + totalRowHeight
             closeSegment(gridBottom)
         }
@@ -493,9 +418,7 @@ object InvoicePdfGenerator {
         y += 26f
 
         if (isReceipt) {
-            newPageIfNeeded(18f)
-            canvas.drawText("● ${l.receiptLabel}", MARGIN, y, receiptBadgePaint)
-            y += 18f
+            line(l.receiptLabel, hintPaint, 16f)
         }
 
         // --- Status płatności / pieczątka ---
@@ -524,3 +447,4 @@ object InvoicePdfGenerator {
         document.close()
     }
 }
+

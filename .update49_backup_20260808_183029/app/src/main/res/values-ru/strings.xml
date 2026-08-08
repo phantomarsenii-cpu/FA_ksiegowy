@@ -306,7 +306,7 @@
     <string name="open_folder_error">Не удалось открыть папку. Файлы сохранены в %1$s</string>
     <string name="invoice_fill_required_fields">Заполните данные покупателя, услугу и сумму</string>
     <string name="invoice_blocked_toast">Выставление фактур заблокировано — сначала подтвердите статус VAT/кассы в Настройках</string>
-    <string name="invoice_is_receipt_label">Фактура выставляется к чеку (paragon)</string>
+    <string name="invoice_is_receipt_label">Эта фактура выставляется как чек</string>
     <string name="vat_rate_choose">Выбрать ставку VAT</string>
     <string name="vat_rate_selected" formatted="false">Ставка VAT: %1$s</string>
     <string name="vat_rate_picker_title">Ставка VAT</string>
@@ -343,12 +343,11 @@
     <string name="invoice_pdf_table_total">Сумма</string>
     <string name="invoice_pdf_unit_piece">шт</string>
     <string name="invoice_pdf_sum_label">Итого</string>
-    <string name="invoice_pdf_table_price_netto">Цена нетто</string>
-    <string name="invoice_pdf_table_netto">Стоимость нетто</string>
+    <string name="invoice_pdf_table_netto">Нетто</string>
     <string name="invoice_pdf_table_vat_rate">Ставка VAT</string>
     <string name="invoice_pdf_table_vat_amount">Сумма VAT</string>
-    <string name="invoice_pdf_table_brutto">Стоимость брутто</string>
-    <string name="invoice_pdf_receipt_label">Фактура выставлена к фискальному чеку</string>
+    <string name="invoice_pdf_table_brutto">Брутто</string>
+    <string name="invoice_pdf_receipt_label">Выставлено как чек для физического лица</string>
     <string name="invoice_pdf_paid_stamp">ОПЛАЧЕНО</string>
     <string name="invoice_pdf_payment_date">Дата оплаты</string>
     <string name="invoice_pdf_footer">Документ создан в приложении FinArs. Не является официальной бухгалтерской или налоговой консультацией — в случае сомнений обратитесь к налоговому консультанту.</string>

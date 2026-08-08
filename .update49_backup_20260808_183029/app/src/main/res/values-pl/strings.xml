@@ -306,7 +306,7 @@
     <string name="open_folder_error">Nie udało się otworzyć folderu. Pliki są zapisane w %1$s</string>
     <string name="invoice_fill_required_fields">Uzupełnij dane nabywcy, usługę i kwotę</string>
     <string name="invoice_blocked_toast">Wystawianie faktur zablokowane — najpierw potwierdź status VAT/kasy fiskalnej w Ustawieniach</string>
-    <string name="invoice_is_receipt_label">Faktura jest wystawiana do paragonu</string>
+    <string name="invoice_is_receipt_label">Ta faktura jest wystawiana jako paragon</string>
     <string name="vat_rate_choose">Wybierz stawkę VAT</string>
     <string name="vat_rate_selected" formatted="false">Stawka VAT: %1$s</string>
     <string name="vat_rate_picker_title">Stawka VAT</string>
@@ -343,12 +343,11 @@
     <string name="invoice_pdf_table_total">Razem</string>
     <string name="invoice_pdf_unit_piece">szt</string>
     <string name="invoice_pdf_sum_label">Łącznie</string>
-    <string name="invoice_pdf_table_price_netto">Cena netto</string>
-    <string name="invoice_pdf_table_netto">Wartość netto</string>
+    <string name="invoice_pdf_table_netto">Netto</string>
     <string name="invoice_pdf_table_vat_rate">Stawka VAT</string>
     <string name="invoice_pdf_table_vat_amount">Kwota VAT</string>
-    <string name="invoice_pdf_table_brutto">Wartość brutto</string>
-    <string name="invoice_pdf_receipt_label">Faktura wystawiona do paragonu fiskalnego</string>
+    <string name="invoice_pdf_table_brutto">Brutto</string>
+    <string name="invoice_pdf_receipt_label">Wystawiono jako paragon dla osoby fizycznej</string>
     <string name="invoice_pdf_paid_stamp">ZAPŁACONO</string>
     <string name="invoice_pdf_payment_date">Data zapłaty</string>
     <string name="invoice_pdf_footer">Dokument wygenerowany w aplikacji FinArs. Nie stanowi oficjalnej porady księgowej ani podatkowej — w razie wątpliwości skonsultuj się z doradcą podatkowym.</string>

@@ -1,3 +1,54 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -e
+
+echo "=== Obновление 49: nowy wyglad faktury PDF (logo, tabela VAT, numeracja, opis paragonu) ==="
+echo "Co sie zmienia:"
+echo " 1) Logo w PDF rysowane bezposrednio z pelnej rozdzielczosci zrodla (bez"
+echo "    recznego pomniejszania bitmapy) - ostrzejszy wydruk logo w rogu faktury."
+echo " 2) Naprawiona tabela VAT: kolumny 'Stawka VAT' / 'Kwota VAT' juz nie"
+echo "    nachodza na sasiednie kolumny (byly za waskie), naglowki dzielone na"
+echo "    dwie linie gdy trzeba. Rozdzielone etykiety 'Cena netto' (cena"
+echo "    jednostkowa) i 'Wartosc netto' (suma pozycji) - wczesniej obie kolumny"
+echo "    mialy identyczny naglowek 'Netto', co bylo mylace."
+echo " 3) W komorkach stawki VAT pokazujemy krotki zapis (np. '23%') zamiast"
+echo "    pelnego opisu ('23% (podstawowa)'), ktory nie miescil sie w kolumnie."
+echo " 4) Numer dokumentu w formacie Numer/MM/RRRR (np. 'FAKTURA VAT 3/08/2026'),"
+echo "    tak jak w oficjalnych wzorach faktur."
+echo " 5) Przelacznik i etykieta w PDF poprawione: 'Faktura jest wystawiana DO"
+echo "    paragonu' zamiast mylacego 'Faktura jest wystawiana JAKO paragon'"
+echo "    (to faktura wystawiana do paragonu z kasy fiskalnej, nie sam paragon)."
+echo " 6) Kolorystyka faktury dopasowana do palety aplikacji (accent_blue_dark /"
+echo "    accent_cyan z colors.xml): kolorowy pasek na gorze strony, akcentowe"
+echo "    naglowki sekcji/tabeli, naprzemienne tlo wierszy, wyrozniony wiersz sumy."
+echo ""
+
+if [ ! -f "settings.gradle" ] || [ ! -d "app/src/main/java/com/example/fa_ksiegowy" ]; then
+    echo "!!! Uruchom skrypt z korzenia projektu (tam, gdzie jest settings.gradle)"
+    exit 1
+fi
+
+if grep -q "invoice_pdf_table_price_netto" "app/src/main/res/values/strings.xml" 2>/dev/null; then
+    echo "!!! Wyglada na to, ze update_project-49 zostal juz zastosowany (strings.xml ma juz invoice_pdf_table_price_netto)"
+    exit 1
+fi
+
+BACKUP_DIR=".update49_backup_$(date +%Y%m%d_%H%M%S)"
+mkdir -p "$BACKUP_DIR"
+for f in \
+    "app/src/main/java/com/example/fa_ksiegowy/InvoicePdfGenerator.kt" \
+    "app/src/main/res/values/strings.xml" \
+    "app/src/main/res/values-pl/strings.xml" \
+    "app/src/main/res/values-ru/strings.xml"
+do
+    if [ -f "$f" ]; then
+        mkdir -p "$BACKUP_DIR/$(dirname "$f")"
+        cp "$f" "$BACKUP_DIR/$f"
+    fi
+done
+echo "--- Backup zmienianych plikow zapisany w $BACKUP_DIR ---"
+
+mkdir -p "$(dirname "app/src/main/java/com/example/fa_ksiegowy/InvoicePdfGenerator.kt")"
+cat > app/src/main/java/com/example/fa_ksiegowy/InvoicePdfGenerator.kt << 'EOF_INVOICE_PDF_GENERATOR_KT'
 package com.example.fa_ksiegowy
 
 import android.content.Context
@@ -524,3 +575,80 @@ object InvoicePdfGenerator {
         document.close()
     }
 }
+EOF_INVOICE_PDF_GENERATOR_KT
+echo "OK: app/src/main/java/com/example/fa_ksiegowy/InvoicePdfGenerator.kt"
+
+
+python3 - << 'EOF_PATCH_STRINGS_EN'
+import io
+path = "app/src/main/res/values/strings.xml"
+with io.open(path, encoding="utf-8") as f:
+    s = f.read()
+
+replacements = [
+    ('    <string name="invoice_is_receipt_label">This invoice is issued as a receipt (paragon)</string>',
+     '    <string name="invoice_is_receipt_label">This invoice is issued for a receipt (paragon)</string>'),
+    ('    <string name="invoice_pdf_table_netto">Net</string>\n    <string name="invoice_pdf_table_vat_rate">VAT rate</string>\n    <string name="invoice_pdf_table_vat_amount">VAT amount</string>\n    <string name="invoice_pdf_table_brutto">Gross</string>\n    <string name="invoice_pdf_receipt_label">Issued as a receipt (paragon) for a private individual</string>',
+     '    <string name="invoice_pdf_table_price_netto">Net price</string>\n    <string name="invoice_pdf_table_netto">Net value</string>\n    <string name="invoice_pdf_table_vat_rate">VAT rate</string>\n    <string name="invoice_pdf_table_vat_amount">VAT amount</string>\n    <string name="invoice_pdf_table_brutto">Gross value</string>\n    <string name="invoice_pdf_receipt_label">Invoice issued for the fiscal receipt (paragon)</string>'),
+]
+for old, new in replacements:
+    if old not in s:
+        raise SystemExit("!!! Nie znaleziono oczekiwanego fragmentu w " + path + " (plik zostal juz zmieniony recznie?) -- pomijam ten plik bezpiecznie")
+    s = s.replace(old, new, 1)
+
+with io.open(path, "w", encoding="utf-8") as f:
+    f.write(s)
+print("OK: " + path)
+EOF_PATCH_STRINGS_EN
+
+python3 - << 'EOF_PATCH_STRINGS_RU'
+import io
+path = "app/src/main/res/values-ru/strings.xml"
+with io.open(path, encoding="utf-8") as f:
+    s = f.read()
+
+replacements = [
+    ('    <string name="invoice_is_receipt_label">\u042d\u0442\u0430 \u0444\u0430\u043a\u0442\u0443\u0440\u0430 \u0432\u044b\u0441\u0442\u0430\u0432\u043b\u044f\u0435\u0442\u0441\u044f \u043a\u0430\u043a \u0447\u0435\u043a</string>',
+     '    <string name="invoice_is_receipt_label">\u0424\u0430\u043a\u0442\u0443\u0440\u0430 \u0432\u044b\u0441\u0442\u0430\u0432\u043b\u044f\u0435\u0442\u0441\u044f \u043a \u0447\u0435\u043a\u0443 (paragon)</string>'),
+    ('    <string name="invoice_pdf_table_netto">\u041d\u0435\u0442\u0442\u043e</string>\n    <string name="invoice_pdf_table_vat_rate">\u0421\u0442\u0430\u0432\u043a\u0430 VAT</string>\n    <string name="invoice_pdf_table_vat_amount">\u0421\u0443\u043c\u043c\u0430 VAT</string>\n    <string name="invoice_pdf_table_brutto">\u0411\u0440\u0443\u0442\u0442\u043e</string>\n    <string name="invoice_pdf_receipt_label">\u0412\u044b\u0441\u0442\u0430\u0432\u043b\u0435\u043d\u043e \u043a\u0430\u043a \u0447\u0435\u043a \u0434\u043b\u044f \u0444\u0438\u0437\u0438\u0447\u0435\u0441\u043a\u043e\u0433\u043e \u043b\u0438\u0446\u0430</string>',
+     '    <string name="invoice_pdf_table_price_netto">\u0426\u0435\u043d\u0430 \u043d\u0435\u0442\u0442\u043e</string>\n    <string name="invoice_pdf_table_netto">\u0421\u0442\u043e\u0438\u043c\u043e\u0441\u0442\u044c \u043d\u0435\u0442\u0442\u043e</string>\n    <string name="invoice_pdf_table_vat_rate">\u0421\u0442\u0430\u0432\u043a\u0430 VAT</string>\n    <string name="invoice_pdf_table_vat_amount">\u0421\u0443\u043c\u043c\u0430 VAT</string>\n    <string name="invoice_pdf_table_brutto">\u0421\u0442\u043e\u0438\u043c\u043e\u0441\u0442\u044c \u0431\u0440\u0443\u0442\u0442\u043e</string>\n    <string name="invoice_pdf_receipt_label">\u0424\u0430\u043a\u0442\u0443\u0440\u0430 \u0432\u044b\u0441\u0442\u0430\u0432\u043b\u0435\u043d\u0430 \u043a \u0444\u0438\u0441\u043a\u0430\u043b\u044c\u043d\u043e\u043c\u0443 \u0447\u0435\u043a\u0443</string>'),
+]
+for old, new in replacements:
+    if old not in s:
+        raise SystemExit("!!! Nie znaleziono oczekiwanego fragmentu w " + path)
+    s = s.replace(old, new, 1)
+
+with io.open(path, "w", encoding="utf-8") as f:
+    f.write(s)
+print("OK: " + path)
+EOF_PATCH_STRINGS_RU
+
+python3 - << 'EOF_PATCH_STRINGS_PL'
+import io
+path = "app/src/main/res/values-pl/strings.xml"
+with io.open(path, encoding="utf-8") as f:
+    s = f.read()
+
+replacements = [
+    ('    <string name="invoice_is_receipt_label">Ta faktura jest wystawiana jako paragon</string>',
+     '    <string name="invoice_is_receipt_label">Faktura jest wystawiana do paragonu</string>'),
+    ('    <string name="invoice_pdf_table_netto">Netto</string>\n    <string name="invoice_pdf_table_vat_rate">Stawka VAT</string>\n    <string name="invoice_pdf_table_vat_amount">Kwota VAT</string>\n    <string name="invoice_pdf_table_brutto">Brutto</string>\n    <string name="invoice_pdf_receipt_label">Wystawiono jako paragon dla osoby fizycznej</string>',
+     '    <string name="invoice_pdf_table_price_netto">Cena netto</string>\n    <string name="invoice_pdf_table_netto">Warto\u015b\u0107 netto</string>\n    <string name="invoice_pdf_table_vat_rate">Stawka VAT</string>\n    <string name="invoice_pdf_table_vat_amount">Kwota VAT</string>\n    <string name="invoice_pdf_table_brutto">Warto\u015b\u0107 brutto</string>\n    <string name="invoice_pdf_receipt_label">Faktura wystawiona do paragonu fiskalnego</string>'),
+]
+for old, new in replacements:
+    if old not in s:
+        raise SystemExit("!!! Nie znaleziono oczekiwanego fragmentu w " + path)
+    s = s.replace(old, new, 1)
+
+with io.open(path, "w", encoding="utf-8") as f:
+    f.write(s)
+print("OK: " + path)
+EOF_PATCH_STRINGS_PL
+
+echo ""
+echo "=== Update 49 zastosowany pomyslnie ==="
+echo "Zaden plik binarny (logo) nie zostal zmieniony - logo w repo juz jest w"
+echo "pelnej rozdzielczosci, problem byl w sposobie rysowania go w PDF."
+echo "Baza danych (Room) NIE zostala zmieniona - nie trzeba nic migrowac."
+echo "Dalej jak zwykle: git add -A && git commit -m 'update 49: PDF invoice redesign' && git push"
+echo "Zbuduj APK przez GitHub Actions."

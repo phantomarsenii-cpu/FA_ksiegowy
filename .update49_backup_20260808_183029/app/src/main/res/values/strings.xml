@@ -306,7 +306,7 @@
     <string name="open_folder_error">Could not open the folder. Files are saved in %1$s</string>
     <string name="invoice_fill_required_fields">Please fill in the buyer, item and amount</string>
     <string name="invoice_blocked_toast">Invoicing is blocked — confirm your VAT/cash-register status in Settings first</string>
-    <string name="invoice_is_receipt_label">This invoice is issued for a receipt (paragon)</string>
+    <string name="invoice_is_receipt_label">This invoice is issued as a receipt (paragon)</string>
     <string name="vat_rate_choose">Choose VAT rate</string>
     <string name="vat_rate_selected" formatted="false">VAT rate: %1$s</string>
     <string name="vat_rate_picker_title">VAT rate</string>
@@ -343,12 +343,11 @@
     <string name="invoice_pdf_table_total">Total</string>
     <string name="invoice_pdf_unit_piece">pc</string>
     <string name="invoice_pdf_sum_label">Total</string>
-    <string name="invoice_pdf_table_price_netto">Net price</string>
-    <string name="invoice_pdf_table_netto">Net value</string>
+    <string name="invoice_pdf_table_netto">Net</string>
     <string name="invoice_pdf_table_vat_rate">VAT rate</string>
     <string name="invoice_pdf_table_vat_amount">VAT amount</string>
-    <string name="invoice_pdf_table_brutto">Gross value</string>
-    <string name="invoice_pdf_receipt_label">Invoice issued for the fiscal receipt (paragon)</string>
+    <string name="invoice_pdf_table_brutto">Gross</string>
+    <string name="invoice_pdf_receipt_label">Issued as a receipt (paragon) for a private individual</string>
     <string name="invoice_pdf_paid_stamp">PAID</string>
     <string name="invoice_pdf_payment_date">Payment date</string>
     <string name="invoice_pdf_footer">Document generated in the FinArs app. This is not official accounting or tax advice — if in doubt, consult a tax advisor.</string>
