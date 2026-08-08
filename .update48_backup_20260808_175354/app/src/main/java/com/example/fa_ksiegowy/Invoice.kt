@@ -39,16 +39,7 @@ data class Invoice(
     /** Status opłacenia — PAID (domyślnie, zgodność wsteczna ze starymi rekordami) lub PENDING. */
     val status: InvoiceStatus = InvoiceStatus.PAID,
     /** Termin płatności — używany tylko gdy status = PENDING (przypomnienia, oznaczenie "zaległa"). */
-    val dueDateMillis: Long? = null,
-
-    /** Stawka VAT (storageKey [VatRate]) — wypełniana tylko gdy sprzedawca jest już
-     *  zarejestrowanym podatnikiem VAT (zob. [VatComplianceHelper]). null oznacza
-     *  fakturę wystawioną przed rejestracją VAT (zwolnienie podmiotowe). */
-    val vatRate: String? = null,
-    /** true, jeśli ta faktura jest jednocześnie wystawiana "do paragonu" z kasy
-     *  fiskalnej (zob. [VatComplianceHelper.confirmKasaFiskalna]) — dotyczy tylko
-     *  sprzedaży zarejestrowanej przez kasę fiskalną osobom fizycznym. */
-    val isReceipt: Boolean = false
+    val dueDateMillis: Long? = null
 ) {
     /** true, jeśli faktura oczekuje na zapłatę i termin już minął. Liczone na bieżąco, nie zapisywane w bazie. */
     val isOverdue: Boolean

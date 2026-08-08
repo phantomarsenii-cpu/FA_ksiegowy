@@ -54,10 +54,6 @@ class AddInvoiceActivity : BaseActivity() {
     private var dueDateMillis: Long = System.currentTimeMillis() + 14L * 24 * 60 * 60 * 1000
     private var lastSavedUri: Uri? = null
 
-    /** Stan limitu VAT/kasy fiskalnej — odświeżany w onCreate/onResume (zob. refreshComplianceStatus). */
-    private var compliance: VatComplianceHelper.ComplianceStatus? = null
-    private var selectedVatRate: VatRate? = null
-
     private val activityType: ActivityType by lazy {
         ActivityTypeHelper.get(getSharedPreferences("settings", MODE_PRIVATE))
     }
@@ -106,12 +102,9 @@ class AddInvoiceActivity : BaseActivity() {
             startActivity(Intent(this, InvoiceHistoryActivity::class.java))
         }
 
-        findViewById<Button>(R.id.btn_vat_rate).setOnClickListener { showVatRatePicker() }
-
         loadSellerData()
         refreshCashLimit()
         applyBusinessKindUi()
-        refreshComplianceStatus()
     }
 
     override fun onResume() {
@@ -119,73 +112,6 @@ class AddInvoiceActivity : BaseActivity() {
         // Настройка "Тип продаж" в Ustawieniach могла измениться, пока пользователь
         // был на другом экране — перепроверяем при каждом возврате.
         applyBusinessKindUi()
-        // Потверждение регистрации VAT / posiadania kasy fiskalnej могло появиться
-        // (или лимиты могли измениться), пока пользователь был в Ustawieniach —
-        // перепроверяем блокировку и видимость stawki VAT при каждом возврате.
-        refreshComplianceStatus()
-    }
-
-    /**
-     * Проверяет, превышен ли лимит zwolnienia z VAT (240 000 zł) и лимит gotówki
-     * dla osób fizycznych (20 000 zł), и подтверждены ли соответствующие статусы
-     * в Ustawieniach (zob. VatComplianceHelper). Пока подтверждения не хватает —
-     * выставление фактур полностью заблокировано (btn_generate отключена, показан
-     * красный баннер). Если VAT уже подтверждён — показываем обязательный выбор
-     * stawki VAT; если kasa fiskalna подтверждена — показываем переключатель
-     * "Do paragonu".
-     */
-    private fun refreshComplianceStatus() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val status = VatComplianceHelper.computeStatus(applicationContext)
-            withContext(Dispatchers.Main) {
-                compliance = status
-                val banner = findViewById<TextView>(R.id.tv_compliance_block_banner)
-                val btnGenerate = findViewById<Button>(R.id.btn_generate)
-                if (status.invoicingBlocked) {
-                    val messages = mutableListOf<String>()
-                    if (status.vatExceeded && !status.vatConfirmed) messages.add(getString(R.string.vat_limit_block_message))
-                    if (status.cashExceeded && !status.kasaConfirmed) messages.add(getString(R.string.kasa_limit_block_message))
-                    banner.text = messages.joinToString("\n\n")
-                    banner.visibility = View.VISIBLE
-                    btnGenerate.isEnabled = false
-                    btnGenerate.alpha = 0.5f
-                } else {
-                    banner.visibility = View.GONE
-                    btnGenerate.isEnabled = true
-                    btnGenerate.alpha = 1.0f
-                }
-
-                val btnVatRate = findViewById<Button>(R.id.btn_vat_rate)
-                if (status.requiresVatRateSelection) {
-                    btnVatRate.visibility = View.VISIBLE
-                    refreshVatRateButtonText()
-                } else {
-                    btnVatRate.visibility = View.GONE
-                    selectedVatRate = null
-                }
-
-                findViewById<View>(R.id.row_is_receipt).visibility =
-                    if (status.allowsReceiptFlag) View.VISIBLE else View.GONE
-            }
-        }
-    }
-
-    private fun refreshVatRateButtonText() {
-        val btn = findViewById<Button>(R.id.btn_vat_rate)
-        val rate = selectedVatRate
-        btn.text = if (rate != null) getString(R.string.vat_rate_selected, getString(rate.labelResId))
-        else getString(R.string.vat_rate_choose)
-    }
-
-    private fun showVatRatePicker() {
-        AppDialog.showOptionPicker(
-            context = this,
-            title = getString(R.string.vat_rate_picker_title),
-            options = VatRate.entries.map { it.storageKey to getString(it.labelResId) }
-        ) { selected ->
-            selectedVatRate = VatRate.fromStorageKeyOrNull(selected)
-            refreshVatRateButtonText()
-        }
     }
 
     /** Кнопка "Dodaj towary z magazynu" видна только для Sprzedaż/Mieszana — для чистых
@@ -484,18 +410,6 @@ class AddInvoiceActivity : BaseActivity() {
             Toast.makeText(this, getString(R.string.invoice_fill_required_fields), Toast.LENGTH_SHORT).show()
             return
         }
-        // Przekroczono limit VAT lub limit gotówki, a wymaganego potwierdzenia w
-        // Ustawieniach jeszcze nie złożono — wystawianie kolejnych faktur jest
-        // zablokowane (zob. refreshComplianceStatus/VatComplianceHelper).
-        if (compliance?.invoicingBlocked == true) {
-            Toast.makeText(this, getString(R.string.invoice_blocked_toast), Toast.LENGTH_LONG).show()
-            return
-        }
-        // Sprzedawca jest już podatnikiem VAT — stawka VAT jest obowiązkowa na każdej fakturze.
-        if (compliance?.requiresVatRateSelection == true && selectedVatRate == null) {
-            Toast.makeText(this, getString(R.string.vat_rate_required_error), Toast.LENGTH_LONG).show()
-            return
-        }
         // Ryczałt: каждая позиция обязана иметь категорию, чтобы налог считался
         // корректно — без неё непонятно, по какой ставке облагать эту позицию.
         if (activityType == ActivityType.JDG_RYCZALT && lines.any { it.category == null }) {
@@ -509,9 +423,6 @@ class AddInvoiceActivity : BaseActivity() {
         findViewById<Button>(R.id.btn_generate).isEnabled = false
         val seller = InvoiceSellerData(sellerName, sellerNip, sellerStreet, sellerPostal, sellerCity, sellerBankAccount)
         val issueDateMillis = System.currentTimeMillis()
-        val vatRateForInvoice = selectedVatRate
-        val isReceiptForInvoice = compliance?.allowsReceiptFlag == true &&
-            findViewById<android.widget.Switch>(R.id.sw_is_receipt).isChecked
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -547,8 +458,6 @@ class AddInvoiceActivity : BaseActivity() {
                         invoiceStatus = invoiceStatus,
                         dueDateMillis = if (invoiceStatus == InvoiceStatus.PENDING) dueDateMillis else null,
                         items = itemsForPdf,
-                        vatRate = vatRateForInvoice,
-                        isReceipt = isReceiptForInvoice,
                         out = out
                     )
                 }
@@ -571,9 +480,7 @@ class AddInvoiceActivity : BaseActivity() {
                         pdfFilePath = saved.uri.toString(),
                         pdfFileName = fileName,
                         status = invoiceStatus,
-                        dueDateMillis = if (invoiceStatus == InvoiceStatus.PENDING) dueDateMillis else null,
-                        vatRate = vatRateForInvoice?.storageKey,
-                        isReceipt = isReceiptForInvoice
+                        dueDateMillis = if (invoiceStatus == InvoiceStatus.PENDING) dueDateMillis else null
                     )
                 )
 
@@ -638,9 +545,6 @@ class AddInvoiceActivity : BaseActivity() {
                     // Возвращаем форму позиций к одной пустой строке для следующей фактуры.
                     findViewById<LinearLayout>(R.id.ll_invoice_items).removeAllViews()
                     addItemRow()
-                    selectedVatRate = null
-                    findViewById<android.widget.Switch>(R.id.sw_is_receipt).isChecked = false
-                    refreshVatRateButtonText()
                     findViewById<Button>(R.id.btn_generate).isEnabled = true
                     findViewById<View>(R.id.row_after_generate).visibility = View.VISIBLE
                     Toast.makeText(
@@ -649,7 +553,6 @@ class AddInvoiceActivity : BaseActivity() {
                         Toast.LENGTH_LONG
                     ).show()
                     refreshCashLimit()
-                    refreshComplianceStatus()
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {

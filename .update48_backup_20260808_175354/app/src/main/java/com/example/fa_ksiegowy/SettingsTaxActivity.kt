@@ -4,15 +4,10 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * Настройки налогов и формы деятельности:
@@ -55,9 +50,6 @@ class SettingsTaxActivity : BaseActivity() {
 
         setupActivityType()
         setupMinWage()
-        setupVatCompliance()
-        setupKasaCompliance()
-        setupPushFrequency()
 
         val etOtherIncome = findViewById<EditText>(R.id.et_other_income)
         etOtherIncome.setText(TaxHelper.getOtherIncome(prefs, year).toString())
@@ -141,119 +133,6 @@ class SettingsTaxActivity : BaseActivity() {
             tvPreview.text = String.format("Monthly limit (75%%): %.2f zł", limit)
         } catch (e: Exception) {
             tvPreview.text = "Monthly limit: could not calculate"
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // Лимит мог быть превышен, пока пользователь был на другом экране (например,
-        // сразу после выставления фактуры) — перепроверяем видимость блока при возврате.
-        setupVatCompliance()
-        setupKasaCompliance()
-    }
-
-    /**
-     * Блок подтверждения регистрации VAT: появляется только после превышения
-     * годового лимита zwolnienia z VAT (240 000 zł) — либо если подтверждение
-     * уже было дано ранее (тогда чекбокс показывается заблокированным как
-     * информация о статусе, без возможности снять галочку).
-     */
-    private fun setupVatCompliance() {
-        val layout = findViewById<View>(R.id.layout_vat_compliance)
-        val cb = findViewById<CheckBox>(R.id.cb_vat_registered)
-        val alreadyConfirmed = VatComplianceHelper.isVatRegisteredConfirmed(prefs)
-        if (alreadyConfirmed) {
-            layout.visibility = View.VISIBLE
-            cb.setOnCheckedChangeListener(null)
-            cb.isChecked = true
-            cb.isEnabled = false
-            cb.text = getString(R.string.cb_vat_registered_confirmed_label)
-            return
-        }
-        CoroutineScope(Dispatchers.IO).launch {
-            val limits = LimitsHelper.compute(applicationContext)
-            withContext(Dispatchers.Main) {
-                layout.visibility = if (limits.vat.exceeded) View.VISIBLE else View.GONE
-                cb.isChecked = false
-                cb.isEnabled = true
-                cb.text = getString(R.string.cb_vat_registered_label)
-                cb.setOnCheckedChangeListener { _, checked ->
-                    if (checked) {
-                        AppDialog.show(
-                            context = this@SettingsTaxActivity,
-                            title = getString(R.string.vat_confirm_dialog_title),
-                            message = getString(R.string.vat_confirm_dialog_message),
-                            positiveText = getString(R.string.confirm_yes),
-                            onPositive = {
-                                VatComplianceHelper.confirmVatRegistered(prefs)
-                                setupVatCompliance()
-                            },
-                            negativeText = getString(R.string.confirm_cancel),
-                            onNegative = { cb.isChecked = false }
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Блок подтверждения наличия kasy fiskalnej — аналогично [setupVatCompliance],
-     * появляется после превышения лимита 20 000 zł gotówki dla osób fizycznych.
-     */
-    private fun setupKasaCompliance() {
-        val layout = findViewById<View>(R.id.layout_kasa_compliance)
-        val cb = findViewById<CheckBox>(R.id.cb_kasa_fiskalna)
-        val alreadyConfirmed = VatComplianceHelper.isKasaFiskalnaConfirmed(prefs)
-        if (alreadyConfirmed) {
-            layout.visibility = View.VISIBLE
-            cb.setOnCheckedChangeListener(null)
-            cb.isChecked = true
-            cb.isEnabled = false
-            cb.text = getString(R.string.cb_kasa_confirmed_label)
-            return
-        }
-        CoroutineScope(Dispatchers.IO).launch {
-            val cash = CashLimitHelper.computeCurrentYear(applicationContext)
-            withContext(Dispatchers.Main) {
-                layout.visibility = if (cash.exceeded) View.VISIBLE else View.GONE
-                cb.isChecked = false
-                cb.isEnabled = true
-                cb.text = getString(R.string.cb_kasa_label)
-                cb.setOnCheckedChangeListener { _, checked ->
-                    if (checked) {
-                        AppDialog.show(
-                            context = this@SettingsTaxActivity,
-                            title = getString(R.string.kasa_confirm_dialog_title),
-                            message = getString(R.string.kasa_confirm_dialog_message),
-                            positiveText = getString(R.string.confirm_yes),
-                            onPositive = {
-                                VatComplianceHelper.confirmKasaFiskalna(prefs)
-                                setupKasaCompliance()
-                            },
-                            negativeText = getString(R.string.confirm_cancel),
-                            onNegative = { cb.isChecked = false }
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    /** Częstotliwość powiadomień push (ile razy dziennie mogą przychodzić alerty
-     *  o przekroczonych limitach i zaległych fakturach) — zob. VatComplianceHelper. */
-    private fun setupPushFrequency() {
-        val et = findViewById<EditText>(R.id.et_push_frequency)
-        et.setText(VatComplianceHelper.getPushFrequency(prefs).toString())
-        findViewById<Button>(R.id.btn_save_push_frequency).setOnClickListener {
-            val value = et.text.toString().toIntOrNull()
-            if (value == null || value < 1) {
-                Toast.makeText(this, getString(R.string.push_frequency_invalid), Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            VatComplianceHelper.setPushFrequency(prefs, value)
-            et.setText(VatComplianceHelper.getPushFrequency(prefs).toString())
-            Toast.makeText(this, getString(R.string.push_frequency_saved), Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -248,10 +248,6 @@
     <string name="notif_bracket_text" formatted="false">Годовая прибыль приближается к 120 000 zł — доход сверх этой суммы облагается по 32% вместо 12%.</string>
     <string name="notif_vat_title">Приближение к лимиту освобождения от VAT</string>
     <string name="notif_vat_text">Годовой доход приближается к 240 000 zł — порогу освобождения от VAT.</string>
-    <string name="notif_vat_exceeded_critical_title">Превышен лимит VAT</string>
-    <string name="notif_vat_exceeded_critical_text" formatted="false">Превышен годовой лимит освобождения от VAT (240 000 zł). Подайте VAT-R в течение 7 дней и подтвердите регистрацию в Настройках — до этого выставление фактур заблокировано.</string>
-    <string name="notif_kasa_exceeded_title">Может понадобиться кассовый аппарат</string>
-    <string name="notif_kasa_exceeded_text" formatted="false">Превышен годовой лимит 20 000 zł наличной продажи физическим лицам. Подтвердите в Настройках наличие кассового аппарата — до этого выставление фактур заблокировано.</string>
     <string name="notif_advance_title">Напоминание об авансовом платеже</string>
     <string name="notif_advance_text">Авансовые платежи по налогу нужно вносить до 20 числа каждого месяца.</string>
     <string name="notif_pit_deadline_title">Напоминание о подаче годовой декларации</string>
@@ -305,20 +301,6 @@
     <string name="open_invoices_folder_button">Открыть папку со счетами</string>
     <string name="open_folder_error">Не удалось открыть папку. Файлы сохранены в %1$s</string>
     <string name="invoice_fill_required_fields">Заполните данные покупателя, услугу и сумму</string>
-    <string name="invoice_blocked_toast">Выставление фактур заблокировано — сначала подтвердите статус VAT/кассы в Настройках</string>
-    <string name="invoice_is_receipt_label">Эта фактура выставляется как чек</string>
-    <string name="vat_rate_choose">Выбрать ставку VAT</string>
-    <string name="vat_rate_selected" formatted="false">Ставка VAT: %1$s</string>
-    <string name="vat_rate_picker_title">Ставка VAT</string>
-    <string name="vat_rate_required_error">Выберите ставку VAT для этой фактуры</string>
-    <string name="vat_rate_23">23% (базовая)</string>
-    <string name="vat_rate_8">8% (сниженная)</string>
-    <string name="vat_rate_5">5% (минимальная)</string>
-    <string name="vat_rate_0">0% (экспорт/WDT)</string>
-    <string name="vat_rate_zw">zw (освобождение)</string>
-    <string name="vat_rate_np">np (не подлежит налогообложению)</string>
-    <string name="vat_limit_block_message" formatted="false">Превышен годовой лимит освобождения от VAT (240 000 zł). Подтвердите регистрацию VAT-R в Настройки → Налоги, чтобы продолжить выставлять фактуры.</string>
-    <string name="kasa_limit_block_message" formatted="false">Превышен годовой лимит 20 000 zł наличной продажи физическим лицам. Подтвердите наличие кассового аппарата в Настройки → Налоги, чтобы продолжить выставлять фактуры.</string>
 
     <!-- История счетов -->
     <string name="invoice_history_title">История счетов</string>
@@ -343,11 +325,6 @@
     <string name="invoice_pdf_table_total">Сумма</string>
     <string name="invoice_pdf_unit_piece">шт</string>
     <string name="invoice_pdf_sum_label">Итого</string>
-    <string name="invoice_pdf_table_netto">Нетто</string>
-    <string name="invoice_pdf_table_vat_rate">Ставка VAT</string>
-    <string name="invoice_pdf_table_vat_amount">Сумма VAT</string>
-    <string name="invoice_pdf_table_brutto">Брутто</string>
-    <string name="invoice_pdf_receipt_label">Выставлено как чек для физического лица</string>
     <string name="invoice_pdf_paid_stamp">ОПЛАЧЕНО</string>
     <string name="invoice_pdf_payment_date">Дата оплаты</string>
     <string name="invoice_pdf_footer">Документ создан в приложении FinArs. Не является официальной бухгалтерской или налоговой консультацией — в случае сомнений обратитесь к налоговому консультанту.</string>
@@ -461,28 +438,6 @@
     <string name="ryczalt_category_selected">Категория: %1$s</string>
     <string name="ryczalt_category_required_error">Выберите категорию ryczałt для каждой позиции</string>
     <string name="income_ryczalt_category_required_error">Выберите категорию ryczałt для этого дохода</string>
-
-    <!-- Соответствие VAT / кассового аппарата (Настройки → Налоги) -->
-    <string name="vat_compliance_title">Регистрация VAT</string>
-    <string name="vat_compliance_hint" formatted="false">Превышен годовой лимит освобождения от VAT (240 000 zł). Вы обязаны подать форму VAT-R в течение 7 дней с даты превышения лимита и начислить VAT на транзакции, которая превысила порог. Подтвердите ниже после регистрации — до этого выставление фактур остаётся заблокированным.</string>
-    <string name="cb_vat_registered_label">Подтверждаю, что зарегистрировался как плательщик VAT (подана VAT-R)</string>
-    <string name="cb_vat_registered_confirmed_label">Подтверждено: зарегистрированный плательщик VAT</string>
-    <string name="kasa_compliance_title">Кассовый аппарат</string>
-    <string name="kasa_compliance_hint">Превышен годовой лимит 20 000 zł наличной продажи физическим лицам. Может понадобиться кассовый аппарат. Подтвердите ниже, когда он у вас появится — до этого выставление фактур остаётся заблокированным.</string>
-    <string name="cb_kasa_label">Подтверждаю, что у меня есть кассовый аппарат</string>
-    <string name="cb_kasa_confirmed_label">Подтверждено: кассовый аппарат используется</string>
-    <string name="vat_confirm_dialog_title">Подтвердить регистрацию VAT</string>
-    <string name="vat_confirm_dialog_message">Это подтверждает, что вы подали VAT-R и являетесь плательщиком VAT. Отменить это в приложении нельзя. Продолжить?</string>
-    <string name="kasa_confirm_dialog_title">Подтвердить кассовый аппарат</string>
-    <string name="kasa_confirm_dialog_message">Это подтверждает наличие у вас кассового аппарата. Отменить это в приложении нельзя. Продолжить?</string>
-    <string name="confirm_yes">Да, подтверждаю</string>
-    <string name="confirm_cancel">Отмена</string>
-
-    <!-- Частота push-уведомлений (Настройки → Налоги) -->
-    <string name="push_frequency_title">Частота push-уведомлений</string>
-    <string name="push_frequency_hint">Сколько раз в день могут приходить уведомления о превышенных лимитах и просроченных фактурах (1–50).</string>
-    <string name="push_frequency_saved">Частота уведомлений сохранена</string>
-    <string name="push_frequency_invalid">Введите число от 1 до 50</string>
     <string name="income_ryczalt_category_label">Категория ryczałt для этого дохода</string>
 
     <!-- Несколько позиций в фактуре -->

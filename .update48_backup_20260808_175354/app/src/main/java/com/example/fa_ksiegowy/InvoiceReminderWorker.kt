@@ -32,8 +32,8 @@ class InvoiceReminderWorker(context: Context, params: WorkerParameters) : Corout
             for (inv in pending) {
                 val due = inv.dueDateMillis ?: continue
                 when {
-                    due < now -> LimitsNotificationWorker.notifyRepeatableStatic(
-                        applicationContext, prefs, "invoice_overdue_${inv.id}",
+                    due < now -> notifyOnce(
+                        prefs, "invoice_overdue_${inv.id}",
                         ctx.getString(R.string.notif_invoice_overdue_title),
                         ctx.getString(R.string.notif_invoice_overdue_text, inv.buyerName, inv.invoiceNumber),
                         InvoiceHistoryActivity::class.java
@@ -64,15 +64,13 @@ class InvoiceReminderWorker(context: Context, params: WorkerParameters) : Corout
     companion object {
         private const val UNIQUE_WORK_NAME = "fa_invoice_reminders_daily_check"
 
-        /** Планирует проверку сроков оплаты фактур. Интервал — 1 час (не 24), чтобы
-         *  оповещения о просроченных фактурах могли повторяться до N раз в день —
-         *  N задаётся пользователем в Ustawieniach (zob. VatComplianceHelper). */
+        /** Планирует ежедневную проверку сроков оплаты фактур. Безопасно вызывать при каждом запуске приложения. */
         fun schedule(context: Context) {
             LimitsNotificationWorker.createChannel(context)
-            val request = PeriodicWorkRequestBuilder<InvoiceReminderWorker>(1, TimeUnit.HOURS).build()
+            val request = PeriodicWorkRequestBuilder<InvoiceReminderWorker>(24, TimeUnit.HOURS).build()
             WorkManager.getInstance(context).enqueueUniquePeriodicWork(
                 UNIQUE_WORK_NAME,
-                ExistingPeriodicWorkPolicy.UPDATE,
+                ExistingPeriodicWorkPolicy.KEEP,
                 request
             )
         }

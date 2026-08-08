@@ -248,10 +248,6 @@
     <string name="notif_bracket_text" formatted="false">Your yearly profit is close to 120,000 zł — income above this is taxed at 32% instead of 12%.</string>
     <string name="notif_vat_title">Approaching the VAT exemption limit</string>
     <string name="notif_vat_text">Your yearly revenue is close to 240,000 zł — the VAT exemption threshold.</string>
-    <string name="notif_vat_exceeded_critical_title">VAT limit exceeded</string>
-    <string name="notif_vat_exceeded_critical_text" formatted="false">You have exceeded the 240,000 zł VAT exemption limit. File form VAT-R within 7 days and confirm your registration in Settings — invoicing is blocked until then.</string>
-    <string name="notif_kasa_exceeded_title">Fiscal cash register may be required</string>
-    <string name="notif_kasa_exceeded_text" formatted="false">You have exceeded the 20,000 zł annual cash-sales limit for private individuals. Confirm in Settings once you have a kasa fiskalna — invoicing is blocked until then.</string>
     <string name="notif_advance_title">Advance tax payment reminder</string>
     <string name="notif_advance_text">Advance tax payments are due by the 20th of the month.</string>
     <string name="notif_pit_deadline_title">Annual tax return reminder</string>
@@ -305,20 +301,6 @@
     <string name="open_invoices_folder_button">Open invoices folder</string>
     <string name="open_folder_error">Could not open the folder. Files are saved in %1$s</string>
     <string name="invoice_fill_required_fields">Please fill in the buyer, item and amount</string>
-    <string name="invoice_blocked_toast">Invoicing is blocked — confirm your VAT/cash-register status in Settings first</string>
-    <string name="invoice_is_receipt_label">This invoice is issued as a receipt (paragon)</string>
-    <string name="vat_rate_choose">Choose VAT rate</string>
-    <string name="vat_rate_selected" formatted="false">VAT rate: %1$s</string>
-    <string name="vat_rate_picker_title">VAT rate</string>
-    <string name="vat_rate_required_error">Choose a VAT rate for this invoice</string>
-    <string name="vat_rate_23">23% (standard)</string>
-    <string name="vat_rate_8">8% (reduced)</string>
-    <string name="vat_rate_5">5% (minimum)</string>
-    <string name="vat_rate_0">0% (export/WDT)</string>
-    <string name="vat_rate_zw">zw (exempt)</string>
-    <string name="vat_rate_np">np (not subject to tax)</string>
-    <string name="vat_limit_block_message" formatted="false">You have exceeded the 240,000 zł VAT exemption limit. Confirm your VAT-R registration in Settings → Taxes to keep invoicing.</string>
-    <string name="kasa_limit_block_message" formatted="false">You have exceeded the 20,000 zł annual cash-sales limit for private individuals. Confirm that you have a kasa fiskalna in Settings → Taxes to keep invoicing.</string>
 
     <!-- Invoice history -->
     <string name="invoice_history_title">Invoice history</string>
@@ -343,11 +325,6 @@
     <string name="invoice_pdf_table_total">Total</string>
     <string name="invoice_pdf_unit_piece">pc</string>
     <string name="invoice_pdf_sum_label">Total</string>
-    <string name="invoice_pdf_table_netto">Net</string>
-    <string name="invoice_pdf_table_vat_rate">VAT rate</string>
-    <string name="invoice_pdf_table_vat_amount">VAT amount</string>
-    <string name="invoice_pdf_table_brutto">Gross</string>
-    <string name="invoice_pdf_receipt_label">Issued as a receipt (paragon) for a private individual</string>
     <string name="invoice_pdf_paid_stamp">PAID</string>
     <string name="invoice_pdf_payment_date">Payment date</string>
     <string name="invoice_pdf_footer">Document generated in the FinArs app. This is not official accounting or tax advice — if in doubt, consult a tax advisor.</string>
@@ -461,28 +438,6 @@
     <string name="ryczalt_category_selected">Category: %1$s</string>
     <string name="ryczalt_category_required_error">Choose a ryczałt category for every item</string>
     <string name="income_ryczalt_category_required_error">Choose a ryczałt category for this income</string>
-
-    <!-- VAT / kasa fiskalna compliance (Settings → Taxes) -->
-    <string name="vat_compliance_title">VAT registration</string>
-    <string name="vat_compliance_hint" formatted="false">You have exceeded the 240,000 zł annual VAT exemption limit. You must file form VAT-R within 7 days of the day you crossed the limit, and start charging VAT on the transaction that crossed it. Confirm below once you have registered — invoicing stays blocked until you do.</string>
-    <string name="cb_vat_registered_label">I confirm I have registered as a VAT payer (filed VAT-R)</string>
-    <string name="cb_vat_registered_confirmed_label">Confirmed: registered as a VAT payer</string>
-    <string name="kasa_compliance_title">Fiscal cash register (kasa fiskalna)</string>
-    <string name="kasa_compliance_hint">You have exceeded the 20,000 zł annual limit of cash sales to private individuals. A fiscal cash register may now be required. Confirm below once you have one — invoicing stays blocked until you do.</string>
-    <string name="cb_kasa_label">I confirm I have a fiscal cash register (kasa fiskalna)</string>
-    <string name="cb_kasa_confirmed_label">Confirmed: fiscal cash register in use</string>
-    <string name="vat_confirm_dialog_title">Confirm VAT registration</string>
-    <string name="vat_confirm_dialog_message">This confirms you have filed VAT-R and are now a VAT payer. This cannot be undone in the app. Continue?</string>
-    <string name="kasa_confirm_dialog_title">Confirm fiscal cash register</string>
-    <string name="kasa_confirm_dialog_message">This confirms you have a fiscal cash register (kasa fiskalna). This cannot be undone in the app. Continue?</string>
-    <string name="confirm_yes">Yes, confirm</string>
-    <string name="confirm_cancel">Cancel</string>
-
-    <!-- Push notification frequency (Settings → Taxes) -->
-    <string name="push_frequency_title">Push notification frequency</string>
-    <string name="push_frequency_hint">How many times per day you can receive alerts about exceeded limits and overdue invoices (1–50).</string>
-    <string name="push_frequency_saved">Notification frequency saved</string>
-    <string name="push_frequency_invalid">Enter a number between 1 and 50</string>
     <string name="income_ryczalt_category_label">Ryczałt category for this income</string>
 
     <!-- Multi-item invoices -->

@@ -69,35 +69,12 @@ class LimitsNotificationWorker(context: Context, params: WorkerParameters) : Cor
                 )
             }
 
-            // 3) Приближение к лимиту zwolnienia z VAT (240 000 zł) — раз в день.
+            // 3) Приближение к лимиту zwolnienia z VAT (200 000 zł).
             if (limits.vat.percent in 90..999) {
                 notifyOnce(
                     prefs, "vat90_${TaxHelper.currentYear()}",
                     ctx.getString(R.string.notif_vat_title),
                     ctx.getString(R.string.notif_vat_text)
-                )
-            }
-
-            // 3b) Лимит zwolnienia z VAT ПРЕВЫШЕН, а регистрация ещё не подтверждена —
-            // это уже юридически срочный вопрос (7 дней на подачу VAT-R), поэтому
-            // повторяем оповещение до N раз в день (см. настройку частоты в Ustawieniach),
-            // а не один раз, как для мягких предупреждений выше.
-            if (limits.vat.exceeded && !VatComplianceHelper.isVatRegisteredConfirmed(prefs)) {
-                notifyRepeatable(
-                    prefs, "vat_exceeded_${TaxHelper.currentYear()}",
-                    ctx.getString(R.string.notif_vat_exceeded_critical_title),
-                    ctx.getString(R.string.notif_vat_exceeded_critical_text)
-                )
-            }
-
-            // 3c) Лимит 20 000 zł gotówki dla osób fizycznych ПРЕВЫШЕН, а kasa fiskalna
-            // ещё не подтверждена — тоже повторяем до N раз в день.
-            val cashStatus = CashLimitHelper.computeCurrentYear(applicationContext)
-            if (cashStatus.exceeded && !VatComplianceHelper.isKasaFiskalnaConfirmed(prefs)) {
-                notifyRepeatable(
-                    prefs, "kasa_exceeded_${TaxHelper.currentYear()}",
-                    ctx.getString(R.string.notif_kasa_exceeded_title),
-                    ctx.getString(R.string.notif_kasa_exceeded_text)
                 )
             }
 
@@ -136,34 +113,10 @@ class LimitsNotificationWorker(context: Context, params: WorkerParameters) : Cor
         showNotification(applicationContext, key.hashCode(), title, text)
     }
 
-    /** Как notifyOnce, но допускает до N повторов В ТЕЧЕНИЕ ОДНОГО ДНЯ — N задаётся
-     *  пользователем в Ustawieniach (zob. VatComplianceHelper.getPushFrequency,
-     *  по умолчанию 3). Используется только для действительно срочных ситуаций
-     *  (превышен лимit VAT/kasy, просроченная фактура) — обычные предупреждения
-     *  "приближаетесь к лимиту" по-прежнему используют notifyOnce (раз в день). */
-    private fun notifyRepeatable(prefs: android.content.SharedPreferences, key: String, title: String, text: String) {
-        notifyRepeatableStatic(applicationContext, prefs, key, title, text)
-    }
-
     companion object {
         private val SDF_DAY = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US)
         const val CHANNEL_ID = "fa_limits_channel"
         private const val UNIQUE_WORK_NAME = "fa_limits_daily_check"
-
-        /** Общая реализация повторяемого (до N раз/день) оповещения — используется
-         *  и здесь, и в InvoiceReminderWorker (просроченные фактуры). */
-        fun notifyRepeatableStatic(
-            context: Context, prefs: android.content.SharedPreferences,
-            key: String, title: String, text: String, targetActivity: Class<*>? = null
-        ) {
-            val today = SDF_DAY.format(java.util.Date())
-            val maxPerDay = VatComplianceHelper.getPushFrequency(prefs)
-            val countKey = "notif_count_${key}_$today"
-            val shown = prefs.getInt(countKey, 0)
-            if (shown >= maxPerDay) return
-            prefs.edit().putInt(countKey, shown + 1).apply()
-            showNotification(context, (key + "_" + shown).hashCode(), title, text, targetActivity)
-        }
 
         fun createChannel(context: Context) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -213,18 +166,13 @@ class LimitsNotificationWorker(context: Context, params: WorkerParameters) : Cor
             }
         }
 
-        /** Планирует проверку лимитов/сроков. Интервал — 1 час (не 24), потому что
-         *  критические оповещения (превышен лимит VAT/kasy) теперь могут повторяться
-         *  до N раз в день (см. notifyRepeatableStatic, частота задаётся пользователем
-         *  в Ustawieniach) — при проверке раз в сутки повторы были бы невозможны.
-         *  Обычные мягкие предупреждения (notifyOnce) по-прежнему показываются не
-         *  чаще одного раза в день независимо от того, как часто отрабатывает воркер. */
+        /** Планирует ежедневную проверку лимитов/сроков. Безопасно вызывать при каждом запуске приложения. */
         fun schedule(context: Context) {
             createChannel(context)
-            val request = PeriodicWorkRequestBuilder<LimitsNotificationWorker>(1, TimeUnit.HOURS).build()
+            val request = PeriodicWorkRequestBuilder<LimitsNotificationWorker>(24, TimeUnit.HOURS).build()
             WorkManager.getInstance(context).enqueueUniquePeriodicWork(
                 UNIQUE_WORK_NAME,
-                ExistingPeriodicWorkPolicy.UPDATE,
+                ExistingPeriodicWorkPolicy.KEEP,
                 request
             )
         }

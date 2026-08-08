@@ -248,10 +248,6 @@
     <string name="notif_bracket_text" formatted="false">Roczny dochód zbliża się do 120 000 zł — nadwyżka będzie opodatkowana stawką 32% zamiast 12%.</string>
     <string name="notif_vat_title">Zbliżasz się do limitu zwolnienia z VAT</string>
     <string name="notif_vat_text">Roczny przychód zbliża się do 240 000 zł — progu zwolnienia z VAT.</string>
-    <string name="notif_vat_exceeded_critical_title">Przekroczono limit VAT</string>
-    <string name="notif_vat_exceeded_critical_text" formatted="false">Przekroczono roczny limit zwolnienia z VAT (240 000 zł). Złóż VAT-R w ciągu 7 dni i potwierdź rejestrację w Ustawieniach — do tego czasu wystawianie faktur jest zablokowane.</string>
-    <string name="notif_kasa_exceeded_title">Może być wymagana kasa fiskalna</string>
-    <string name="notif_kasa_exceeded_text" formatted="false">Przekroczono roczny limit 20 000 zł sprzedaży gotówkowej dla osób fizycznych. Potwierdź w Ustawieniach posiadanie kasy fiskalnej — do tego czasu wystawianie faktur jest zablokowane.</string>
     <string name="notif_advance_title">Przypomnienie o zaliczce na podatek</string>
     <string name="notif_advance_text">Zaliczki na podatek należy wpłacać do 20 dnia każdego miesiąca.</string>
     <string name="notif_pit_deadline_title">Przypomnienie o rocznym zeznaniu podatkowym</string>
@@ -305,20 +301,6 @@
     <string name="open_invoices_folder_button">Otwórz folder z fakturami</string>
     <string name="open_folder_error">Nie udało się otworzyć folderu. Pliki są zapisane w %1$s</string>
     <string name="invoice_fill_required_fields">Uzupełnij dane nabywcy, usługę i kwotę</string>
-    <string name="invoice_blocked_toast">Wystawianie faktur zablokowane — najpierw potwierdź status VAT/kasy fiskalnej w Ustawieniach</string>
-    <string name="invoice_is_receipt_label">Ta faktura jest wystawiana jako paragon</string>
-    <string name="vat_rate_choose">Wybierz stawkę VAT</string>
-    <string name="vat_rate_selected" formatted="false">Stawka VAT: %1$s</string>
-    <string name="vat_rate_picker_title">Stawka VAT</string>
-    <string name="vat_rate_required_error">Wybierz stawkę VAT dla tej faktury</string>
-    <string name="vat_rate_23">23% (podstawowa)</string>
-    <string name="vat_rate_8">8% (obniżona)</string>
-    <string name="vat_rate_5">5% (minimalna)</string>
-    <string name="vat_rate_0">0% (eksport/WDT)</string>
-    <string name="vat_rate_zw">zw (zwolnienie)</string>
-    <string name="vat_rate_np">np (nie podlega opodatkowaniu)</string>
-    <string name="vat_limit_block_message" formatted="false">Przekroczono roczny limit zwolnienia z VAT (240 000 zł). Potwierdź rejestrację VAT-R w Ustawienia → Podatki, aby dalej wystawiać faktury.</string>
-    <string name="kasa_limit_block_message" formatted="false">Przekroczono roczny limit 20 000 zł sprzedaży gotówkowej dla osób fizycznych. Potwierdź posiadanie kasy fiskalnej w Ustawienia → Podatki, aby dalej wystawiać faktury.</string>
 
     <!-- Historia faktur -->
     <string name="invoice_history_title">Historia faktur</string>
@@ -343,11 +325,6 @@
     <string name="invoice_pdf_table_total">Razem</string>
     <string name="invoice_pdf_unit_piece">szt</string>
     <string name="invoice_pdf_sum_label">Łącznie</string>
-    <string name="invoice_pdf_table_netto">Netto</string>
-    <string name="invoice_pdf_table_vat_rate">Stawka VAT</string>
-    <string name="invoice_pdf_table_vat_amount">Kwota VAT</string>
-    <string name="invoice_pdf_table_brutto">Brutto</string>
-    <string name="invoice_pdf_receipt_label">Wystawiono jako paragon dla osoby fizycznej</string>
     <string name="invoice_pdf_paid_stamp">ZAPŁACONO</string>
     <string name="invoice_pdf_payment_date">Data zapłaty</string>
     <string name="invoice_pdf_footer">Dokument wygenerowany w aplikacji FinArs. Nie stanowi oficjalnej porady księgowej ani podatkowej — w razie wątpliwości skonsultuj się z doradcą podatkowym.</string>
@@ -461,28 +438,6 @@
     <string name="ryczalt_category_selected">Kategoria: %1$s</string>
     <string name="ryczalt_category_required_error">Wybierz kategorię ryczałtu dla każdej pozycji</string>
     <string name="income_ryczalt_category_required_error">Wybierz kategorię ryczałtu dla tego przychodu</string>
-
-    <!-- Zgodność VAT / kasa fiskalna (Ustawienia → Podatki) -->
-    <string name="vat_compliance_title">Rejestracja VAT</string>
-    <string name="vat_compliance_hint" formatted="false">Przekroczono roczny limit zwolnienia z VAT (240 000 zł). Musisz złożyć formularz VAT-R w ciągu 7 dni od dnia przekroczenia limitu i zacząć naliczać VAT na transakcji, która przekroczyła próg. Potwierdź poniżej po zarejestrowaniu — wystawianie faktur pozostaje zablokowane do tego czasu.</string>
-    <string name="cb_vat_registered_label">Potwierdzam, że zarejestrowałem/-am się jako podatnik VAT (złożono VAT-R)</string>
-    <string name="cb_vat_registered_confirmed_label">Potwierdzono: zarejestrowany podatnik VAT</string>
-    <string name="kasa_compliance_title">Kasa fiskalna</string>
-    <string name="kasa_compliance_hint">Przekroczono roczny limit 20 000 zł sprzedaży gotówkowej dla osób fizycznych. Może być wymagana kasa fiskalna. Potwierdź poniżej, gdy ją posiadasz — wystawianie faktur pozostaje zablokowane do tego czasu.</string>
-    <string name="cb_kasa_label">Potwierdzam, że posiadam kasę fiskalną</string>
-    <string name="cb_kasa_confirmed_label">Potwierdzono: kasa fiskalna w użyciu</string>
-    <string name="vat_confirm_dialog_title">Potwierdź rejestrację VAT</string>
-    <string name="vat_confirm_dialog_message">To potwierdza, że złożono VAT-R i jesteś podatnikiem VAT. Nie można tego cofnąć w aplikacji. Kontynuować?</string>
-    <string name="kasa_confirm_dialog_title">Potwierdź kasę fiskalną</string>
-    <string name="kasa_confirm_dialog_message">To potwierdza posiadanie kasy fiskalnej. Nie można tego cofnąć w aplikacji. Kontynuować?</string>
-    <string name="confirm_yes">Tak, potwierdzam</string>
-    <string name="confirm_cancel">Anuluj</string>
-
-    <!-- Częstotliwość powiadomień push (Ustawienia → Podatki) -->
-    <string name="push_frequency_title">Częstotliwość powiadomień push</string>
-    <string name="push_frequency_hint">Ile razy dziennie mogą przychodzić powiadomienia o przekroczonych limitach i zaległych fakturach (1–50).</string>
-    <string name="push_frequency_saved">Zapisano częstotliwość powiadomień</string>
-    <string name="push_frequency_invalid">Podaj liczbę od 1 do 50</string>
     <string name="income_ryczalt_category_label">Kategoria ryczałtu dla tego przychodu</string>
 
     <!-- Wiele pozycji na fakturze -->

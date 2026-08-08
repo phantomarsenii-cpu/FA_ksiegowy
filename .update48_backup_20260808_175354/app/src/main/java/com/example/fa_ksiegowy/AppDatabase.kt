@@ -10,7 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [Entry::class, Invoice::class, RecurringEntry::class, Product::class, InvoiceItem::class, InventoryRecord::class, InventorySession::class],
-    version = 9,
+    version = 8,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -103,20 +103,6 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        /** v8 -> v9: po przekroczeniu limitu zwolnienia z VAT (240 000 zł) i potwierdzeniu
-         *  rejestracji w Ustawieniach użytkownik wybiera stawkę VAT na każdej fakturze
-         *  (vatRate) — zapisywana jako storageKey [VatRate]. Po potwierdzeniu posiadania
-         *  kasy fiskalnej (limit 20 000 zł gotówki od osób fizycznych) faktura może być
-         *  dodatkowo oznaczona jako wystawiona "do paragonu" (isReceipt). Obie kolumny są
-         *  opcjonalne — dla wszystkich wcześniejszych faktur pozostają NULL/false, bez
-         *  utraty już zapisanych danych. */
-        private val MIGRATION_8_9 = object : Migration(8, 9) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE invoices ADD COLUMN vatRate TEXT")
-                database.execSQL("ALTER TABLE invoices ADD COLUMN isReceipt INTEGER NOT NULL DEFAULT 0")
-            }
-        }
-
         @Volatile private var INSTANCE: AppDatabase? = null
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
@@ -124,7 +110,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "fa_ksiegowy.db"
-                ).addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9).fallbackToDestructiveMigration().build().also { INSTANCE = it }
+                ).addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8).fallbackToDestructiveMigration().build().also { INSTANCE = it }
             }
         }
     }
